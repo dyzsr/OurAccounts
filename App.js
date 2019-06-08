@@ -1,6 +1,10 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+
+import Accounts from './Accounts';
+
 
 class HomeScreen extends React.Component {
   render() {
@@ -22,14 +26,13 @@ class SettingsScreen extends React.Component {
   }
 }
 
-const TabNavigator = createBottomTabNavigator({
+export default createMaterialBottomTabNavigator({
+  Accounts: 'Accounts',
   Home: HomeScreen,
   Settings: SettingsScreen,
-},{
-  initialRouteName: 'Home',
-  activeColor: '#aaffaa',
-  inactiveColor: '#55ff55',
-  barStyle: { background: '#11ee11' }
+}, {
+    initialRouteName: 'Accounts',
+    activeColor: '#f0edf6',
+    inactiveColor: '#3e2465',
+    barStyle: { backgroundColor: '#694fad' },
 });
-
-export default createAppContainer(TabNavigator);
