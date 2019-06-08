@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default class Accounts extends React.Component {
+export default class Sync extends React.Component {
     render(props) {
         return (
             <View style={styles.mainContent}>
-                <Text>Accounts</Text>
+                <Text>Sync</Text>
             </View>
         );
     }
@@ -19,3 +19,4 @@ const styles = StyleSheet.create({
         fontSize: 80,
     },
 });
+
