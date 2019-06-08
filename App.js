@@ -1,16 +1,21 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import { Text, View } from 'react-native';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
-const AccountsView = require('./views/Accounts').default;
 import MonthsView from './views/Months';
 import StatisticsView from './views/Statistics';
 import SyncView from './views/Sync';
 
-const store = createStore(require('./models/Accounts').default);
+import { AccountsView, AccountsReducer } from './models/Accounts';
+
+const reducers = combineReducers({
+  accountInfo: AccountsReducer,
+})
+
+const store = createStore(reducers);
+store.subscribe(() => console.log(store.getState()));
 
 const TabNavigator = createMaterialBottomTabNavigator({
   accounts: AccountsView,
@@ -26,16 +31,15 @@ const TabNavigator = createMaterialBottomTabNavigator({
 
 const AppContainer = createAppContainer(TabNavigator);
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const App = () => {
+  return (
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
+  );
+}
 
-  render() {
-    return (
-      <Provider store={store}>
-        <AppContainer></AppContainer>
-      </Provider>
-    );
-  }
-};
+store.dispatch({type: 'add'});
+store.dispatch({type: 'del', index: 0});
+
+export default App;
