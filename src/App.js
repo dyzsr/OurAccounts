@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -9,15 +9,12 @@ import MonthsView from './views/Months';
 import StatisticsView from './views/Statistics';
 import SyncView from './views/Sync';
 
-import { AccountsReducer } from './models/Accounts';
-
-const reducers = combineReducers({
-  accountInfo: AccountsReducer,
-})
-
+// create store
+import { reducers } from './reducer';
 const store = createStore(reducers);
 store.subscribe(() => console.log(store.getState()));
 
+// create navigation
 const TabNavigator = createMaterialBottomTabNavigator({
   accounts: AccountsView,
   months: MonthsView,
@@ -39,8 +36,5 @@ const App = () => {
     </Provider>
   );
 }
-
-store.dispatch({type: 'add'});
-store.dispatch({type: 'del', index: 0});
 
 export default App;

@@ -1,6 +1,8 @@
 const INITIAL_STATE = {};
 
-const mapStateToProps = ({}) => ({});
+const mapStateToProps = ({ accountInfo }) => ({
+  account: accountInfo.accounts[accountInfo.index],
+});
 
 const mapDispatchToProps = (dispatch) => ({
 

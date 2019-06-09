@@ -61,10 +61,10 @@ const styles = StyleSheet.create({
 
 const AccountsView_ = connect(mapStateToProps, mapDispatchToProps)(Accounts);
 const AccountsView = createStackNavigator({
-    list: {screen: AccountsView_},
-    edit: {screen: AccountEditView},
+    accountList: {screen: AccountsView_},
+    accountEdit: {screen: AccountEditView},
 }, {
-    initialRouteKey: 'list',
+    initialRouteKey: 'accountList',
 });
 
 export default AccountsView;
