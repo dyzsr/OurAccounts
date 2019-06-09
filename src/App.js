@@ -11,6 +11,7 @@ import SyncView from './views/Sync';
 
 // create store
 import { reducers } from './reducer';
+
 const store = createStore(reducers);
 store.subscribe(() => console.log(store.getState()));
 
