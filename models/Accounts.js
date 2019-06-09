@@ -1,18 +1,10 @@
-import { connect } from 'react-redux';
-import Accounts from '../views/Accounts'
 
+// reducer
 const INITIAL_STATE = {
   key: 0,
   accounts: [],
+  index: 0,
 };
-
-const AccountsReducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case "add": return handleAdd(state);
-    case "del": return handleDel(state, action.index);
-  }
-  return state;
-}
 
 const handleAdd = (state) => {
   const accounts = state.accounts.slice();
@@ -20,7 +12,7 @@ const handleAdd = (state) => {
     key: state.key + 1 + '',
     text: 'new account',
   });
-  return { key: state.key + 1, accounts: accounts };
+  return { ...state, key: state.key + 1, accounts: accounts };
 }
 
 const handleDel = (state, index) => {
@@ -31,6 +23,16 @@ const handleDel = (state, index) => {
   return state;
 }
 
+const AccountsReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case "add": return handleAdd(state);
+    case "del": return handleDel(state, action.index);
+  }
+  return state;
+}
+
+export { AccountsReducer };
+
 
 const mapStateToProps = ({accountInfo}) => ({accounts: accountInfo.accounts});
 
@@ -39,6 +41,4 @@ const mapDispatchToProps = (dispatch) => ({
   onClickDel: (idx) => dispatch({type: 'del', index: idx}),
 });
 
-const AccountsView = connect(mapStateToProps, mapDispatchToProps)(Accounts);
-
-export { AccountsReducer, AccountsView };
+export { mapStateToProps, mapDispatchToProps };
