@@ -4,11 +4,12 @@ import { Provider } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
+import AccountsView from './views/Accounts';
 import MonthsView from './views/Months';
 import StatisticsView from './views/Statistics';
 import SyncView from './views/Sync';
 
-import { AccountsView, AccountsReducer } from './models/Accounts';
+import { AccountsReducer } from './models/Accounts';
 
 const reducers = combineReducers({
   accountInfo: AccountsReducer,

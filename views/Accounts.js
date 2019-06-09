@@ -1,7 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { FlatList } from 'react-native-gesture-handler';
+import { createStackNavigator } from 'react-navigation';
+
+import { mapStateToProps, mapDispatchToProps } from '../models/Accounts';
+import AccountEditView from './AccountEdit';
 
 const AccountItem = ({account, index, onClickDel}) => {
     return (
@@ -53,4 +59,12 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Accounts;
+const AccountsView_ = connect(mapStateToProps, mapDispatchToProps)(Accounts);
+const AccountsView = createStackNavigator({
+    list: {screen: AccountsView_},
+    edit: {screen: AccountEditView},
+}, {
+    initialRouteKey: 'list',
+});
+
+export default AccountsView;
