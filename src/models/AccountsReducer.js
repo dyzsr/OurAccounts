@@ -7,10 +7,12 @@ const INITIAL_STATE = {
 
 const AccountsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "add": return handleAdd(state);
-    case "del": return handleDel(state, action.index);
-    case "setIndex": return handleSetIndex(state, action.index);
-    case "edit": return handleEdit(state, action.navigator);
+    case "account_add": return handleAdd(state);
+    case "account_del": return handleDel(state, action);
+    case "account_select": return handleSelect(state, action);
+    case "account_edit": return handleEdit(state, action);
+    case "account_save": return handleSave(state, action);
+    case "account_back": return handleBack(state, action);
   }
   return state;
 }
@@ -24,7 +26,7 @@ const handleAdd = (state) => {
   return { ...state, key: state.key + 1, accounts: accounts };
 }
 
-const handleDel = (state, index) => {
+const handleDel = (state, {index}) => {
   const accounts = state.accounts;
   if (accounts.length > 0 && index < accounts.length) {
     return {...state, accounts: accounts.slice(0, index).concat(accounts.slice(index + 1))};
@@ -32,7 +34,7 @@ const handleDel = (state, index) => {
   return state;
 }
 
-const handleSetIndex = (state, index) => {
+const handleSelect = (state, {index}) => {
   const accounts = state.accounts;
   if (accounts.length > 0 && index < accounts.length) {
     return {...state, index: index};
@@ -40,8 +42,19 @@ const handleSetIndex = (state, index) => {
   return state;
 }
 
-const handleEdit = (state, navigator) => {
-  navigator.navigate('accountEdit');
+const handleEdit = (state, {callBack}) => {
+  callBack();
+  return state;
+}
+
+const handleSave = (state, {index, account}) => {
+  const accounts = state.accounts.slice();
+  accounts[index] = account;
+  return {...state, accounts};
+}
+
+const handleBack = (state, {callBack}) => {
+  callBack();
   return state;
 }
 

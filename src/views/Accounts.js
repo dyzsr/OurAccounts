@@ -6,10 +6,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { FlatList } from 'react-native-gesture-handler';
 import { createStackNavigator } from 'react-navigation';
 
-import { mapStateToProps, mapDispatchToProps } from '../models/Accounts';
 import AccountEditView from './AccountEdit';
 
-const AccountItem = ({account, index, onClickDel}) => {
+const AccountItem = ({account, index, onClickDel, onClickEdit}) => {
     return (
         <View>
             <Text>Account key={account.key} index={index}</Text>
@@ -18,36 +17,52 @@ const AccountItem = ({account, index, onClickDel}) => {
                 onPress={() => onClickDel(index)}
             >Del
             </Icon.Button>
+            <Icon.Button
+                name="trash-alt"
+                onPress={() => onClickEdit(index)}
+            >Edit
+            </Icon.Button>
         </View>
     );
 }
 
-const AccountList = ({accounts, onClickDel}) => {
+const AccountList = ({accounts, onClickDel, onClickEdit}) => {
     // console.log(accounts);
     return (
         <FlatList
             data={accounts}
             renderItem={({ item, index }) => (
-                <AccountItem account={item} index={index} onClickDel={onClickDel} />
+                <AccountItem
+                    account={item}
+                    index={index}
+                    onClickDel={onClickDel}
+                    onClickEdit={onClickEdit}
+                />
             )}
         />
     );
 }
 
-const Accounts = ({ accounts, onClickAdd, onClickDel }) => {
-    // console.log(accounts);
-    return (
-        <View style={styles.mainContent}>
-            <Icon.Button
-                name="plus"
-                background="#3b5998"
-                onPress={onClickAdd}
-            >Add
-            </Icon.Button>
-            <Text>Accounts!!!</Text>
-            <AccountList accounts={accounts} onClickDel={onClickDel}/>
-        </View>
-    );
+
+const Accounts = ({ accounts, navigation, onClickAdd, onClickDel, onClickEdit }) => {
+	return (
+		<View style={styles.mainContent}>
+			<Icon.Button
+				name="plus"
+				background="#3b5998"
+				onPress={onClickAdd}
+			>Add
+      </Icon.Button>
+			<Text>Accounts!!!</Text>
+			<AccountList
+				accounts={accounts}
+				onClickDel={onClickDel}
+				onClickEdit={(idx) => onClickEdit(idx, () => {
+					navigation.navigate('accountEdit');
+				})}
+			/>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
@@ -56,6 +71,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 80,
+    },
+});
+
+const mapStateToProps = ({accountInfo}) => ({accounts: accountInfo.accounts});
+
+const mapDispatchToProps = (dispatch) => ({
+    onClickAdd: () => dispatch({type: 'account_add'}),
+    onClickDel: (idx) => dispatch({type: 'account_del', index: idx}),
+    onClickEdit: (idx, callBack) => {
+        dispatch({type: 'account_select', index: idx});
+        dispatch({type: 'account_edit', callBack: callBack})
     },
 });
 
