@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+// import { AccountData } from '../models/AccountsReducer';
+
 const AccountEdit = ({ account, index, navigation, onClickBack }) => {
   return (
     <View>

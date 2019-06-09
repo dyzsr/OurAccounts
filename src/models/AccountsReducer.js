@@ -5,6 +5,19 @@ const INITIAL_STATE = {
   index: 0,
 };
 
+class AccountData {
+  constructor({date, time, amount, item, desc, imgPath}) {
+    this.date = date;
+    this.time = time;
+    this.amount = amount;
+    this.item = item;
+    this.desc = desc;
+    this.imgPath = imgPath;
+  }
+}
+
+export { AccountData };
+
 const AccountsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "account_add": return handleAdd(state);
@@ -21,7 +34,7 @@ const handleAdd = (state) => {
   const accounts = state.accounts.slice();
   accounts.push({
     key: state.key + 1 + '',
-    text: 'new account',
+    data: new AccountData(),
   });
   return { ...state, key: state.key + 1, accounts: accounts };
 }
