@@ -46,7 +46,7 @@ const theme = {
 const App = () => {
   return (
     <Provider store={store}>
-      <PersistGate loading={<ActivityIndicator size='large'/>} persistor={persistor}>
+      <PersistGate loading={<ActivityIndicator size="large"/>} persistor={persistor}>
         <PaperProvider theme={theme}>
           <AppContainer />
         </PaperProvider>

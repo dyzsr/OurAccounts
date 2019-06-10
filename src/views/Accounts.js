@@ -8,11 +8,13 @@ import { FlatList } from 'react-native-gesture-handler';
 import { createStackNavigator, HeaderBackButton } from 'react-navigation';
 
 import AccountEditView from './AccountEdit';
+import styles from './style';
 
 const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
 	return (
 		<View>
-			<Text>Account key={account.key} index={index}</Text>
+			<Text style={styles.text}>Account key={account.key} index={index}</Text>
+			<Text style={styles.text}>{account.item}</Text>
 			<Button name="delete" onPress={() => onClickDel(index)}>
 				Del
 			</Button>
@@ -42,25 +44,28 @@ const AccountList = ({ accounts, onClickDel, onClickEdit }) => {
 
 
 class Accounts extends React.Component {
-	static navigationOptions() {
+	static navigationOptions({navigation}) {
 		return {
 			title: 'Accounts',
+			headerRight: (
+				<Button icon="add-circle" onPress={navigation.getParam('onClickAdd')}>
+					Add
+				</Button>
+			)
 		};
+	}
+
+	componentDidMount() {
+		const { navigation, onClickAdd } = this.props;
+		navigation.setParams({
+			onClickAdd: () => onClickAdd(),
+		});
 	}
 
 	render() {
 		const {accounts, navigation, onClickAdd, onClickDel, onClickEdit} = this.props;
 		return (
 			<View>
-				<Button
-					icon="add-circle"
-					// background="#3b5998"
-					onPress={onClickAdd}
-				>Add
-				</Button>
-
-				<Text>Accounts!!!</Text>
-
 				<AccountList
 					accounts={accounts}
 					onClickDel={onClickDel}
