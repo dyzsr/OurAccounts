@@ -3,19 +3,16 @@
  * The storage of an account item
  */
 class AccountData {
-  constructor({date, time, amount, item, desc, imgPath}) {
-    this.key = AccountData.key + '';
-    console.log(AccountData.key);
+  constructor({key, date, time, amount, item, desc, imgPath}) {
+    this.key = key;
     this.date = date;
     this.time = time;
     this.amount = amount;
     this.item = item;
     this.desc = desc;
     this.imgPath = imgPath;
-    AccountData.key++;
   }
 }
-AccountData.key = 0;
 
 export { AccountData };
 
@@ -23,18 +20,19 @@ export { AccountData };
  * Reducers for model Accounts
  */
 const INITIAL_STATE = {
+  next_key: 0,
   accounts: [],
   index: 0,
   accountData: new AccountData({}),
 };
 
-const AccountsReducer = (state = INITIAL_STATE, action) => {
+const accountsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "account_add": return handleAdd(state);
     case "account_del": return handleDel(state, action);
     case "account_select": return handleSelect(state, action);
     case "account_edit": return handleEdit(state, action);
-    case "account_save": return handleSave(state, action);
+    case "account_save": return handleSave(state);
     case "account_back": return handleBack(state, action);
     case "account_edit_date": return handleEditDate(state, action);
     case "account_edit_time": return handleEditTime(state, action);
@@ -44,8 +42,8 @@ const AccountsReducer = (state = INITIAL_STATE, action) => {
 
 const handleAdd = (state) => {
   const accounts = state.accounts.slice();
-  accounts.push(new AccountData({}));
-  return { ...state, accounts: accounts };
+  accounts.push(new AccountData({key: state.next_key + ''}));
+  return { ...state, next_key: state.next_key + 1, accounts: accounts };
 }
 
 const handleDel = (state, {index}) => {
@@ -69,10 +67,10 @@ const handleEdit = (state, {callBack}) => {
   return state;
 }
 
-const handleSave = (state, {index, accountData}) => {
+const handleSave = (state) => {
   const accounts = state.accounts.slice();
-  accounts[index] = accountData;
-  return {...state, accounts, accountData};
+  accounts[state.index] = state.accountData;
+  return {...state, accounts};
 }
 
 const handleBack = (state, {callBack}) => {
@@ -90,4 +88,4 @@ const handleEditTime = (state, {time}) => {
   return {...state, accountData};
 }
 
-export { AccountsReducer };
+export { accountsReducer };

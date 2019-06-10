@@ -1,6 +1,8 @@
 import React from 'react';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+
+import { ActivityIndicator } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
@@ -10,9 +12,8 @@ import StatisticsView from './views/Statistics';
 import SyncView from './views/Sync';
 
 // create store
-import { reducers } from './reducer';
+import { store, persistor } from './reducer';
 
-const store = createStore(reducers);
 store.subscribe(() => console.log(store.getState()));
 
 // create navigation
@@ -33,7 +34,9 @@ const AppContainer = createAppContainer(TabNavigator);
 const App = () => {
   return (
     <Provider store={store}>
-      <AppContainer />
+      <PersistGate loading={<ActivityIndicator size='large'/>} persistor={persistor}>
+        <AppContainer />
+      </PersistGate>
     </Provider>
   );
 }
