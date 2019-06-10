@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ActivityIndicator } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import AccountsView from './views/Accounts';
 import MonthsView from './views/Months';
@@ -31,11 +32,24 @@ const TabNavigator = createMaterialBottomTabNavigator({
 
 const AppContainer = createAppContainer(TabNavigator);
 
+const theme = {
+  ...DefaultTheme,
+  dark: true,
+  roundness: 20,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    accent: 'yellow',
+  },
+};
+
 const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={<ActivityIndicator size='large'/>} persistor={persistor}>
-        <AppContainer />
+        <PaperProvider theme={theme}>
+          <AppContainer />
+        </PaperProvider>
       </PersistGate>
     </Provider>
   );

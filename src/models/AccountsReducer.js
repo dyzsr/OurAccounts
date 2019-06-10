@@ -36,6 +36,9 @@ const accountsReducer = (state = INITIAL_STATE, action) => {
     case "account_back": return handleBack(state, action);
     case "account_edit_date": return handleEditDate(state, action);
     case "account_edit_time": return handleEditTime(state, action);
+    case "account_edit_amount": return handleEditAmount(state, action);
+    case "account_edit_item": return handleEditItem(state, action);
+    case "account_edit_desc": return handleEditDesc(state, action);
   }
   return state;
 }
@@ -85,6 +88,21 @@ const handleEditDate = (state, {date}) => {
 
 const handleEditTime = (state, {time}) => {
   const accountData = {...state.accountData, time};
+  return {...state, accountData};
+}
+
+const handleEditAmount = (state, {amount}) => {
+  const accountData = {...state.accountData, amount};
+  return {...state, accountData};
+}
+
+const handleEditItem = (state, {item}) => {
+  const accountData = {...state.accountData, item};
+  return {...state, accountData};
+}
+
+const handleEditDesc = (state, {desc}) => {
+  const accountData = {...state.accountData, desc};
   return {...state, accountData};
 }
 

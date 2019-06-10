@@ -5,6 +5,35 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import DatePicker from 'react-native-datepicker';
 import Geolocation from 'react-native-geolocation-service';
 import { HeaderBackButton } from 'react-navigation';
+import { TextInput } from 'react-native-paper';
+import styles from './style';
+
+const MyDatePicker = ({date, onChangeDate}) => (
+  <DatePicker
+    mode="date"
+    placehold="select date"
+    format="YYYY-MM-DD"
+    date={date ? date : new Date()}
+    minDate="1900-01-01"
+    maxDate="2099-12-31"
+    confirmBtnText="Confirm"
+    cancelBtnTest="Cancel"
+    onDateChange={(date) => onChangeDate(date)}
+  />
+);
+
+const MyTimePicker = ({time, onChangeTime}) => (
+  <DatePicker
+    mode="time"
+    placehold="select time"
+    format="LT"
+    is24Hour={true}
+    date={time ? time : new Date()}
+    confirmBtnText="Confirm"
+    cancelBtnTest="Cancel"
+    onDateChange={(time) => onChangeTime(time)}
+  />
+);
 
 class AccountEdit extends React.Component {
   static navigationOptions({navigation}) {
@@ -24,10 +53,23 @@ class AccountEdit extends React.Component {
   }
 
   render() {
-    const {
-      accountData, index, navigation,
-      onClickBack, onChangeDate, onChangeTime
-    } = this.props;
+    const { accountData, onChangeDate, onChangeTime,
+      onChangeAmount, onChangeItem, onChangeDesc } = this.props;
+
+    return (
+      <View>
+        <Text style={styles.text}>
+          Account Edit
+        </Text>
+
+        <MyDatePicker date={accountData.date} onChangeDate={onChangeDate}/>
+        <MyTimePicker time={accountData.time} onChangeTime={onChangeTime}/>
+
+        <TextInput title="amount" defaultValue={accountData.amount} onChangeText={onChangeAmount}/>
+        <TextInput title="item" defaultValue={accountData.item} onChangeText={onChangeItem}/>
+        <TextInput title="desc" defaultValue={accountData.desc} onChangeText={onChangeDesc}/>
+      </View>
+    );
 
     // let position;
     // Geolocation.getCurrentPosition(
@@ -40,36 +82,6 @@ class AccountEdit extends React.Component {
     //   },
     //   { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
     // );
-
-    return (
-      <View>
-        <Text>
-          Account Edit
-        </Text>
-
-        <DatePicker
-          mode="date"
-          placehold="select date"
-          format="YYYY-MM-DD"
-          date={accountData.date ? accountData.date : new Date()}
-          minDate="1900-01-01"
-          maxDate="2099-12-31"
-          confirmBtnText="Confirm"
-          cancelBtnTest="Cancel"
-          onDateChange={(date) => onChangeDate(date)}
-        />
-        <DatePicker
-          mode="time"
-          placehold="select time"
-          format="LT"
-          is24Hour={true}
-          date={accountData.time ? accountData.time : new Date()}
-          confirmBtnText="Confirm"
-          cancelBtnTest="Cancel"
-          onDateChange={(time) => onChangeTime(time)}
-        />
-      </View>
-    );
   }
 }
 
@@ -86,6 +98,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onChangeDate: (date) => dispatch({type: 'account_edit_date', date}),
   onChangeTime: (time) => dispatch({type: 'account_edit_time', time}),
+  onChangeAmount: (amount) => dispatch({type: 'account_edit_amount', amount}),
+  onChangeItem: (item) => dispatch({type: 'account_edit_item', item}),
+  onChangeDesc: (desc) => dispatch({type: 'account_edit_desc', desc}),
 });
 
 const AccountEditView = connect(mapStateToProps, mapDispatchToProps)(AccountEdit);

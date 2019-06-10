@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { StyleSheet, Text, View } from 'react-native';
+import { Button, withTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { FlatList } from 'react-native-gesture-handler';
 import { createStackNavigator, HeaderBackButton } from 'react-navigation';
@@ -12,16 +13,12 @@ const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
 	return (
 		<View>
 			<Text>Account key={account.key} index={index}</Text>
-			<Icon.Button
-				name="trash-alt"
-				onPress={() => onClickDel(index)}
-			>Del
-            </Icon.Button>
-			<Icon.Button
-				name="trash-alt"
-				onPress={() => onClickEdit(index)}
-			>Edit
-            </Icon.Button>
+			<Button name="delete" onPress={() => onClickDel(index)}>
+				Del
+			</Button>
+			<Button icon="edit" onPress={() => onClickEdit(index)}>
+				Edit
+			</Button>
 		</View>
 	);
 }
@@ -54,14 +51,16 @@ class Accounts extends React.Component {
 	render() {
 		const {accounts, navigation, onClickAdd, onClickDel, onClickEdit} = this.props;
 		return (
-			<View style={styles.mainContent}>
-				<Icon.Button
-					name="plus"
-					background="#3b5998"
+			<View>
+				<Button
+					icon="add-circle"
+					// background="#3b5998"
 					onPress={onClickAdd}
 				>Add
-      </Icon.Button>
+				</Button>
+
 				<Text>Accounts!!!</Text>
+
 				<AccountList
 					accounts={accounts}
 					onClickDel={onClickDel}
@@ -73,15 +72,6 @@ class Accounts extends React.Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	mainContent: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		fontSize: 80,
-	},
-});
 
 const mapStateToProps = ({ accountInfo }) => ({ accounts: accountInfo.accounts });
 
@@ -96,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AccountsView_ = connect(mapStateToProps, mapDispatchToProps)(Accounts);
-const AccountsView = createStackNavigator({
+let AccountsView = createStackNavigator({
 	accountList: {
 		screen: AccountsView_,
 		// navigationOptions: () => ({title: "Accounts",})
@@ -111,4 +101,5 @@ const AccountsView = createStackNavigator({
 	}
 );
 
+AccountsView = withTheme(AccountsView);
 export default AccountsView;
