@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import DatePicker from 'react-native-datepicker';
-import Geolocation from 'react-native-geolocation-service';
+import ImagePicker from 'react-native-image-picker';
 import { HeaderBackButton } from 'react-navigation';
-import { TextInput } from 'react-native-paper';
+import { TextInput, Button } from 'react-native-paper';
 import styles from './style';
 
 const MyDatePicker = ({date, onChangeDate}) => (
@@ -52,9 +51,36 @@ class AccountEdit extends React.Component {
     });
   }
 
+  onAddImage() {
+    const options = {
+      title: 'Select Image',
+      customButtons: [{ name: 'photo', title: 'Choose Image' }],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      }
+    };
+
+    const { onAddImage } = this.props;
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = { uri: response.uri };
+        onAddImage(source.uri);
+      }
+    });
+  }
+
   render() {
-    const { accountData, onChangeDate, onChangeTime,
-      onChangeAmount, onChangeItem, onChangeDesc } = this.props;
+    const { accountData, onChangeDate, onChangeTime, onChangeAmount,
+       onChangeItem, onChangeDesc } = this.props;
 
     return (
       <View>
@@ -62,26 +88,44 @@ class AccountEdit extends React.Component {
           Account Edit
         </Text>
 
-        <MyDatePicker date={accountData.date} onChangeDate={onChangeDate}/>
-        <MyTimePicker time={accountData.time} onChangeTime={onChangeTime}/>
+        <View>
+          <Text>Date</Text>
+          <MyDatePicker date={accountData.date} onChangeDate={onChangeDate} />
+        </View>
 
-        <TextInput title="amount" defaultValue={accountData.amount} onChangeText={onChangeAmount}/>
-        <TextInput title="item" defaultValue={accountData.item} onChangeText={onChangeItem}/>
-        <TextInput title="desc" defaultValue={accountData.desc} onChangeText={onChangeDesc}/>
+        <View>
+          <Text>Time</Text>
+          <MyTimePicker time={accountData.time} onChangeTime={onChangeTime} />
+        </View>
+
+        <View>
+          <Text>Amount</Text>
+          <TextInput keyboardType="number-pad"
+            title="amount" defaultValue={accountData.amount} onChangeText={onChangeAmount} />
+        </View>
+
+        <View>
+          <Text>Item</Text>
+          <TextInput title="item" defaultValue={accountData.item} onChangeText={onChangeItem} />
+        </View>
+
+        <View>
+          <Text>Desc</Text>
+          <TextInput title="desc" defaultValue={accountData.desc} onChangeText={onChangeDesc} />
+        </View>
+
+        <View>
+          <Text>Images</Text>
+          <Button onPress={() => this.onAddImage()}>
+            Add Image
+          </Button>
+        </View>
+
+        <View>
+          <Text>Location</Text>
+        </View>
       </View>
     );
-
-    // let position;
-    // Geolocation.getCurrentPosition(
-    //   (position) => {
-    //     console.log(position);
-    //   },
-    //   (error) => {
-    //     // See error code charts below.
-    //     console.log(error.code, error.message);
-    //   },
-    //   { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    // );
   }
 }
 
@@ -101,6 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
   onChangeAmount: (amount) => dispatch({type: 'account_edit_amount', amount}),
   onChangeItem: (item) => dispatch({type: 'account_edit_item', item}),
   onChangeDesc: (desc) => dispatch({type: 'account_edit_desc', desc}),
+  onAddImage: (imgPath) => dispatch({type: 'account_add_img', imgPath}),
 });
 
 const AccountEditView = connect(mapStateToProps, mapDispatchToProps)(AccountEdit);

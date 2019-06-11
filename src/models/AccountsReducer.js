@@ -10,7 +10,7 @@ class AccountData {
     this.amount = amount;
     this.item = item;
     this.desc = desc;
-    this.imgPath = imgPath;
+    this.imgPaths = [imgPath];
   }
 }
 
@@ -39,6 +39,7 @@ const accountsReducer = (state = INITIAL_STATE, action) => {
     case "account_edit_amount": return handleEditAmount(state, action);
     case "account_edit_item": return handleEditItem(state, action);
     case "account_edit_desc": return handleEditDesc(state, action);
+    case "account_add_img": return handleAddImage(state, action);
   }
   return state;
 }
@@ -103,6 +104,12 @@ const handleEditItem = (state, {item}) => {
 
 const handleEditDesc = (state, {desc}) => {
   const accountData = {...state.accountData, desc};
+  return {...state, accountData};
+}
+
+const handleAddImage = (state, {imgPath}) => {
+  const imgPaths = state.accountData.imgPaths.concat([imgPath]);
+  const accountData = {...state.accountData, imgPaths};
   return {...state, accountData};
 }
 
