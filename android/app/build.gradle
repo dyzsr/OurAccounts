@@ -140,7 +140,6 @@ android {
 dependencies {
     implementation project(':react-native-amap-geolocation')
     implementation project(':react-native-geolocation-service')
-    implementation project(':react-native-fs')
     implementation project(':react-native-image-picker')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-screens')

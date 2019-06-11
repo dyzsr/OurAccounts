@@ -3,15 +3,16 @@
  * The storage of an account item
  */
 class AccountData {
-  constructor({key, date, time, amount, item, desc, imgPath, position}) {
-    this.key = key;
-    this.date = date;
-    this.time = time;
-    this.amount = amount;
-    this.item = item;
-    this.desc = desc;
-    this.imgPaths = imgPath ? [imgPath] : [];
-    this.position = position;
+  constructor({key}) {
+    this.key = key; // string
+    this.date = new Date(); // Date
+    this.time = new Date(); // Date
+    this.isIncome = true; // boolean: is income or expense
+    this.amount = undefined // string: the amount of money
+    this.item = undefined // string: on what item the transaction is
+    this.desc = undefined // string: description of the transaction
+    this.imgPaths = []; // array(string) paths of images
+    this.position = undefined; // Position: the geolocation where the transaction happened
   }
 }
 
@@ -37,6 +38,7 @@ const accountsReducer = (state = INITIAL_STATE, action) => {
     case "account_back": return handleBack(state, action);
     case "account_edit_date": return handleEditDate(state, action);
     case "account_edit_time": return handleEditTime(state, action);
+    case "account_edit_type": return handleEditType(state, action);
     case "account_edit_amount": return handleEditAmount(state, action);
     case "account_edit_item": return handleEditItem(state, action);
     case "account_edit_desc": return handleEditDesc(state, action);
@@ -92,6 +94,11 @@ const handleEditDate = (state, {date}) => {
 
 const handleEditTime = (state, {time}) => {
   const accountData = {...state.accountData, time};
+  return {...state, accountData};
+}
+
+const handleEditType = (state, {isIncome}) => {
+  const accountData = {...state.accountData, isIncome};
   return {...state, accountData};
 }
 
