@@ -14,9 +14,11 @@ import { init, Geolocation } from 'react-native-amap-geolocation';
 PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
 
 // 使用自己申请的高德 App Key 进行初始化
+/*
 init({
   android: "d1472587fae499ae25c6ab8c8ba34ec8"
 });
+*/
 
 
 const MyDatePicker = ({date, onChangeDate}) => (

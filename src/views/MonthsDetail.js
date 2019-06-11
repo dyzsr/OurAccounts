@@ -53,44 +53,39 @@ class MonthsDetail extends React.Component {
     }
 
     render() {
-        const { accounts, length, year, month, day } = this.props;
+        const { accounts, year, month, day } = this.props;
         // console.warn("year is " + year);
         // console.warn("month is " + month);
         // console.warn("day is " + day);
-        console.warn(Filter(accounts, length, year, month, day))
+        // console.warn(Filter(accounts, length, year, month, day))
+        // console.warn(accounts);
+        var res = [];
+        for (var i = 0; i < accounts.length; ++ i) {
+            if ((month < 10 && year + "-0" + month + "-" + day == accounts[i].date) ||
+            (month >= 10 && year + "-" + month + "-" + day == accounts[i].date )) {
+                res.push(accounts[i]);
+            }
+
+            // console.warn(year + "-0" + month + "-" + day);
+            // console.warn(accounts[i].date);
+        }
+        res.sort(function(a, b){return a.time - b.time});
         return (
-            /*
             <View>
                 <MonthsList
-                    accounts = { Filter(accounts, year, month, day) }
+                    accounts = { res }
                 />
             </View>
-            */
-
-            <View></View>
         );
     }
 }
 
-function Filter({accounts, year, month, day}) {
-    var res = [];
-    for (var i = 0; accounts[i]; ++ i) {
-        if (year == accounts[i].year &&
-            month == accounts[i].month &&
-            day == accounts[i].day) {
-            res.push(accounts[i]);
-        }
-    }
-    res.sort(function(a, b){return a.time - b.time});
-    return res;
-}
-
-const mapStateToProps = ({ accountInfo }) => ({
+const mapStateToProps = ({ accountInfo, monthInfo }) => ({
     accountData: accountInfo.accountData,
     accounts: accountInfo.accounts,
-    year: accountInfo.year,
-    month: accountInfo.month,
-    day: accountInfo.day,
+    year: monthInfo.year,
+    month: monthInfo.month,
+    day: monthInfo.day,
 });
 
 const mapDispatchToProps = (dispatch) => ({

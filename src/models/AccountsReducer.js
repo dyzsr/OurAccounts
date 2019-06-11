@@ -43,13 +43,6 @@ const accountsReducer = (state = INITIAL_STATE, action) => {
     case "account_edit_amount": return handleEditAmount(state, action);
     case "account_edit_item": return handleEditItem(state, action);
     case "account_edit_desc": return handleEditDesc(state, action);
-    
-    case "year_select": return yearSelect(state, action);
-    case "month_select": return monthSelect(state, action);
-    case "day_select": return daySelect(state, action);
-    case "month_watch": return monthWatch(state, action);
-    case "month_back": return monthBack(state, action);
-
     case "account_add_img": return handleAddImage(state, action);
     case "account_del_img": return handleDelImage(state, action);
     case "account_edit_pos": return handleEditPosition(state, action);

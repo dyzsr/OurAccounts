@@ -55,10 +55,10 @@ class Months extends Component {
     }
 }
 
-const mapStateToProps = ({ accountInfo }) => ({
-    year: accountInfo.year,
-    month: accountInfo.month,
-    day: accountInfo.day,
+const mapStateToProps = ({ monthInfo }) => ({
+    year: monthInfo.year,
+    month: monthInfo.month,
+    day: monthInfo.day,
 });
 
 const mapDispatchToProps = (dispatch) => ({

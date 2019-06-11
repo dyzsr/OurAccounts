@@ -11,12 +11,9 @@
     "prop-types": "^15.7.2",
     "react": "16.8.3",
     "react-native": "0.59.9",
-<<<<<<< HEAD
     "react-native-calendars": "^1.185.0",
     "react-native-charts-wrapper": "^0.5.5",
-=======
     "react-native-amap-geolocation": "^1.0.3",
->>>>>>> 20838b49a204f05f1ed2a3e32c5ffdf58b3a856b
     "react-native-datepicker": "^1.7.2",
     "react-native-fs": "^2.13.3",
     "react-native-geocoding": "^0.3.0",
