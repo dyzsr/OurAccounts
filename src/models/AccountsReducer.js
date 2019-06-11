@@ -3,14 +3,15 @@
  * The storage of an account item
  */
 class AccountData {
-  constructor({key, date, time, amount, item, desc, imgPath}) {
+  constructor({key, date, time, amount, item, desc, imgPath, position}) {
     this.key = key;
     this.date = date;
     this.time = time;
     this.amount = amount;
     this.item = item;
     this.desc = desc;
-    this.imgPath = imgPath;
+    this.imgPaths = imgPath ? [imgPath] : [];
+    this.position = position;
   }
 }
 
@@ -48,6 +49,10 @@ const accountsReducer = (state = INITIAL_STATE, action) => {
     case "day_select": return daySelect(state, action);
     case "month_watch": return monthWatch(state, action);
     case "month_back": return monthBack(state, action);
+
+    case "account_add_img": return handleAddImage(state, action);
+    case "account_del_img": return handleDelImage(state, action);
+    case "account_edit_pos": return handleEditPosition(state, action);
   }
   return state;
 }
@@ -135,6 +140,30 @@ const monthWatch = (state, {callBack}) => {
 const monthBack = (state, {callBack}) => {
   callBack();
   return state;
+}
+
+const handleAddImage = (state, {imgPath}) => {
+  const imgPaths = state.accountData.imgPaths.concat([imgPath]);
+  const accountData = {...state.accountData, imgPaths};
+  return {...state, accountData};
+}
+
+const handleDelImage = (state, {index, imgPath}) => {
+  let accountData = state.accountData;
+  const imgPaths = accountData.imgPaths;
+  if (imgPaths[index] === imgPath) {
+    accountData = {
+      ...accountData,
+      imgPaths: imgPaths.slice(0, index).concat(imgPaths.slice(index + 1))
+    };
+    return {...state, accountData};
+  }
+  return state;
+}
+
+const handleEditPosition = (state, {position}) => {
+  const accountData = {...state.accountData, position};
+  return {...state, accountData};
 }
 
 export { accountsReducer };

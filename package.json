@@ -11,15 +11,23 @@
     "prop-types": "^15.7.2",
     "react": "16.8.3",
     "react-native": "0.59.9",
+<<<<<<< HEAD
     "react-native-calendars": "^1.185.0",
     "react-native-charts-wrapper": "^0.5.5",
+=======
+    "react-native-amap-geolocation": "^1.0.3",
+>>>>>>> 20838b49a204f05f1ed2a3e32c5ffdf58b3a856b
     "react-native-datepicker": "^1.7.2",
+    "react-native-fs": "^2.13.3",
+    "react-native-geocoding": "^0.3.0",
     "react-native-geolocation-service": "^2.0.1",
     "react-native-gesture-handler": "^1.3.0",
+    "react-native-image-picker": "^0.28.1",
     "react-native-modal-datetime-picker": "^7.4.2",
     "react-native-ocalendar": "^1.0.1",
     "react-native-paper": "^2.16.0",
     "react-native-screens": "^1.0.0-alpha.22",
+    "react-native-swipeout": "^2.3.6",
     "react-native-vector-icons": "^6.5.0",
     "react-native-webview": "^5.11.0",
     "react-navigation": "^3.11.0",
@@ -34,6 +42,8 @@
     "babel-jest": "^24.8.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.54.1",
+    "node-sass": "^4.12.0",
+    "react-native-sass-transformer": "^1.4.0",
     "react-test-renderer": "16.8.3"
   },
   "jest": {
