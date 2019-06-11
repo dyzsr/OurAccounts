@@ -10,23 +10,24 @@ const persistConfig = {
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
+  blacklist: ['months'],
 };
 
 const accountsPersistConfig = {
   key: 'accounts',
   storage,
-  blacklist: ['index', 'accountData', 'month', 'day', 'year'],
+  blacklist: ['index', 'accountData'],
 };
 
-const monthsPersistConfig = {
-  key: 'months',
-  storage,
-  blacklist: ['month', 'day', 'year'],
-};
+// const monthsPersistConfig = {
+//   key: 'months',
+//   storage,
+//   blacklist: ['month', 'day', 'year'],
+// };
 
 const reducer = combineReducers({
   accountInfo: persistReducer(accountsPersistConfig, accountsReducer),
-  monthInfo: persistReducer(monthsPersistConfig, monthsReducer),
+  monthInfo: monthsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
