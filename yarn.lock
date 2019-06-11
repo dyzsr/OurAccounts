@@ -2058,7 +2058,7 @@ escape-html@~1.0.3:
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
-escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
+escape-string-regexp@1.0.5, escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
@@ -2837,7 +2837,7 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-invariant@^2.2.2, invariant@^2.2.4:
+invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -3791,6 +3791,16 @@ locate-path@^3.0.0:
   dependencies:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
+
+lodash.get@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.npm.taobao.org/lodash.get/download/lodash.get-4.4.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash.get%2Fdownload%2Flodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
+
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npm.taobao.org/lodash.isequal/download/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
 
 lodash.pad@^4.1.0:
   version "4.5.1"
@@ -5115,6 +5125,24 @@ react-native-animatable@^1.2.4:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-calendars@^1.185.0:
+  version "1.185.0"
+  resolved "https://registry.npm.taobao.org/react-native-calendars/download/react-native-calendars-1.185.0.tgz#8846c11374738e0180f65774de59fdb7c8bf0eca"
+  integrity sha1-iEbBE3RzjgGA9ld03ln9t8i/Dso=
+  dependencies:
+    lodash.get "^4.4.2"
+    lodash.isequal "^4.5.0"
+    prop-types "^15.5.10"
+    xdate "^0.8.0"
+
+react-native-charts-wrapper@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.npm.taobao.org/react-native-charts-wrapper/download/react-native-charts-wrapper-0.5.5.tgz#9891f6020af25dd49598d6a18e4b35ac18953cd7"
+  integrity sha1-mJH2AgryXdSVmNahjks1rBiVPNc=
+  dependencies:
+    prop-types "^15.5.10"
+    react "16.8.3"
+
 react-native-datepicker@^1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
@@ -5151,6 +5179,11 @@ react-native-modal@^9.0.0:
   dependencies:
     prop-types "^15.6.2"
     react-native-animatable "^1.2.4"
+
+react-native-ocalendar@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/react-native-ocalendar/download/react-native-ocalendar-1.0.1.tgz#e0df6d63ce705c3c089b145dee4d47b7a71dc343"
+  integrity sha1-4N9tY85wXDwImxRd7k1Ht6cdw0M=
 
 react-native-paper@^2.16.0:
   version "2.16.0"
@@ -5198,6 +5231,14 @@ react-native-vector-icons@^6.5.0:
     lodash "^4.0.0"
     prop-types "^15.6.2"
     yargs "^13.2.2"
+
+react-native-webview@^5.11.0:
+  version "5.11.0"
+  resolved "https://registry.npm.taobao.org/react-native-webview/download/react-native-webview-5.11.0.tgz#7b1eeac7f3ea3a6f7bab3eefc10b272f0a008603"
+  integrity sha1-ex7qx/PqOm97qz7vwQsnLwoAhgM=
+  dependencies:
+    escape-string-regexp "1.0.5"
+    invariant "2.2.4"
 
 react-native@0.59.9:
   version "0.59.9"
@@ -6600,6 +6641,11 @@ xcode@^2.0.0:
   dependencies:
     simple-plist "^1.0.0"
     uuid "^3.3.2"
+
+xdate@^0.8.0:
+  version "0.8.2"
+  resolved "https://registry.npm.taobao.org/xdate/download/xdate-0.8.2.tgz#d7b033c00485d02695baf0044f4eacda3fc961a3"
+  integrity sha1-17AzwASF0CaVuvAET06s2j/JYaM=
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
