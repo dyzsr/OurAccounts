@@ -26,6 +26,9 @@ const INITIAL_STATE = {
   accounts: [],
   index: 0,
   accountData: new AccountData({}),
+  year: 0,
+  month: 0,
+  day: 0,
 };
 
 const accountsReducer = (state = INITIAL_STATE, action) => {
@@ -115,6 +118,28 @@ const handleEditItem = (state, {item}) => {
 const handleEditDesc = (state, {desc}) => {
   const accountData = {...state.accountData, desc};
   return {...state, accountData};
+}
+
+const yearSelect = (state, {year}) => {
+  return {...state, year};
+}
+
+const monthSelect = (state, {month}) => {
+  return {...state, month};
+}
+
+const daySelect = (state, {day}) => {
+  return {...state, day};
+}
+
+const monthWatch = (state, {callBack}) => {
+  callBack();
+  return state;
+}
+
+const monthBack = (state, {callBack}) => {
+  callBack();
+  return state;
 }
 
 const handleAddImage = (state, {imgPath}) => {

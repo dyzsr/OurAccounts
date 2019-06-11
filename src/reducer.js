@@ -4,6 +4,7 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage'
 
 import { accountsReducer } from './models/AccountsReducer';
+import { monthsReducer } from './models/MonthsReducer';
 
 const persistConfig = {
   key: 'root',
@@ -14,11 +15,18 @@ const persistConfig = {
 const accountsPersistConfig = {
   key: 'accounts',
   storage,
-  blacklist: ['index', 'accountData'],
+  blacklist: ['index', 'accountData', 'month', 'day', 'year'],
+};
+
+const monthsPersistConfig = {
+  key: 'months',
+  storage,
+  blacklist: ['month', 'day', 'year'],
 };
 
 const reducer = combineReducers({
   accountInfo: persistReducer(accountsPersistConfig, accountsReducer),
+  monthInfo: persistReducer(monthsPersistConfig, monthsReducer),
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
