@@ -14,7 +14,7 @@ const persistConfig = {
 const accountsPersistConfig = {
   key: 'accounts',
   storage,
-  blacklist: ['index', 'accountData'],
+  blacklist: ['index', 'accountData', 'month', 'day', 'year'],
 };
 
 const reducer = combineReducers({

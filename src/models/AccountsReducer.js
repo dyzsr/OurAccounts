@@ -24,6 +24,9 @@ const INITIAL_STATE = {
   accounts: [],
   index: 0,
   accountData: new AccountData({}),
+  year: 0,
+  month: 0,
+  day: 0,
 };
 
 const accountsReducer = (state = INITIAL_STATE, action) => {
@@ -39,6 +42,12 @@ const accountsReducer = (state = INITIAL_STATE, action) => {
     case "account_edit_amount": return handleEditAmount(state, action);
     case "account_edit_item": return handleEditItem(state, action);
     case "account_edit_desc": return handleEditDesc(state, action);
+    
+    case "year_select": return yearSelect(state, action);
+    case "month_select": return monthSelect(state, action);
+    case "day_select": return daySelect(state, action);
+    case "month_watch": return monthWatch(state, action);
+    case "month_back": return monthBack(state, action);
   }
   return state;
 }
@@ -104,6 +113,28 @@ const handleEditItem = (state, {item}) => {
 const handleEditDesc = (state, {desc}) => {
   const accountData = {...state.accountData, desc};
   return {...state, accountData};
+}
+
+const yearSelect = (state, {year}) => {
+  return {...state, year};
+}
+
+const monthSelect = (state, {month}) => {
+  return {...state, month};
+}
+
+const daySelect = (state, {day}) => {
+  return {...state, day};
+}
+
+const monthWatch = (state, {callBack}) => {
+  callBack();
+  return state;
+}
+
+const monthBack = (state, {callBack}) => {
+  callBack();
+  return state;
 }
 
 export { accountsReducer };
