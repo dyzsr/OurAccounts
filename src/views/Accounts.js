@@ -10,6 +10,8 @@ import Swipeout from 'react-native-swipeout';
 import AccountEditView from './AccountEdit';
 import styles from './style';
 
+var moment = require('moment');
+
 const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
 	let swipeoutBtn = [{
 		text: 'delete',
@@ -21,7 +23,10 @@ const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
 			<TouchableHighlight onPress={() => onClickEdit(index)}>
 				<View>
 					<Text>Account {index}</Text>
-					<Text style={styles.text}>{account.item}</Text>
+					<Text style={styles.text}>
+						{account.item ? account.item : 'unknown'}
+						{' ' + moment(account.date).format('YYYY-MM-DD')}
+					</Text>
 				</View>
 			</TouchableHighlight>
 		</Swipeout>

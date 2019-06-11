@@ -5,7 +5,6 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import cn.qiuxiang.react.geolocation.AMapGeolocationPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
-import com.rnfs.RNFSPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
@@ -32,7 +31,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new AMapGeolocationPackage(),
             new RNFusedLocationPackage(),
-            new RNFSPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
             new RNScreensPackage(),
