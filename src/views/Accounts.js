@@ -1,27 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Button, withTheme } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import { FlatList } from 'react-native-gesture-handler';
-import { createStackNavigator, HeaderBackButton } from 'react-navigation';
+import { FlatList, TouchableHighlight } from 'react-native-gesture-handler';
+import { createStackNavigator } from 'react-navigation';
+import Swipeout from 'react-native-swipeout';
 
 import AccountEditView from './AccountEdit';
 import styles from './style';
 
 const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
+	let swipeoutBtn = [{
+		text: 'delete',
+		type: 'delele',
+		onPress: () => onClickDel(index),
+	}];
 	return (
-		<View>
-			<Text style={styles.text}>Account key={account.key} index={index}</Text>
-			<Text style={styles.text}>{account.item}</Text>
-			<Button name="delete" onPress={() => onClickDel(index)}>
-				Del
-			</Button>
-			<Button icon="edit" onPress={() => onClickEdit(index)}>
-				Edit
-			</Button>
-		</View>
+		<Swipeout right={swipeoutBtn}>
+			<TouchableHighlight onPress={() => onClickEdit(index)}>
+				<View>
+					<Text>Account {index}</Text>
+					<Text style={styles.text}>{account.item}</Text>
+				</View>
+			</TouchableHighlight>
+		</Swipeout>
 	);
 }
 
@@ -30,7 +33,7 @@ const AccountList = ({ accounts, onClickDel, onClickEdit }) => {
 	return (
 		<FlatList
 			data={accounts}
-			renderItem={({ item, index }) => (
+			renderItem={({item, index}) => (
 				<AccountItem
 					account={item}
 					index={index}
