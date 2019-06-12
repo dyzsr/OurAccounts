@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Text, View } from 'react-native';
-import { Button, withTheme } from 'react-native-paper';
-import { FlatList, TouchableHighlight } from 'react-native-gesture-handler';
+import {
+	Container, Header, Content, Button, Text, Title,
+	ListItem, SwipeRow, Icon, Item, Left, Body, Right,
+} from 'native-base';
+import { FlatList } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import Swipeout from 'react-native-swipeout';
 
 import AccountEditView from './AccountEdit';
 import styles from './style';
@@ -19,22 +20,38 @@ const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
 		onPress: () => onClickDel(index),
 	}];
 	return (
-		<Swipeout right={swipeoutBtn}>
-			<TouchableHighlight onPress={() => onClickEdit(index)}>
-				<View>
-					<Text>Account {index}</Text>
-					<Text style={styles.text}>
-						{account.item ? account.item : 'unknown'}
-						{' ' + moment(account.date).format('YYYY-MM-DD')}
+		<SwipeRow
+			disableRightSwipe={true}
+			leftOpenValue={75}
+			rightOpenValue={-75}
+			body={
+				<Button full light
+					style={{width: '100%'}}
+					onPress={() => onClickEdit(index)}>
+					<Text>
+						{account.isIncome ? '收入' : '支出'}
 					</Text>
-				</View>
-			</TouchableHighlight>
-		</Swipeout>
+
+					<Text>
+						消费类别: {account.item ? account.item : '未设置'}
+					</Text>
+
+					<Text>
+						消费时间: {moment(account.date).format('YYYY-MM-DD')}
+					</Text>
+				</Button>
+			}
+			right={
+				<Button full danger
+					onPress={() => onClickDel(index)}>
+					<Icon active name='trash' />
+				</Button>
+			}
+		/>
 	);
 }
 
-const AccountList = ({ accounts, onClickDel, onClickEdit }) => {
-	// console.log(accounts);
+const AccountList = ({ accounts, onClickDel, onClickEdit, style }) => {
 	return (
 		<FlatList
 			data={accounts}
@@ -55,10 +72,14 @@ class Accounts extends React.Component {
 	static navigationOptions({navigation}) {
 		return {
 			title: 'Accounts',
-			headerRight: (
-				<Button icon="add-circle" onPress={navigation.getParam('onClickAdd')}>
-					Add
-				</Button>
+			header: (
+				<Header>
+					<Left />
+					<Body>
+						<Title>账单</Title>
+					</Body>
+					<Right />
+				</Header>
 			)
 		};
 	}
@@ -73,15 +94,21 @@ class Accounts extends React.Component {
 	render() {
 		const {accounts, navigation, onClickAdd, onClickDel, onClickEdit} = this.props;
 		return (
-			<View>
-				<AccountList
-					accounts={accounts}
-					onClickDel={onClickDel}
-					onClickEdit={(idx) => onClickEdit(idx, () => {
-						navigation.navigate('accountEdit');
-					})}
-				/>
-			</View>
+			<Container>
+				<Content padder>
+					<Button block
+						onPress={navigation.getParam('onClickAdd')}>
+						<Text>Add</Text>
+					</Button>
+					<AccountList
+						accounts={accounts}
+						onClickDel={onClickDel}
+						onClickEdit={(idx) => onClickEdit(idx, () => {
+							navigation.navigate('accountEdit');
+						})}
+					/>
+				</Content>
+			</Container>
 		);
 	}
 }
@@ -99,7 +126,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AccountsView_ = connect(mapStateToProps, mapDispatchToProps)(Accounts);
-let AccountsView = createStackNavigator({
+const AccountsView = createStackNavigator({
 	accountList: {
 		screen: AccountsView_,
 		// navigationOptions: () => ({title: "Accounts",})
@@ -114,5 +141,4 @@ let AccountsView = createStackNavigator({
 	}
 );
 
-AccountsView = withTheme(AccountsView);
 export default AccountsView;

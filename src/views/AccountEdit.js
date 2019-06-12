@@ -1,10 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Image, Text, View, Picker, PermissionsAndroid } from 'react-native';
+import {
+  Container, Header, Content, View,
+  Left, Body, Right, Title, Item, Text,
+  Row, Form, Label, Button, Input, Icon
+} from 'native-base';
+
+import { Image, Picker, PermissionsAndroid } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import ImagePicker from 'react-native-image-picker';
 import { HeaderBackButton } from 'react-navigation';
-import { TextInput, Button } from 'react-native-paper';
+import { } from 'react-native-paper';
 import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
 import {
   Menu, MenuOptions, MenuOption,
@@ -19,15 +25,14 @@ import styles from './style';
 PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
 
 // 使用自己申请的高德 App Key 进行初始化
-/*
 init({
   android: "d1472587fae499ae25c6ab8c8ba34ec8"
 });
-*/
 
 
-const MyDatePicker = ({date, onChangeDate}) => (
+const MyDatePicker = ({date, onChangeDate, style}) => (
   <DatePicker
+    style={style}
     mode="date"
     placehold="select date"
     format="YYYY-MM-DD"
@@ -40,8 +45,9 @@ const MyDatePicker = ({date, onChangeDate}) => (
   />
 );
 
-const MyTimePicker = ({time, onChangeTime}) => (
+const MyTimePicker = ({time, onChangeTime, style}) => (
   <DatePicker
+    style={style}
     mode="time"
     placehold="select time"
     format="LT"
@@ -58,7 +64,7 @@ const Images = ({imgPaths, onDeleteImage}) => {
   const images = imgPaths.map((imgPath, index) => (
     imgPath ?
       (
-        <View key={index + ''}>
+        <View key={index+''}>
           <Menu>
             <MenuTrigger triggerOnLongPress={true}>
               <Image source={{ uri: imgPath }} style={{ width: 100, height: 100 }} />
@@ -69,12 +75,16 @@ const Images = ({imgPaths, onDeleteImage}) => {
           </Menu>
         </View>
       ) : (
-        <View key={index + ''} />
+        <View key={index+''}/>
       )
   ));
+  const imgMat = [];
+  for (i = 0; i * 3 < images.length; i++) {
+    imgMat.push(<Row key={'r'+i}>{images.slice(i * 3, i * 3 + 3)}</Row>);
+  }
   return (
     <MenuProvider>
-      <View>{images}</View>
+      {imgMat}
     </MenuProvider>
   );
 }
@@ -83,9 +93,20 @@ class AccountEdit extends React.Component {
   static navigationOptions({navigation}) {
     return {
       title: 'Edit Account',
-      headerLeft: (
-        <HeaderBackButton onPress={navigation.getParam('onClickBack')} />
-      ),
+			header: (
+				<Header>
+          <Left>
+            <Button transparent
+              onPress={navigation.getParam('onClickBack')}>
+              <Icon name="arrow-back"/>
+            </Button>
+          </Left>
+					<Body>
+						<Title>账单</Title>
+					</Body>
+					<Right />
+				</Header>
+			)
     };
   }
 
@@ -145,70 +166,95 @@ class AccountEdit extends React.Component {
 
   render() {
     const { accountData, onChangeDate, onChangeTime, onChangeType,
-       onChangeAmount, onChangeItem, onChangeDesc, onDelImage, onSave } = this.props;
+      onChangeAmount, onChangeItem, onChangeDesc, onDelImage, onSave } = this.props;
 
     return (
-      <ScrollView>
-        <Text style={styles.text}>
-          Account Edit
-        </Text>
+      <Container padder>
+        <Content>
+          <Form>
 
-        <View>
-          <Text>Date</Text>
-          <MyDatePicker date={accountData.date} onChangeDate={onChangeDate} />
-        </View>
+            <Item fixedLabel>
+              <Label>日期</Label>
+              <MyDatePicker style={styles.accountDataValue}
+                date={accountData.date} onChangeDate={onChangeDate} />
+            </Item>
 
-        <View>
-          <Text>Time</Text>
-          <MyTimePicker time={accountData.time} onChangeTime={onChangeTime} />
-        </View>
+            <Item fixedLabel>
+              <Label>时间</Label>
+              <MyTimePicker style={styles.accountDataValue}
+                time={accountData.time} onChangeTime={onChangeTime} />
+            </Item>
 
-        <View>
-          <Text>Type</Text>
-          <Picker
-            selectedValue={
-              accountData.isIncome === 'undefined' ? true : accountData.isIncome
-            }
-            onValueChange={(itemValue) => onChangeType(itemValue)}>
-            <Picker.Item label='income' value={true} />
-            <Picker.Item label='expense' value={false}/>
-          </Picker>
-        </View>
+            <Item fixedLabel>
+              <Label>账目类型</Label>
+              <Picker
+                style={styles.accountDataValue}
+                selectedValue={
+                  accountData.isIncome === 'undefined' ? true : accountData.isIncome
+                }
+                onValueChange={(itemValue) => onChangeType(itemValue)}>
+                <Picker.Item label='income' value={true} />
+                <Picker.Item label='expense' value={false} />
+              </Picker>
+            </Item>
 
-        <View>
-          <Text>Amount</Text>
-          <TextInput keyboardType="number-pad"
-            title="amount" defaultValue={accountData.amount}
-             onChangeText={onChangeAmount} onEndEditing={onSave}/>
-        </View>
+            <Item fixedLabel>
+              <Label>效费种类</Label>
+              <Input
+                title="item" defaultValue={accountData.item}
+                onChangeText={onChangeItem} onEndEditing={onSave} />
+            </Item>
 
-        <View>
-          <Text>Item</Text>
-          <TextInput title="item" defaultValue={accountData.item}
-           onChangeText={onChangeItem} onEndEditing={onSave} />
-        </View>
+            <Item fixedLabel>
+              <Label>金额</Label>
+              <Input
+                keyboardType="number-pad"
+                title="amount" defaultValue={accountData.amount}
+                onChangeText={onChangeAmount} onEndEditing={onSave} />
+            </Item>
 
-        <View>
-          <Text>Desc</Text>
-          <TextInput title="desc" defaultValue={accountData.desc}
-           onChangeText={onChangeDesc} onEndEditing={onSave} />
-        </View>
+            <Item fixedLabel>
+              <Label>描述</Label>
+              <Input
+                title="desc" defaultValue={accountData.desc}
+                onChangeText={onChangeDesc} onEndEditing={onSave} />
+            </Item>
 
-        <View>
-          <Text>Images</Text>
-          <Button icon='photo-library' onPress={() => this.onAddImage()}>
-            Add Image
-          </Button>
-          <Images imgPaths={accountData.imgPaths}
-            onDeleteImage={(index, imgPath) => onDelImage(index, imgPath)} />
-        </View>
+            <Item fixedLabel>
+              <Label>图片</Label>
+              <Button
+                iconLeft
+                style={{width: 120, marginTop: 5, marginBottom: 5, marginRight: 30}}
+                onPress={() => this.onAddImage()}>
+                <Icon type="MaterialIcons" name='add-a-photo'/>
+                <Text>添加图片</Text>
+              </Button>
+            </Item>
 
-        <View>
-          <Text>Location</Text>
-          <Button icon='add-location' onPress={() => this.onGetPosition()}></Button>
-          <Text>{this.getAddress()}</Text>
-        </View>
-      </ScrollView>
+            <Images
+              imgPaths={accountData.imgPaths}
+              onDeleteImage={(index, imgPath) => onDelImage(index, imgPath)}
+            />
+
+            <Item fixedLabel>
+              <Label>位置</Label>
+              <Button
+                iconLeft
+                style={{width: 120, marginTop: 5, marginBottom: 5, marginRight: 30}}
+                onPress={() => this.onGetPosition()}>
+                <Icon type="MaterialIcons" name='add-location'/>
+                <Text>添加位置</Text>
+              </Button>
+            </Item>
+
+            <Label>
+              {this.getAddress()}
+            </Label>
+
+          </Form>
+        </Content>
+
+      </Container>
     );
   }
 }
