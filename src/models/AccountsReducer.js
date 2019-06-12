@@ -8,7 +8,7 @@ class AccountData {
     this.date = new Date(); // Date
     this.time = new Date(); // Date
     this.isIncome = true; // boolean: is income or expense
-    this.amount = undefined // string: the amount of money
+    this.amount = "0" // string: the amount of money
     this.item = undefined // string: on what item the transaction is
     this.desc = undefined // string: description of the transaction
     this.imgPaths = []; // array(string) paths of images

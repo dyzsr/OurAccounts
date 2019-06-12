@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Calendar } from 'react-native-calendars';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { withTheme } from 'react-native-paper';
+import {
+	Container, Header, Content, Button, Text, Title,
+	ListItem, SwipeRow, Item, Left, Body, Right,
+} from 'native-base';
 import MonthsDetailView from './MonthsDetail';
 
 class Months extends Component {
     // 标题头
-    static navigationOptions() {
+    static navigationOptions({navigation}) {
 		return {
-            title: '消费情况',
-            headerLeft: (
-                <Icon.Button
-                    name = "react"
-                    backgroundColor = "black"
-                />
-            ),
+			title: 'Months',
+			header: (
+				<Header>
+					<Left />
+					<Body>
+						<Title>月份</Title>
+					</Body>
+					<Right />
+				</Header>
+			)
 		};
 	}
 
@@ -29,36 +36,90 @@ class Months extends Component {
 	}
 
     render() {
-        const { navigation, year, month, day,
-            onClick } = this.props;
-        // console.warn("year is " + year);
-        // console.warn("month is " + month);
-        // console.warn("day is " + day);
+        const { accounts, navigation, year, month, day, income, expense,
+            onClick, onChange, onIncome, onExpense } = this.props;
+
+        onIncome(accounts);
+        onExpense(accounts);
+
+        // console.warn(year + ' ' + month + ' ' + day);
+
         return (
-            <View>
+            <View style = {{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+            }}>
                 <Calendar
                     onDayPress={(day) =>
                         // 点击日期切换至消费详细
                         onClick(day, () => {
-                            // console.warn("nmsl year " + day.year);
-                            // console.warn("nmsl month " + day.month);
-                            // console.warn("nmsl day " + day.day);
                             // console.warn(day);
                             navigation.navigate('monthsDetail');
                         })
                     }
                     monthFormat = { 'yyyy年M月' }
-                    onMonthChange = {() => {}}
+                    onMonthChange = {(month) => {
+                        onChange(month);
+                        onIncome(accounts);
+                        onExpense(accounts);
+                    }}
                 />
+                <View style = {{
+                    height: 100,
+                }} />
+                <View style = {{
+                    height: 100,
+                    flexDirection: 'row',
+                    justifyContent: 'center'
+                }}>
+                    <View style = {{
+                        flex: 1,
+                    }}>
+                        <Text style = {{
+                            fontSize: 30,
+                            color: "green",
+                            bottom: "25%",
+                            position: "absolute",
+                            left: "25%",
+                        }}>
+                            月收入{'\n'}
+                            { income }
+                        </Text>
+                    </View>
+                    <View style = {{
+                        flex: 0.005,
+                        backgroundColor: "grey",
+                        height: "90%",
+                        alignItems: 'center',
+                    }} />
+                    <View style = {{
+                        flex: 1,
+                    }}>
+                        <Text style = {{
+                            fontSize: 30,
+                            color: "red",
+                            bottom: "25%",
+                            position: "absolute",
+                            left: "25%",
+                        }}>
+                            月支出{'\n'}
+                            { expense }
+                        </Text>
+                    </View>
+                </View>
             </View>
         );
     }
 }
 
-const mapStateToProps = ({ monthInfo }) => ({
+const mapStateToProps = ({ accountInfo, monthInfo }) => ({
+    accounts: accountInfo.accounts,
     year: monthInfo.year,
     month: monthInfo.month,
     day: monthInfo.day,
+    income: monthInfo.income,
+    expense: monthInfo.expense,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -68,7 +129,16 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch({ type: 'day_select', day: day.day });
 		dispatch({ type: 'month_watch', callBack: callBack })
 		console.log('WATCH');
-	},
+    },
+    onChange: (month) => {
+        dispatch({ type: 'month_change', month: month.month });
+    },
+    onIncome: (accounts) => {
+        dispatch({ type: 'month_income', accounts: accounts });
+    },
+    onExpense: (accounts) => {
+        dispatch({ type: 'month_expense', accounts: accounts });
+    },
 });
 
 const MonthsView_ = connect(mapStateToProps, mapDispatchToProps)(Months);
@@ -86,5 +156,4 @@ let MonthsView = createStackNavigator({
 	}
 );
 
-MonthsView = withTheme(MonthsView);
 export default MonthsView;

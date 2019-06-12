@@ -1,21 +1,43 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { createStackNavigator, HeaderBackButton } from 'react-navigation';
+import { FlatList } from 'react-native';
+import {
+	Container, Header, Content, Button, Text, Title,
+	ListItem, SwipeRow, Icon, Item, Left, Body, Right,
+} from 'native-base';
 import styles from './style';
-import { FlatList } from 'react-native-gesture-handler';
+
+var moment = require('moment');
 
 const MonthsItem = ({ account }) => {
 	return (
 		<View>
-			<Text style = { styles.text }>
-                Account key = { account.key } time = { account.time }
-            </Text>
+			<SwipeRow
+                disableRightSwipe={ true }
+                disableLeftSwipe={ true }
+                leftOpenValue = { 75 }
+                rightOpenValue = { -75 }
+                body = {
+                    <Button full light
+                        style = {{ width: '100%' }}
+                    >
+                        <Text>
+                            {account.isIncome ? '收入' : '支出'}
+                        </Text>
 
-            <Text style = { styles.text }>
-                { account.amount }
-            </Text>
+                        <Text>
+                            消费类别: {account.item ? account.item : '未设置'}
+                        </Text>
+
+                        <Text>
+                            消费时间: {moment(account.date).format('YYYY-MM-DD')}
+                        </Text>
+                    </Button>
+                }
+            />
 		</View>
 	);
 }
@@ -28,7 +50,7 @@ const MonthsList = ({ accounts }) => {
 				<MonthsItem
 					account = { item }
 				/>
-			)}
+            )}
 		/>
 	);
 }
@@ -36,12 +58,22 @@ const MonthsList = ({ accounts }) => {
 class MonthsDetail extends React.Component {
     static navigationOptions({navigation}) {
         return {
-            title: '消费明细',
-            headerLeft: (
-                <HeaderBackButton
-                    onPress = { navigation.getParam('onClickBack') }
-                />
-            ),
+            title: 'Month Detail',
+			header: (
+				<Header>
+                    <Left>
+                        <Button transparent
+                            onPress = { navigation.getParam('onClickBack') }
+                        >
+                        <Icon name = "arrow-back"/>
+                        </Button>
+                    </Left>
+					<Body>
+						<Title> 收支详情 </Title>
+					</Body>
+					<Right />
+				</Header>
+			)
         };
     }
 
@@ -70,6 +102,7 @@ class MonthsDetail extends React.Component {
             // console.warn(accounts[i].date);
         }
         res.sort(function(a, b){return a.time - b.time});
+        // console.warn(res);
         return (
             <View>
                 <MonthsList
