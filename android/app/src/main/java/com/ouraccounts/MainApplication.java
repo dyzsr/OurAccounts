@@ -3,11 +3,7 @@ package com.ouraccounts;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-<<<<<<< HEAD
-import com.reactnativecommunity.webview.RNCWebViewPackage;
-=======
 import com.horcrux.svg.SvgPackage;
->>>>>>> 150e2ca7fa9f71602daefec0660819b1ec6b2c9b
 import cn.qiuxiang.react.geolocation.AMapGeolocationPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -34,11 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-<<<<<<< HEAD
-            new RNCWebViewPackage(),
-=======
             new SvgPackage(),
->>>>>>> 150e2ca7fa9f71602daefec0660819b1ec6b2c9b
             new AMapGeolocationPackage(),
             new RNFusedLocationPackage(),
             new ImagePickerPackage(),

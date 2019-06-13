@@ -138,11 +138,7 @@ android {
 }
 
 dependencies {
-<<<<<<< HEAD
-    implementation project(':react-native-webview')
-=======
     implementation project(':react-native-svg')
->>>>>>> 150e2ca7fa9f71602daefec0660819b1ec6b2c9b
     implementation project(':react-native-amap-geolocation')
     implementation project(':react-native-geolocation-service')
     implementation project(':react-native-image-picker')
