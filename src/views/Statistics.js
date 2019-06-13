@@ -7,16 +7,16 @@ import {
 } from 'native-base';
 // import Echarts from 'native-echarts';
 
-// import { CalendarList } from 'react-native-calendars';
-// import DatePicker from 'react-native-datepicker';
-// import {
-// 	LineChart,
-// 	BarChart,
-// 	PieChart,
-// 	ProgressChart,
-// 	ContributionGraph,
-// 	StackedBarChart
-// } from 'react-native-chart-kit';
+import { CalendarList } from 'react-native-calendars';
+import DatePicker from 'react-native-datepicker';
+import {
+	LineChart,
+	BarChart,
+	PieChart,
+	ProgressChart,
+	ContributionGraph,
+	StackedBarChart
+} from 'react-native-chart-kit';
 
 var moment = require('moment');
 
@@ -33,18 +33,18 @@ const color = [
 	'#a9a9a9',
 ];
 
-const categories = [
-	{ name: '购物', income: 100, expense: 88, },
-	{ name: '餐饮', income: 76, expense: 99, },
-	{ name: '服装', income: 234, expense: 111, },
-	{ name: '生活', income: 988, expense: 222, },
-	{ name: '教育', income: 45, expense: 333, },
-	{ name: '娱乐', income: 10, expense: 444, },
-	{ name: '出行', income: 299, expense: 555, },
-	{ name: '医疗', income: 413, expense: 666, },
-	{ name: '投资', income: 22, expense: 777, },
-	{ name: '其他', income: 108, expense: 1080, },
-];
+// const categories = [
+// 	{ name: '购物', income: 100, expense: 88, },
+// 	{ name: '餐饮', income: 76, expense: 99, },
+// 	{ name: '服装', income: 234, expense: 111, },
+// 	{ name: '生活', income: 988, expense: 222, },
+// 	{ name: '教育', income: 45, expense: 333, },
+// 	{ name: '娱乐', income: 10, expense: 444, },
+// 	{ name: '出行', income: 299, expense: 555, },
+// 	{ name: '医疗', income: 413, expense: 666, },
+// 	{ name: '投资', income: 22, expense: 777, },
+// 	{ name: '其他', income: 108, expense: 1080, },
+// ];
 
 class Statistics extends React.Component {
 	constructor(props) {
