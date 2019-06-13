@@ -1,3 +1,4 @@
+var moment = require('moment');
 
 /**
  * The storage of an account item
@@ -5,8 +6,8 @@
 class AccountData {
   constructor({key}) {
     this.key = key; // string
-    this.date = new Date(); // Date
-    this.time = new Date(); // Date
+    this.date = moment(new Date()).format('YYYY-MM-DD'); // Date
+    this.time = moment(new Date()).format("LT"); // Date
     this.isIncome = true; // boolean: is income or expense
     this.amount = "0" // string: the amount of money
     this.item = undefined // string: on what item the transaction is

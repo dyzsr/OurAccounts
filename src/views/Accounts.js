@@ -14,11 +14,6 @@ import styles from './style';
 var moment = require('moment');
 
 const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
-	let swipeoutBtn = [{
-		text: 'delete',
-		type: 'delele',
-		onPress: () => onClickDel(index),
-	}];
 	return (
 		<SwipeRow
 			disableRightSwipe={true}
@@ -26,18 +21,19 @@ const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
 			rightOpenValue={-75}
 			body={
 				<Button full light
-					style={{width: '100%'}}
+					style={{alignContent: 'flex-start', width: '100%', height: '100%'}}
 					onPress={() => onClickEdit(index)}>
-					<Text>
-						{account.isIncome ? '收入' : '支出'}
+					<Text style={{flex: 1, fontSize: 25}}>
+					条目{index}:
 					</Text>
-
-					<Text>
-						消费类别: {account.item ? account.item : '未设置'}
-					</Text>
-
-					<Text>
-						消费时间: {moment(account.date).format('YYYY-MM-DD')}
+					<Text style={{flex: 3, flexDirection: 'column'}}>
+						<Text>
+							{account.isIncome ? '收入' : '支出'}
+							{"\n"}
+							消费类别: {account.item ? account.item : '未设置'}
+							{"\n"}
+							消费时间: {moment(account.date).format('YYYY-MM-DD')}
+						</Text>
 					</Text>
 				</Button>
 			}
@@ -96,9 +92,10 @@ class Accounts extends React.Component {
 		return (
 			<Container>
 				<Content padder>
-					<Button block
+					<Button block success
 						onPress={navigation.getParam('onClickAdd')}>
-						<Text>Add</Text>
+						<Icon type="MaterialIcons" name="add-circle"/>
+						<Text>添加</Text>
 					</Button>
 					<AccountList
 						accounts={accounts}

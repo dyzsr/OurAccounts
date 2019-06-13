@@ -193,16 +193,28 @@ class AccountEdit extends React.Component {
                   accountData.isIncome === 'undefined' ? true : accountData.isIncome
                 }
                 onValueChange={(itemValue) => onChangeType(itemValue)}>
-                <Picker.Item label='income' value={true} />
-                <Picker.Item label='expense' value={false} />
+                <Picker.Item label='收入' value={true} />
+                <Picker.Item label='支出' value={false} />
               </Picker>
             </Item>
 
             <Item fixedLabel>
-              <Label>效费种类</Label>
-              <Input
-                title="item" defaultValue={accountData.item}
-                onChangeText={onChangeItem} onEndEditing={onSave} />
+              <Label>消费种类</Label>
+              <Picker
+                style={styles.accountDataValue}
+                selectedValue={accountData.item}
+                onValueChange={(itemValue) => onChangeItem(itemValue)}>
+                <Picker.Item label='购物' value={'购物'} />
+                <Picker.Item label='餐饮' value={'餐饮'} />
+                <Picker.Item label='服装' value={'服装'} />
+                <Picker.Item label='生活' value={'生活'} />
+                <Picker.Item label='教育' value={'教育'} />
+                <Picker.Item label='娱乐' value={'娱乐'} />
+                <Picker.Item label='出行' value={'出行'} />
+                <Picker.Item label='医疗' value={'医疗'} />
+                <Picker.Item label='投资' value={'投资'} />
+                <Picker.Item label='其他' value={'其他'} />
+              </Picker>
             </Item>
 
             <Item fixedLabel>
@@ -223,7 +235,7 @@ class AccountEdit extends React.Component {
             <Item fixedLabel>
               <Label>图片</Label>
               <Button
-                iconLeft
+                iconLeft danger
                 style={{width: 120, marginTop: 5, marginBottom: 5, marginRight: 30}}
                 onPress={() => this.onAddImage()}>
                 <Icon type="MaterialIcons" name='add-a-photo'/>
@@ -239,7 +251,7 @@ class AccountEdit extends React.Component {
             <Item fixedLabel>
               <Label>位置</Label>
               <Button
-                iconLeft
+                iconLeft danger
                 style={{width: 120, marginTop: 5, marginBottom: 5, marginRight: 30}}
                 onPress={() => this.onGetPosition()}>
                 <Icon type="MaterialIcons" name='add-location'/>
