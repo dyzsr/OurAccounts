@@ -10,7 +10,7 @@ class AccountData {
     this.time = moment(new Date()).format("LT"); // Date
     this.isIncome = true; // boolean: is income or expense
     this.amount = "0" // string: the amount of money
-    this.item = undefined // string: on what item the transaction is
+    this.item = '购物' // string: on what item the transaction is
     this.desc = undefined // string: description of the transaction
     this.imgPaths = []; // array(string) paths of images
     this.position = undefined; // Position: the geolocation where the transaction happened

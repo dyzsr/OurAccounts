@@ -24,7 +24,9 @@ const MonthsItem = ({ account }) => {
                     <Button full light
                         style = {{ width: '100%' }}
                     >
-                        <Text>
+                        <Text style = {{
+                            color: account.isIncome ? 'green' : 'red'
+                        }}>
                             {account.isIncome ? '收入' : '支出'}
                         </Text>
 
@@ -33,7 +35,7 @@ const MonthsItem = ({ account }) => {
                         </Text>
 
                         <Text>
-                            消费时间: {moment(account.date).format('YYYY-MM-DD')}
+                            消费金额: {account.amount}
                         </Text>
                     </Button>
                 }
