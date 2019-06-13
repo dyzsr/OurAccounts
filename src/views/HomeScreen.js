@@ -3,8 +3,8 @@ import { createAppContainer, createBottomTabNavigator } from 'react-navigation';
 import {
   Footer,
   FooterTab,
-  Button,
-  Text,
+  Button, Icon,
+  Text, H1, H2, H3,
 } from 'native-base';
 
 import AccountsView from './Accounts';
@@ -28,28 +28,32 @@ const HomeNavigator = createBottomTabNavigator({
               active={props.navigation.state.index == 0}
               onPress={() => props.navigation.navigate("accounts")}
             >
-              <Text large>账单</Text>
+              <Icon type='FontAwesome5' name='dollar-sign' />
+              <Text>账单</Text>
             </Button>
             <Button
               vertical
               active={props.navigation.state.index == 1}
               onPress={() => props.navigation.navigate("months")}
             >
-              <Text large>月份</Text>
+              <Icon type='FontAwesome5' name='book' />
+              <Text>月份</Text>
             </Button>
             <Button
               vertical
               active={props.navigation.state.index == 2}
               onPress={() => props.navigation.navigate("statistics")}
             >
-              <Text large>图表</Text>
+              <Icon type='FontAwesome5' name='chart-pie' />
+              <Text>图表</Text>
             </Button>
             <Button
               vertical
               active={props.navigation.state.index == 3}
               onPress={() => props.navigation.navigate("sync")}
             >
-              <Text large>账户</Text>
+              <Icon type='FontAwesome5' name='user-circle' />
+              <Text>账户</Text>
             </Button>
           </FooterTab>
         </Footer>
