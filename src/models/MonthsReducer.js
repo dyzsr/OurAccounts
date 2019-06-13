@@ -55,7 +55,7 @@ const monthIncome = (state, {accounts}) => {
     if ((state.month < 10 && !accounts[i].date.indexOf(state.year + "-0" + state.month)) ||
     (state.month >= 10 && !accounts[i].date.indexOf(state.year + "-" + state.month))) {
       if (accounts[i].isIncome) income += parseInt(accounts[i].amount);
-      else outcome += parseInt(accounts[i].amount);
+      // else outcome += parseInt(accounts[i].amount);
     }
   }
   return {...state, income};
