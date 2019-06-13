@@ -4619,7 +4619,7 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "0.0.8"
 
-moment@^2.22.0, moment@^2.24.0:
+moment@^2.20.1, moment@^2.22.0, moment@^2.24.0:
   version "2.24.0"
   resolved "https://registry.npm.taobao.org/moment/download/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha1-DQVdU/UFKqZTyfbraLtdEr9cK1s=
@@ -5253,6 +5253,11 @@ path-type@^3.0.0:
   dependencies:
     pify "^3.0.0"
 
+paths-js@^0.4.7:
+  version "0.4.9"
+  resolved "https://registry.npm.taobao.org/paths-js/download/paths-js-0.4.9.tgz#dc926a7b35fee91bdfa7f984db904a697d8a57c0"
+  integrity sha1-3JJqezX+6Rvfp/mE25BKaX2KV8A=
+
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -5323,6 +5328,11 @@ pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
   integrity sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
+
+point-in-polygon@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/point-in-polygon/download/point-in-polygon-1.0.1.tgz#d59b64e8fee41c49458aac82b56718c5957b2af7"
+  integrity sha1-1Ztk6P7kHElFiqyCtWcYxZV7Kvc=
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -5531,6 +5541,15 @@ react-native-calendars@^1.185.0:
     prop-types "^15.5.10"
     xdate "^0.8.0"
 
+react-native-chart-kit@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/react-native-chart-kit/download/react-native-chart-kit-3.0.0.tgz#c02305fdbfb4892311d043c2deca086ab0de9d6b"
+  integrity sha1-wCMF/b+0iSMR0EPC3soIarDenWs=
+  dependencies:
+    lodash "^4.17.11"
+    paths-js "^0.4.7"
+    point-in-polygon "^1.0.1"
+
 react-native-datepicker@^1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
@@ -5606,6 +5625,15 @@ react-native-modal@^9.0.0:
     prop-types "^15.6.2"
     react-native-animatable "^1.2.4"
 
+react-native-month-selector@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npm.taobao.org/react-native-month-selector/download/react-native-month-selector-1.4.0.tgz#d8137689d5e811495782742c3ae7276f5b330c51"
+  integrity sha1-2BN2idXoEUlXgnQsOucnb1szDFE=
+  dependencies:
+    moment "^2.20.1"
+    prop-types "^15.6.0"
+    react-native-swipe-gestures "^1.0.3"
+
 react-native-ocalendar@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/react-native-ocalendar/download/react-native-ocalendar-1.0.1.tgz#e0df6d63ce705c3c089b145dee4d47b7a71dc343"
@@ -5655,6 +5683,16 @@ react-native-sass-transformer@^1.4.0:
   version "1.0.0-alpha.22"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
+
+react-native-svg@^9.5.1:
+  version "9.5.1"
+  resolved "https://registry.npm.taobao.org/react-native-svg/download/react-native-svg-9.5.1.tgz#eb21fa7eb5d71649620541e6549c6ed425d80240"
+  integrity sha1-6yH6frXXFkliBUHmVJxu1CXYAkA=
+
+react-native-swipe-gestures@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/react-native-swipe-gestures/download/react-native-swipe-gestures-1.0.3.tgz#4160f8d459627323f3a3d2770af4bcd82fd054f5"
+  integrity sha1-QWD41FlicyPzo9J3CvS82C/QVPU=
 
 react-native-swipeout@^2.3.6:
   version "2.3.6"

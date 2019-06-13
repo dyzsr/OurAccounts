@@ -5,12 +5,13 @@ import storage from 'redux-persist/lib/storage'
 
 import { accountsReducer } from './models/AccountsReducer';
 import { monthsReducer } from './models/MonthsReducer';
+import { statisticsReducer } from './models/StatisticsReducer';
 
 const persistConfig = {
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
-  blacklist: ['months'],
+  blacklist: ['monthInfo', 'statisticsInfo'],
 };
 
 const accountsPersistConfig = {
@@ -28,6 +29,7 @@ const accountsPersistConfig = {
 const reducer = combineReducers({
   accountInfo: persistReducer(accountsPersistConfig, accountsReducer),
   monthInfo: monthsReducer,
+  statisticsInfo: statisticsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

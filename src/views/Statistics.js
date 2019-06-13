@@ -1,40 +1,90 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Echarts from 'native-echarts';
+import { connect } from 'react-redux';
+import { ScrollView } from 'react-native';
+import {
+	Container, Header, Content, Left, Body, Right,
+	Text, View, Title,
+} from 'native-base';
+// import Echarts from 'native-echarts';
 
-export default class StatisticsView extends React.Component {
-    render() {
-        const option = {
-            title: {
-                text: 'ECharts demo'
-            },
-            tooltip: {},
-            legend: {
-                data:['销量']
-            },
-            xAxis: {
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-            },
-            yAxis: {},
-            series: [{
-                name: '销量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-            }]
-        };
-        return (
-            <View>
-                <Echarts option={option} height={300} />
-            </View>
-        );
-    }
+import { CalendarList } from 'react-native-calendars';
+import DatePicker from 'react-native-datepicker';
+import {
+	LineChart,
+	BarChart,
+	PieChart,
+	ProgressChart,
+	ContributionGraph,
+	StackedBarChart
+} from 'react-native-chart-kit';
+
+var moment = require('moment');
+
+class Statistics extends React.Component {
+	constructor(props) {
+		console.log('STATIS');
+		super(props);
+		const { month, accounts, onSelectMonth } = props;
+		onSelectMonth(month, accounts);
+		console.log('OK');
+	}
+
+	onSelectMonth(month) {
+		const { accounts, onSelectMonth } = this.props;
+		onSelectMonth(month, accounts);
+	}
+
+	render() {
+		const { month, categories, yearData } = this.props;
+
+		return (
+			<Container>
+				<Header>
+					<Left />
+					<Body>
+						<Title>统计图表</Title>
+					</Body>
+					<Right />
+				</Header>
+
+				<Content>
+					<ScrollView>
+						<CalendarList
+							horizontal={true}
+							onVisibleMonthChange={(month) => onSelectMonth(month.dateString)}
+							monthFormat='yyyy年M月'
+							pagingEnabled={true}
+						/>
+
+						<PieChart
+							data={categories}
+							width={450}
+							height={300}
+							accessor='population'
+							backgroundColor='transparent'
+							paddingLeft={30}
+							chartConfig={{
+								color: (opacity = 0) => `rgba(26, 255, 146, ${opacity})`,
+							}}
+						/>
+
+					</ScrollView>
+				</Content>
+			</Container>
+		);
+	}
 }
 
-const styles = StyleSheet.create({
-    mainContent: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 80,
-    },
+const mapStateToProps = ({ accountInfo, statisticsInfo }) => ({
+	accounts: accountInfo.accounts,
+	month: statisticsInfo.month,
+	categories: statisticsInfo.categories,
+	yearData: statisticsInfo.yearData,
 });
+
+const mapDispatchToProps = (dispatch) => ({
+	onSelectMonth: (month, accounts) =>
+		dispatch({ type: 'statis_count', month, accounts }),
+});
+
+export default StatisticsView = connect(mapStateToProps, mapDispatchToProps)(Statistics);
