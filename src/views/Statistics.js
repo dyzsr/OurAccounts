@@ -56,6 +56,7 @@ class Statistics extends React.Component {
 	}
 
 	onSelectMonth(month) {
+		console.log('visible month change:', month);
 		const { accounts, onSelectMonth } = this.props;
 		onSelectMonth(month, accounts);
 	}
@@ -68,8 +69,6 @@ class Statistics extends React.Component {
 		const ctg_expense = categories.map(({name, expense}, index) => ({
 			name, population: expense, color: color[index],
 		}));
-
-		// console.warn("month is " + month);
 
 		return (
 			<Container>
@@ -85,17 +84,17 @@ class Statistics extends React.Component {
 					<ScrollView>
 						<CalendarList
 							horizontal={true}
-							onVisibleMonthChange={(month) => onSelectMonth(month)}
+							onVisibleMonthsChange={(month) => this.onSelectMonth(month[0].dateString)}
 							monthFormat='yyyy年M月'
 							pagingEnabled={true}
 						/>
 
 						<H3>月收入统计</H3>
 						<PieChart
-							data={categories}
+							data={ctg_income}
 							width={450}
 							height={300}
-							accessor='income'
+							accessor='population'
 							backgroundColor='transparent'
 							paddingLeft={30}
 							chartConfig={{
@@ -105,10 +104,10 @@ class Statistics extends React.Component {
 
 						<H3>月支出统计</H3>
 						<PieChart
-							data={categories}
+							data={ctg_expense}
 							width={450}
 							height={300}
-							accessor='expense'
+							accessor='population'
 							backgroundColor='transparent'
 							paddingLeft={30}
 							chartConfig={{
@@ -129,10 +128,10 @@ const mapStateToProps = ({ accountInfo, statisticsInfo }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	onSelectMonth: (month) => {
-		// console.warn(month);
-		dispatch({ type: 'statis_count', month: month });
-	}
+	onSelectMonth: (month, accounts) => {
+        dispatch({ type: 'statis_count', month: month });
+        dispatch({ type: 'statis_month', accounts: accounts });
+    }
 });
 
 export default StatisticsView = connect(mapStateToProps, mapDispatchToProps)(Statistics);
