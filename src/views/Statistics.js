@@ -56,6 +56,7 @@ class Statistics extends React.Component {
 	}
 
 	onSelectMonth(month) {
+		console.log('visible month change:', month);
 		const { accounts, onSelectMonth } = this.props;
 		onSelectMonth(month, accounts);
 	}
@@ -83,7 +84,7 @@ class Statistics extends React.Component {
 					<ScrollView>
 						<CalendarList
 							horizontal={true}
-							onVisibleMonthChange={(month) => onSelectMonth(month.dateString)}
+							onVisibleMonthsChange={(month) => this.onSelectMonth(month[0].dateString)}
 							monthFormat='yyyy年M月'
 							pagingEnabled={true}
 						/>
