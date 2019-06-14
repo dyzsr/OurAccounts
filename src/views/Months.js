@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Calendar } from 'react-native-calendars';
 import { View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, NavigationEvents } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { withTheme } from 'react-native-paper';
 import {
@@ -26,21 +26,28 @@ class Months extends Component {
 				</Header>
 			)
 		};
-	}
+    }
 
 	componentDidMount() {
 		const { navigation } = this.props;
 		navigation.setParams({
 			onClick: () => onClick(),
 		});
-	}
+    }
+    
+    onWillFocus() {
+        const { accounts, onIncome, onExpense } = this.props;
+        onIncome(accounts);
+        onExpense(accounts);
+        console.log('init months');
+    }
 
     render() {
         const { accounts, navigation, year, month, day, income, expense,
             onClick, onChange, onIncome, onExpense } = this.props;
 
-        onIncome(accounts);
-        onExpense(accounts);
+        // onIncome(accounts);
+        // onExpense(accounts);
 
         // console.warn(year + ' ' + month + ' ' + day);
 
@@ -50,6 +57,10 @@ class Months extends Component {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
             }}>
+                <NavigationEvents
+                    onWillFocus={() => this.onWillFocus()}
+                />
+
                 <Calendar
                     onDayPress={(day) =>
                         // 点击日期切换至消费详细

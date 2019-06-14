@@ -1,16 +1,19 @@
+var moment = require('moment');
+
 /**
- * Reducers for model Accounts
+ * Reducers for model Months
  */
 const INITIAL_STATE = {
-  year: 0,
-  month: 0,
-  day: 0,
+  year: parseInt(moment().format('YYYY')),
+  month: parseInt(moment().format('M')),
+  day: parseInt(moment().format('DD')),
   income: 0,
   expense: 0,
 };
 
 const monthsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case "month_init": return init(state);
     case "year_select": return yearSelect(state, action);
     case "month_select": return monthSelect(state, action);
     case "day_select": return daySelect(state, action);
@@ -20,6 +23,10 @@ const monthsReducer = (state = INITIAL_STATE, action) => {
     case "month_income": return monthIncome(state, action);
     case "month_expense": return monthExpense(state, action);
   }
+  return state;
+}
+
+const init = (state) => {
   return state;
 }
 
