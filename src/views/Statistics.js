@@ -6,6 +6,7 @@ import {
 	Text, View, Title, H1, H2, H3,
 } from 'native-base';
 // import Echarts from 'native-echarts';
+import { NavigationEvents } from 'react-navigation';
 
 import { CalendarList } from 'react-native-calendars';
 import DatePicker from 'react-native-datepicker';
@@ -61,14 +62,35 @@ class Statistics extends React.Component {
 		onSelectMonth(month, accounts);
 	}
 
+	checkZero(ctg) {
+		let zero = true;
+		for (i = 0; i < ctg.length; i++) {
+			if (ctg[i].population != 0) {
+				zero = false;
+				break;
+			}
+		}
+		return zero;
+	}
+
+	onInit() {
+		const {accounts, onInit} = this.props;
+		onInit(accounts);
+		console.log('init statis');
+	}
+
 	render() {
-		const { month, categories, yearData } = this.props;
+		const { month, categories, yearData, onInit, accounts } = this.props;
 		const ctg_income = categories.map(({name, income}, index) => ({
 			name, population: income, color: color[index],
 		}));
 		const ctg_expense = categories.map(({name, expense}, index) => ({
 			name, population: expense, color: color[index],
 		}));
+		if (this.checkZero(ctg_income))
+			ctg_income[9].population = 1;
+		if (this.checkZero(ctg_expense))
+			ctg_expense[9].population = 1;
 
 		return (
 			<Container>
@@ -81,6 +103,10 @@ class Statistics extends React.Component {
 				</Header>
 
 				<Content contentContainerStyle={{alignItems: 'stretch'}}>
+					<NavigationEvents
+						onWillFocus={() => this.onInit()}
+					/>
+
 					<ScrollView>
 						<CalendarList
 							horizontal={true}
@@ -89,7 +115,7 @@ class Statistics extends React.Component {
 							pagingEnabled={true}
 						/>
 
-						<H3>月收入统计</H3>
+						<H3 style={{paddingLeft: 50,}}>月收入统计</H3>
 						<PieChart
 							data={ctg_income}
 							width={450}
@@ -102,7 +128,7 @@ class Statistics extends React.Component {
 							}}
 						/>
 
-						<H3>月支出统计</H3>
+						<H3 style={{paddingLeft: 50,}}>月支出统计</H3>
 						<PieChart
 							data={ctg_expense}
 							width={450}
@@ -128,6 +154,7 @@ const mapStateToProps = ({ accountInfo, statisticsInfo }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+	onInit: (accounts) => dispatch({type: 'statis_month', accounts}),
 	onSelectMonth: (month, accounts) => {
         dispatch({ type: 'statis_count', month: month });
         dispatch({ type: 'statis_month', accounts: accounts });
