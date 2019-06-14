@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import {
   Container, Header, Content, View,
   Left, Body, Right, Title, Item, Text,
-  Row, Form, Label, Button, Input, Icon
+  Row, Form, Label, Button, Input, Icon,
+  H1, H2, H3,
 } from 'native-base';
 
-import { Image, Picker, PermissionsAndroid } from 'react-native';
+import { Dimensions, Image, Picker, PermissionsAndroid } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import ImagePicker from 'react-native-image-picker';
 import { HeaderBackButton } from 'react-navigation';
@@ -29,6 +30,7 @@ init({
   android: "d1472587fae499ae25c6ab8c8ba34ec8"
 });
 
+var { width, height } = Dimensions.get('window');
 
 const MyDatePicker = ({date, onChangeDate, style}) => (
   <DatePicker
@@ -61,13 +63,17 @@ const MyTimePicker = ({time, onChangeTime, style}) => (
 
 const Images = ({imgPaths, onDeleteImage}) => {
   console.log(imgPaths);
+  let W = width / 3 - 10;
+  let H = W;
+  console.log(W, H);
   const images = imgPaths.map((imgPath, index) => (
     imgPath ?
       (
         <View key={index+''}>
           <Menu>
             <MenuTrigger triggerOnLongPress={true}>
-              <Image source={{ uri: imgPath }} style={{ width: 100, height: 100 }} />
+              <Image source={{ uri: imgPath }}
+                style={{ marginLeft: 3, marginRight: 3, width: W, height: H }} />
             </MenuTrigger>
             <MenuOptions>
               <MenuOption text='delete' onSelect={() => onDeleteImage(index, imgPath)} />
@@ -80,7 +86,11 @@ const Images = ({imgPaths, onDeleteImage}) => {
   ));
   const imgMat = [];
   for (i = 0; i * 3 < images.length; i++) {
-    imgMat.push(<Row key={'r'+i}>{images.slice(i * 3, i * 3 + 3)}</Row>);
+    imgMat.push(
+      <Row key={'r' + i} style={{paddingLeft: 5, paddingRight: 5}}>
+        {images.slice(i * 3, i * 3 + 3)}
+      </Row>
+    );
   }
   return (
     <MenuProvider>
@@ -259,9 +269,9 @@ class AccountEdit extends React.Component {
               </Button>
             </Item>
 
-            <Label>
+            <H2 style={{marginLeft: 10}}>
               {this.getAddress()}
-            </Label>
+            </H2>
 
           </Form>
         </Content>
