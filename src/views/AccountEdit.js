@@ -173,19 +173,19 @@ class AccountEdit extends React.Component {
         <Content>
           <Form>
 
-            <Item fixedLabel>
+            <Item fixedLabel style = {{height: 60}} >
               <Label>日期</Label>
               <MyDatePicker style={styles.accountDataValue}
                 date={accountData.date} onChangeDate={onChangeDate} />
             </Item>
 
-            <Item fixedLabel>
+            <Item fixedLabel style = {{height: 60}} >
               <Label>时间</Label>
               <MyTimePicker style={styles.accountDataValue}
                 time={accountData.time} onChangeTime={onChangeTime} />
             </Item>
 
-            <Item fixedLabel>
+            <Item fixedLabel style = {{height: 60}} >
               <Label>账目类型</Label>
               <Picker
                 style={styles.accountDataValue}
@@ -198,7 +198,7 @@ class AccountEdit extends React.Component {
               </Picker>
             </Item>
 
-            <Item fixedLabel>
+            <Item fixedLabel style = {{height: 60}} >
               <Label>消费种类</Label>
               <Picker
                 style={styles.accountDataValue}
@@ -217,7 +217,7 @@ class AccountEdit extends React.Component {
               </Picker>
             </Item>
 
-            <Item fixedLabel>
+            <Item fixedLabel style = {{height: 60}} >
               <Label>金额</Label>
               <Input
                 keyboardType="number-pad"
@@ -225,18 +225,18 @@ class AccountEdit extends React.Component {
                 onChangeText={onChangeAmount} onEndEditing={onSave} />
             </Item>
 
-            <Item fixedLabel>
+            <Item fixedLabel style = {{height: 60}} >
               <Label>描述</Label>
               <Input
                 title="desc" defaultValue={accountData.desc}
                 onChangeText={onChangeDesc} onEndEditing={onSave} />
             </Item>
 
-            <Item fixedLabel>
+            <Item fixedLabel style = {{height: 60}} >
               <Label>图片</Label>
               <Button
                 iconLeft danger
-                style={{width: 120, marginTop: 5, marginBottom: 5, marginRight: 30}}
+                style={{width: 130, marginTop: 5, marginBottom: 5, marginRight: 30}}
                 onPress={() => this.onAddImage()}>
                 <Icon type="MaterialIcons" name='add-a-photo'/>
                 <Text>添加图片</Text>
@@ -248,11 +248,11 @@ class AccountEdit extends React.Component {
               onDeleteImage={(index, imgPath) => onDelImage(index, imgPath)}
             />
 
-            <Item fixedLabel>
+            <Item fixedLabel style = {{height: 60}} >
               <Label>位置</Label>
               <Button
                 iconLeft danger
-                style={{width: 120, marginTop: 5, marginBottom: 5, marginRight: 30}}
+                style={{width: 130, marginTop: 5, marginBottom: 5, marginRight: 30}}
                 onPress={() => this.onGetPosition()}>
                 <Icon type="MaterialIcons" name='add-location'/>
                 <Text>添加位置</Text>

@@ -52,7 +52,7 @@ const handleMonth = (state, {accounts}) => {
     }
   }
   for (var j = 0; j < categories.length; ++ j) {
-    console.warn(categories[j].income);
+    // console.warn(categories[j].income);
   }
   return {...state, categories};
 }

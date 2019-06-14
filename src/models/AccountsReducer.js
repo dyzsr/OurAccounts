@@ -52,7 +52,7 @@ const accountsReducer = (state = INITIAL_STATE, action) => {
 
 const handleAdd = (state) => {
   const accounts = state.accounts.slice();
-  accounts.push(new AccountData({key: state.next_key + ''}));
+  accounts.unshift(new AccountData({key: state.next_key + ''}));
   return { ...state, next_key: state.next_key + 1, accounts: accounts };
 }
 

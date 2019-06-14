@@ -22,7 +22,7 @@ const MonthsItem = ({ account }) => {
                 rightOpenValue = { -75 }
                 body = {
                     <Button full light
-                        style = {{ width: '100%' }}
+                        style = {{ alignContent: 'flex-start', width: '100%', height: '100%' }}
                     >
                         <Text style = {{
                             color: account.isIncome ? 'green' : 'red'
@@ -31,11 +31,11 @@ const MonthsItem = ({ account }) => {
                         </Text>
 
                         <Text>
-                            消费类别: {account.item ? account.item : '未设置'}
+                            类别: {account.item ? account.item : '未设置'}
                         </Text>
 
                         <Text>
-                            消费金额: {account.amount}
+                            金额: {account.amount}
                         </Text>
                     </Button>
                 }

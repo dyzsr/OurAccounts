@@ -24,15 +24,18 @@ const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
 					style={{alignContent: 'flex-start', width: '100%', height: '100%'}}
 					onPress={() => onClickEdit(index)}>
 					<Text style={{flex: 1, fontSize: 25}}>
-					条目{index}:
+						条目{index}:
 					</Text>
 					<Text style={{flex: 3, flexDirection: 'column'}}>
-						<Text>
+						<Text style = {{
+							fontSize: 17, 
+							color: account.isIncome ? 'green' : 'red'
+						}}>
 							{account.isIncome ? '收入' : '支出'}
+						</Text>
+						<Text style = {{fontSize: 17}} >
+							({account.item ? account.item : '未设置'})											{moment(account.date).format('YYYY-MM-DD')}
 							{"\n"}
-							消费类别: {account.item ? account.item : '未设置'}
-							{"\n"}
-							消费时间: {moment(account.date).format('YYYY-MM-DD')}
 						</Text>
 					</Text>
 				</Button>
