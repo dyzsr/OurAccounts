@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import {
 	Container, Header, Content, Button, Text, Title,
 	ListItem, SwipeRow, Icon, Item, Left, Body, Right,
+	H1, H2, H3
 } from 'native-base';
-import { FlatList } from 'react-native';
+import { Dimensions, FlatList } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 import AccountEditView from './AccountEdit';
@@ -16,6 +17,7 @@ var moment = require('moment');
 const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
 	return (
 		<SwipeRow
+			style={{height: 100}}
 			disableRightSwipe={true}
 			leftOpenValue={75}
 			rightOpenValue={-75}
@@ -23,20 +25,19 @@ const AccountItem = ({ account, index, onClickDel, onClickEdit }) => {
 				<Button full light
 					style={{alignContent: 'flex-start', width: '100%', height: '100%'}}
 					onPress={() => onClickEdit(index)}>
-					<Text style={{flex: 1, fontSize: 25}}>
+					<H2>
 						条目{index}:
-					</Text>
-					<Text style={{flex: 3, flexDirection: 'column'}}>
-						<Text style = {{
-							fontSize: 17, 
+					</H2>
+					<Text>
+						<H3 style={{
 							color: account.isIncome ? 'green' : 'red'
 						}}>
 							{account.isIncome ? '收入' : '支出'}
-						</Text>
-						<Text style = {{fontSize: 17}} >
-							({account.item ? account.item : '未设置'})											{moment(account.date).format('YYYY-MM-DD')}
-							{"\n"}
-						</Text>
+						</H3>
+						<H3>
+							({account.item ? account.item : '未设置'}) {'  '}
+							{moment(account.date).format('YYYY-MM-DD')}
+						</H3>
 					</Text>
 				</Button>
 			}

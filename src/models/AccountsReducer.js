@@ -8,7 +8,7 @@ class AccountData {
     this.key = key; // string
     this.date = moment(new Date()).format('YYYY-MM-DD'); // Date
     this.time = moment(new Date()).format("LT"); // Date
-    this.isIncome = true; // boolean: is income or expense
+    this.isIncome = false; // boolean: is income or expense
     this.amount = "0" // string: the amount of money
     this.item = '购物' // string: on what item the transaction is
     this.desc = undefined // string: description of the transaction
