@@ -220,10 +220,75 @@ OurAccounts
 
 ### 图表统计模块
 
+我们以饼状图展现每月中，各收入/支出类别在当月总收入/支出的占比。
+
+在`react-native-chart-kit`中，`PieChart`组件能够满足我们的需求。
+在`StatisticsReducer.js`中，保存的状态用于图表统计模块的制图。
+与列表统计模块不同的是，图表统计模块中使用`CalendarList`，无需点按左右箭头按钮切换月份，而是直接左右滑动屏幕即可。
+
+状态中，`categories`中参与统计的收支类型需要与之前记账模块中内置的类型保持一致，`income`和`expense`两个数据分别用于收入图和支出图。
+但因为所有数据全部为`0`时，在渲染时会报错，因此我们暂时将“其他”项这里修改为非`0`。
+这只是权宜之计，实际统计后往往会被覆盖掉。
+
+```javascript
+  const INITIAL_STATE = {
+    month: moment().format('YYYY-MM'),
+    categories: [
+      { name: '购物', income: 0, expense: 0, },
+      { name: '餐饮', income: 0, expense: 0, },
+      { name: '服装', income: 0, expense: 0, },
+      { name: '生活', income: 0, expense: 0, },
+      { name: '教育', income: 0, expense: 0, },
+      { name: '娱乐', income: 0, expense: 0, },
+      { name: '出行', income: 0, expense: 0, },
+      { name: '医疗', income: 0, expense: 0, },
+      { name: '投资', income: 0, expense: 0, },
+      { name: '其他', income: 1, expense: 1, },
+    ],
+    yearData: [],
+  };
+```
+
+我们分别对总收入占比和总支出占比进行饼状图制图。
+
+```javascript
+    <H3 style={{paddingLeft: 50,}}>月收入统计</H3>
+    <PieChart
+      data={ctg_income}
+      width={450}
+      height={300}
+      accessor='population'
+      backgroundColor='transparent'
+      paddingLeft={30}
+      chartConfig={{
+        color: (opacity = 0) => `rgba(26, 255, 146, ${opacity})`,
+      }}
+    />
+
+    <H3 style={{paddingLeft: 50,}}>月支出统计</H3>
+    <PieChart
+      data={ctg_expense}
+      width={450}
+      height={300}
+      accessor='population'
+      backgroundColor='transparent'
+      paddingLeft={30}
+      chartConfig={{
+        color: (opacity = 0) => `rgba(26, 255, 146, ${opacity})`,
+      }}
+    />
+```
+
+最后，在切换月份使得`month`状态刷新时，我们也要能即时刷新图表显示。这一步的逻辑与列表统计模块类似。
+首先更新`month`属性，然后用更新过的时间属性筛选出对应时间范围内的账目，用它们更新`categories`中的各条目的收入支出。
+
 ### 云端书记同步模块
 
 
 # 系统可能的拓展
 
+导出功能。将选定日期范围内的账目导出至`.csv`或`.xls`格式的文件中，并能方便转移到其他平台。
+
+设置功能。制定多套显示模式、UI界面等，让用户自定义自己的记账软件。
 
 # 总结体会
