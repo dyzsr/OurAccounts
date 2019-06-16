@@ -131,7 +131,92 @@ OurAccounts
 
 ### 列表统计模块
 
+列表统计模块将每月的总收入和总支出显示给用户。为了方便地查看某一日的具体开支，还要能提供快捷的日期跳转功能。
 
+在`react-native-calendars`中，提供了`Calendar`组件以显示日历。日历具有点击左右箭头按钮切换月份、单击日期触发事件等功能。
+
+```javascript
+                <Calendar
+                    onDayPress={(day) =>
+                        // 点击日期切换至消费详细
+                        onClick(day, () => {
+                            // console.warn(day);
+                            navigation.navigate('monthsDetail');
+                        })
+                    }
+                    monthFormat = { 'yyyy年M月' }
+                    onMonthChange = {(month) => {
+                        onChange(month);
+                        onIncome(accounts);
+                        onExpense(accounts);
+                    }}
+                />
+```
+
+同时，为了实现UI上的复用，避免多个模块风格不一致，
+在`Months`类型被封装为用户可见的`MonthsView`前，我们使用`react-navigation`中的功能指定其“标题栏”的外观。
+
+```javascript
+  static navigationOptions({navigation}) {
+		return {
+			title: 'Months',
+			header: (
+				<Header>
+					<Left />
+					<Body>
+						<Title>月份</Title>
+					</Body>
+					<Right />
+				</Header>
+			)
+		};
+  }
+```
+
+在列表统计模块内部的触发事件可分为以下几类。
+
+* 点击日历上的具体日期
+  * 此时更新状态中的年、月、日，对应到该日期，通过年月日筛选出该日期下的账目
+  * 触发从当前视图`MonthsView_`转移到`MonthsDetailView`的事件
+* 点击日历的左右切换月份按钮
+  * 更新状态中的月
+  * 更新当前月的总收入和总支出
+
+```javascript
+  const mapDispatchToProps = (dispatch) => ({
+      onClick: (day, callBack) => {
+          dispatch({ type: 'year_select', year: day.year });
+          dispatch({ type: 'month_select', month: day.month });
+          dispatch({ type: 'day_select', day: day.day });
+          dispatch({ type: 'month_watch', callBack: callBack })
+          console.log('WATCH');
+      },
+      onChange: (month) => {
+          dispatch({ type: 'month_change', month: month.month });
+      },
+      onIncome: (accounts) => {
+          dispatch({ type: 'month_income', accounts: accounts });
+      },
+      onExpense: (accounts) => {
+          dispatch({ type: 'month_expense', accounts: accounts });
+      },
+  });
+```
+
+点击某一具体日期后，查看具体账目所涉及的逻辑在`MonthsDetail.js`中。
+在`AccountData`这一对象类型数据中，`date`域为形如`"YYYY-MM-DD"`的字符串。
+需要注意的是，诸如`6`、`7`月在字符串中也会变为`06`、`07`。据此可以写出筛选当日账目并按具体时间排序显示的逻辑。
+
+```javascript
+        var res = [];
+        for (var i = 0; i < accounts.length; ++ i) {
+            if ((month < 10 && year + "-0" + month + "-" + day == accounts[i].date) ||
+            (month >= 10 && year + "-" + month + "-" + day == accounts[i].date )) {
+                res.push(accounts[i]);
+            }
+        }
+        res.sort(function(a, b){return a.time - b.time});
+```
 
 ### 图表统计模块
 
