@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="generator" content="Madoko, version 1.1.6" />
+  <meta name="viewport" content="initial-scale=1.0" />
+  <meta name="author" content="倪理涵" />
+  <title>移动互联网技术与应用</title>
+  <style type="text/css"  class="link">
+  /*# sourceURL=madoko.css */
+  
+  .madoko .toc>.tocblock .tocblock .tocblock {
+    margin-left: 2.25em;
+  }
+  .madoko .toc>.tocblock .tocblock {
+    margin-left: 1.5em;
+  }
+  .madoko .toc-contents>.tocblock>.tocitem {
+    font-weight: bold;
+  }
+  .madoko .toc {
+    margin-top: 1em;
+  }
+  .madoko p.para-continue {
+    margin-bottom: 0pt;
+  }
+  .madoko .para-block+p {
+    margin-top: 0pt;
+  }
+  .madoko ul.para-block, .madoko ol.para-block {
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+  }
+  .madoko ul.para-end, .madoko ol.para-end {
+    margin-bottom: 1em;
+  }
+  .madoko dl {
+    margin-left: 0em;
+  }
+  .madoko blockquote {
+    font-style: italic;
+  }
+  .madoko a.localref {
+    text-decoration: none;
+  }
+  .madoko a.localref:hover {
+    text-decoration: underline;
+  }
+  .madoko .footnotes {
+    font-size: smaller;
+    margin-top: 2em;
+  }
+  .madoko .footnotes hr {
+    width: 50%;
+    text-align: left;
+  }
+  .madoko .footnote { 
+    margin-left: 1em;
+  }
+  .madoko .footnote-before {
+    margin-left: -1em;
+    width: 1em;
+    display: inline-block;
+  }
+  .madoko .align-center, .madoko .align-center>p {
+    text-align: center !important;
+  }
+  .madoko .align-center pre {
+    text-align: left;
+  }
+  .madoko .align-center>* {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-left, .madoko .align-left>p {
+    text-align: left !important;
+  }
+  .madoko .align-left>* {
+    margin-left: 0pt !important;
+    margin-right: auto !important;
+  }
+  .madoko .align-right, .madoko .align-right>p {
+    text-align: right !important;
+  }
+  .madoko .align-right>* {
+    margin-left: auto !important;
+    margin-right: 0pt !important;
+  }
+  .madoko .align-center>table,
+  .madoko .align-left>table,
+  .madoko .align-right>table {
+    text-align: left !important;
+  }
+  .madoko .equation-before {
+    float: right;
+  }
+  .madoko .bibitem {
+    font-size: smaller;
+  }
+  .madoko .bibsearch {
+    font-size: x-small;
+    text-decoration:none;
+    color: black;
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  .madoko .block, .madoko .figure, .madoko .bibitem, .madoko .equation, .madoko div.math {
+    margin-top: 1ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .figure {
+    padding: 0.5em;
+    margin-left: 0pt;
+    margin-right: 0pt;
+  }
+  .madoko .hidden {
+    display: none;
+  }
+  .madoko .invisible {
+    visibility: hidden;
+  }
+  .madoko.preview .invisible {
+    visibility: visible;
+    opacity: 0.5;
+  }
+  .madoko code.code, .madoko span.code {
+    white-space: pre-wrap;
+  }
+  .madoko hr, hr.madoko {
+    border: none;
+    border-bottom: black solid 1px;
+    margin-bottom: 0.5ex;
+  }
+  .madoko .framed>*:first-child {
+    margin-top: 0pt;
+  }
+  .madoko .framed>*:last-child {
+    margin-bottom: 0pt;
+  }
+  .madoko ul.list-style-type-dash {
+      list-style-type: none !important;
+  }
+  .madoko ul.list-style-type-dash > li:before {
+      content: "\2013"; 
+      position: absolute;
+      margin-left: -1em; 
+  }
+  .madoko table.madoko {
+    border-collapse: collapse;
+  }
+  .madoko td, .madoko th {
+    padding: 0ex 0.5ex;
+    margin: 0pt;
+    vertical-align: top;
+  }
+  .madoko .cell-border-left {
+    border-left: 1px solid black;
+  }
+  .madoko .cell-border-right {
+    border-right: 1px solid black;
+  }
+  .madoko thead>tr:first-child>.cell-line,
+  .madoko tbody:first-child>tr:first-child>.cell-line {
+    border-top: 1px solid black;
+    border-bottom: none;
+  }
+  .madoko .cell-line, .madoko .cell-double-line {
+    border-bottom: 1px solid black;
+    border-top: none;
+  }
+  .madoko .cell-double-line {
+    border-top: 1px solid black;
+    padding-top: 1.5px !important;
+  }
+  .madoko .input-mathpre .MathJax_Display {
+    text-align: left !important;
+  }
+  .madoko div.input-mathpre {
+    text-align: left;
+    margin-top: 1.5ex;
+    margin-bottom: 1ex;
+  }
+  .madoko .math-rendering {
+    text-align: left;
+    white-space: pre;
+    color: gray;
+  }
+  .madoko .mathdisplay {
+    text-align: center;
+  }
+  .madoko .pretty table {
+    border-collapse: collapse;
+  }
+  .madoko .pretty td {
+    padding: 0em;
+  }
+  .madoko .pretty td.empty {
+    min-width: 1.5ex;
+  }
+  .madoko .pretty td.expander {
+    width: 100em;
+  }
+  body.madoko, .madoko .serif {
+    font-family: Cambria,"Times New Roman","Liberation Serif","Times",serif;
+  }
+  .madoko .sans-serif {
+    font-family: "Calibri", "Optima", sans-serif;
+  }
+  .madoko .symbol {
+    font-family: "Segoe UI Symbol", Symbola, serif;
+  }
+  body.madoko {  
+    -webkit-text-size-adjust: 100%;       
+    text-rendering: optimizeLegibility;
+  }
+  body.madoko {
+    max-width: 88ex; 
+    margin: 1em auto;
+    padding: 0em 2em;  
+  }
+  body.preview.madoko {
+    padding: 0em 1em;
+  }
+  .madoko p {
+    text-align: justify;
+  }
+  .madoko h1, .madoko h2, .madoko h3, .madoko h4 { 
+    margin-top: 1.22em; 
+    margin-bottom: 1ex;
+  }
+  .madoko h1+p, .madoko h2+p, .madoko h3+p, .madoko h4+p, .madoko h5+p  { 
+    margin-top: 1ex;    
+  }
+  .madoko h5, .madoko h6 { 
+    margin-top: 1ex;
+    font-size: 1em;
+  }
+  .madoko h5 { 
+    margin-bottom: 0.5ex;
+  }
+  .madoko h5 + p {
+    margin-top: 0.5ex;
+  }
+  .madoko h6 { 
+    margin-bottom: 0pt;
+  }
+  .madoko h6 + p {
+    margin-top: 0pt;
+  }
+  .madoko pre, .madoko code, .madoko kbd, .madoko samp, .madoko tt, 
+  .madoko .monospace, .madoko .token-indent, .madoko .reveal pre, .madoko .reveal code, .madoko .email {
+    font-family: Consolas,"Andale Mono WT","Andale Mono",Lucida Console,Monaco,monospace,monospace;
+    font-size: 0.85em;
+  }
+  .madoko pre code, .madoko .token-indent {
+    font-size: 0.95em;
+  }
+  .madoko pre code {
+    font-family: inherit !important;
+  }
+  .madoko ol.linenums li {
+    background-color: white;
+    list-style-type: decimal;
+  }
+  .madoko .remote {
+    background-color: #F0FFF0;
+  }
+  .madoko .remote + * {
+    margin-top: 0pt;
+  }
+  @media print {
+    body.madoko {
+      font-size: 10pt;
+    }
+    @page {
+      margin: 1in 1.5in;
+    }
+  }
+  @media only screen and (max-device-width:1024px) {
+    body.madoko {
+      padding: 0em 0.5em;    
+    }
+    .madoko li {
+      text-align: left;
+    }
+  }
+  
+    </style>
+  
+  </head>
+<body class="madoko">
+
+<div class="body madoko" style="line-adjust:0">
+
+<div class="titleblock align-center para-block" style="text-align:center;line-adjust:0">
+<div class="titleheader align-center" style="text-align:center;line-adjust:0">
+<div class="title para-block" style="font-size:xx-large;font-weight:bold;margin-bottom:0.5ex;line-adjust:0">移动互联网技术与应用</div>
+<div class="subtitle para-block" style="font-size:x-large;margin-bottom:0.5ex;line-adjust:0">Android记账软件开发报告</div></div>
+<div class="authors align-center" style="text-align:center;width:80%;line-adjust:0"><table class="authorrow columns block" style="margin-top:2ex;width:100%;line-adjust:0">
+<tbody><tr><td class="author column" style="text-align:center;line-adjust:0">
+<div class="authorname" style="font-size:large;line-adjust:0">董岩</div>
+<div class="authornote" style="line-adjust:0">2016211225</div></td><td class="author column" style="text-align:center;line-adjust:0">
+<div class="authorname" style="font-size:large;line-adjust:0">倪理涵</div>
+<div class="authornote" style="line-adjust:0">2016211156</div></td></tr></tbody></table></div></div>
+<hr  class="madoko" style="display:block">
+<span data-line=""></span>
+<nav class="toc toc-contents"><h2 id="sec-contents" class="clearnum h1 heading-contents" data-heading-depth="1" style="display:block">Contents</h2>
+<div class="tocblock tocblock1">
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="section" data-toc-depth="1" data-toc-line="[1]{.heading-label}.&#8194;\u7CFB\u7EDF\u5F00\u53D1\u7684\u521B\u610F\u4E0E\u80CC\u666F" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">1</span>.&#8194;系统开发的创意与背景</a></div>
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="section" data-toc-depth="1" data-toc-line="[2]{.heading-label}.&#8194;\u76F8\u5173\u6280\u672F" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">2</span>.&#8194;相关技术</a></div>
+<div class="tocblock tocblock2">
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="section" data-toc-depth="2" data-toc-line="[2.1]{.heading-label}.&#8194;\u5F00\u53D1\u73AF\u5883" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">2.1</span>.&#8194;开发环境</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="section" data-toc-depth="2" data-toc-line="[2.2]{.heading-label}.&#8194;\u6240\u4F7F\u7528\u7684\u6280\u672F" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">2.2</span>.&#8194;所使用的技术</a></div></div>
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="section" data-toc-depth="1" data-toc-line="[3]{.heading-label}.&#8194;\u7CFB\u7EDF\u529F\u80FD\u9700\u6C42" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">3</span>.&#8194;系统功能需求</a></div>
+<div class="tocblock tocblock2">
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="section" data-toc-depth="2" data-toc-line="[3.1]{.heading-label}.&#8194;\u8BB0\u8D26\u529F\u80FD" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">3.1</span>.&#8194;记账功能</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="section" data-toc-depth="2" data-toc-line="[3.2]{.heading-label}.&#8194;\u7EDF\u8BA1\u529F\u80FD" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">3.2</span>.&#8194;统计功能</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="section" data-toc-depth="2" data-toc-line="[3.3]{.heading-label}.&#8194;\u540C\u6B65\u529F\u80FD" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">3.3</span>.&#8194;同步功能</a></div></div>
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="section" data-toc-depth="1" data-toc-line="[4]{.heading-label}.&#8194;\u7CFB\u7EDF\u8BBE\u8BA1\u4E0E\u5B9E\u73B0" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">4</span>.&#8194;系统设计与实现</a></div>
+<div class="tocblock tocblock2">
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="section" data-toc-depth="2" data-toc-line="[4.1]{.heading-label}.&#8194;\u7CFB\u7EDF\u603B\u4F53\u8BBE\u8BA1" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">4.1</span>.&#8194;系统总体设计</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="section" data-toc-depth="2" data-toc-line="[4.2]{.heading-label}.&#8194;\u7CFB\u7EDF\u7269\u7406\u5206\u5E03" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">4.2</span>.&#8194;系统物理分布</a></div>
+<div class="tocitem tocitem2" data-toc-target-elem="h2" data-toc-target="section" data-toc-depth="2" data-toc-line="[4.3]{.heading-label}.&#8194;\u6A21\u5757\u8BBE\u8BA1" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">4.3</span>.&#8194;模块设计</a></div>
+<div class="tocblock tocblock3">
+<div class="tocitem tocitem3" data-toc-target-elem="h3" data-toc-target="section" data-toc-depth="3" data-toc-line="[4.3.1]{.heading-label}.&#8194;\u4E3B\u754C\u9762" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">4.3.1</span>.&#8194;主界面</a></div>
+<div class="tocitem tocitem3" data-toc-target-elem="h3" data-toc-target="section" data-toc-depth="3" data-toc-line="[4.3.2]{.heading-label}.&#8194;\u8BB0\u8D26\u6A21\u5757" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">4.3.2</span>.&#8194;记账模块</a></div>
+<div class="tocitem tocitem3" data-toc-target-elem="h3" data-toc-target="section" data-toc-depth="3" data-toc-line="[4.3.3]{.heading-label}.&#8194;\u5217\u8868\u7EDF\u8BA1\u6A21\u5757" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">4.3.3</span>.&#8194;列表统计模块</a></div>
+<div class="tocitem tocitem3" data-toc-target-elem="h3" data-toc-target="section" data-toc-depth="3" data-toc-line="[4.3.4]{.heading-label}.&#8194;\u56FE\u8868\u7EDF\u8BA1\u6A21\u5757" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">4.3.4</span>.&#8194;图表统计模块</a></div>
+<div class="tocitem tocitem3" data-toc-target-elem="h3" data-toc-target="section" data-toc-depth="3" data-toc-line="[4.3.5]{.heading-label}.&#8194;\u4E91\u7AEF\u540C\u6B65\u6A21\u5757" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">4.3.5</span>.&#8194;云端同步模块</a></div></div></div>
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="section" data-toc-depth="1" data-toc-line="[5]{.heading-label}.&#8194;\u7CFB\u7EDF\u53EF\u80FD\u7684\u62D3\u5C55" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">5</span>.&#8194;系统可能的拓展</a></div>
+<div class="tocitem tocitem1" data-toc-target-elem="h1" data-toc-target="section" data-toc-depth="1" data-toc-line="[6]{.heading-label}.&#8194;\u603B\u7ED3\u4F53\u4F1A" style="toctarget:section"><a href="#section" class="localref"><span class="heading-label">6</span>.&#8194;总结体会</a></div></div></nav>
+<hr  class="madoko" style="display:block">
+<h2 id="section" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">1</span>.&#8194;</span>系统开发的创意与背景</h2>
+<p class="p noindent">当下是移动互联网的时代，手机已是生活的必需品。合理地使用手机可以让生活更加轻松、便捷。
+这学期的《移动互联网技术与应用》课程紧跟时代潮流，由来自企业，具有实际工程经验的老师
+为我们讲授移动平台软件的开发，以及与服务端的数据交互技术。
+</p>
+<p class="p indent">这一学期，我们通过IOS平台富文本编辑器软件的开发实践，熟悉了IOS平台的软件开发流程；
+现在进行Android平台的记账软件的开发，是一个比富文本编辑器规模稍大的软件，更是我们熟悉了
+移动平台客户端软件的整体结构。
+</p><h2 id="section" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">2</span>.&#8194;</span>相关技术</h2><h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.1</span>.&#8194;</span>开发环境</h3>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">操作系统：Windows 10，Ubuntu 18.04 LTS
+</li>
+<li class="li ul-li list-star-li compact-li">工具：Android Studio，VS Code，命令行终端
+</li>
+<li class="li ul-li list-star-li compact-li">语言：Javascript，React（JSX）
+</li></ul>
+<h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">2.2</span>.&#8194;</span>所使用的技术</h3>
+<p class="p noindent">我们的应用主要使用React-Native框架开发，开发过程需要借助<code class="code code1">React-Native-CLI</code>，<code class="code code1">Android Studio</code>
+等工具，在其中涉及到的技术有：
+</p>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">Javascript（ES2016版本）
+</li>
+<li class="li ul-li list-star-li compact-li">NodeJS，基于V8引擎的JS运行环境，通常用于后端和界面的开发
+</li>
+<li class="li ul-li list-star-li compact-li">React，一套用于编写UI的JS类库
+</li>
+<li class="li ul-li list-star-li compact-li">React-Native，一套使用React开发移动端本地应用的框架
+</li>
+<li class="li ul-li list-star-li compact-li">Redux，一个提供可预测程序状态的JS容器
+</li>
+<li class="li ul-li list-star-li compact-li">React-Redux，一套React和Redux相结合的框架
+</li></ul>
+<h2 id="section" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">3</span>.&#8194;</span>系统功能需求</h2>
+<p class="p noindent">这个软件希望做到：
+</p>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">能详尽地记录账目信息
+</li>
+<li class="li ul-li list-star-li compact-li">能统计账目信息
+</li>
+<li class="li ul-li list-star-li compact-li">能以图表的方式查看统计结果
+</li>
+<li class="li ul-li list-star-li compact-li">账目信息能够稳定保存
+</li></ul>
+
+<p class="p noindent">我们将主要的功能需求划分为三个部分：记账功能、统计功能和同步功能。
+</p><h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">3.1</span>.&#8194;</span>记账功能</h3>
+<p class="p noindent">记账功能需要保存具体的账目信息。一条账目具体需要保存：
+</p>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">交易时间（年月日时分）
+</li>
+<li class="li ul-li list-star-li compact-li">交易类型（收入/支出）
+</li>
+<li class="li ul-li list-star-li compact-li">交易项目（购物、餐饮、教育……）
+</li>
+<li class="li ul-li list-star-li compact-li">交易金额
+</li>
+<li class="li ul-li list-star-li compact-li">对这条交易的描述（具体消费了什么……）
+</li>
+<li class="li ul-li list-star-li compact-li">与交易相关的图片（可以有多张）
+</li>
+<li class="li ul-li list-star-li compact-li">交易地点（可以自动获取当前位置）
+</li></ul>
+
+<p class="p noindent">记账功能要有以下用例：
+</p>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">增添新的账单条目
+
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">新添的账目初始化为默认值
+</li></ul></li>
+<li class="li ul-li list-star-li compact-li">修改已有账单条目
+
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">修改交易时间
+</li>
+<li class="li ul-li list-star-li compact-li">修改交易类型
+</li>
+<li class="li ul-li list-star-li compact-li">修改交易项目
+</li>
+<li class="li ul-li list-star-li compact-li">修改交易金额
+</li>
+<li class="li ul-li list-star-li compact-li">修改对交易的描述
+</li>
+<li class="li ul-li list-star-li compact-li">添加或删除交易相关的图片
+</li>
+<li class="li ul-li list-star-li compact-li">修改交易发生的地点
+</li></ul></li>
+<li class="li ul-li list-star-li compact-li">删除一条账单条目
+</li></ul>
+<h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">3.2</span>.&#8194;</span>统计功能</h3>
+<p class="p noindent">统计功能要求能够对一段时间内的交易信息加以整理，然后以较为直观的形式呈现出来。
+</p>
+<p class="p indent">呈现的形式分为两部分，一部分是文字信息，以列表和数字的形式呈现；另一部分是可视化信息，
+以图表的形式呈现。
+</p>
+<p class="p indent">统计功能有以下用例：
+</p>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">查看指定月份的收入和支出总额
+
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">统计一个月的收入总额
+</li>
+<li class="li ul-li list-star-li compact-li">统计一个月的支出总额
+</li></ul></li>
+<li class="li ul-li list-star-li compact-li">查看某一日的具体交易信息
+
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">列表显示当日的所有账单
+</li></ul></li>
+<li class="li ul-li list-star-li compact-li">查看指定月份的支出和收入类别占比
+
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">图表显示当月支出中各类别的占比
+</li>
+<li class="li ul-li list-star-li compact-li">图表显示当月收入中各类别的占比
+</li></ul></li></ul>
+<h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">3.3</span>.&#8194;</span>同步功能</h3>
+<p class="p noindent">同步功能要求做到账目数据的可持久化保存，数据要在软件停止运行后稳定的存储在手机中。
+</p>
+<p class="p indent">唯一需要保存的数据是所有的账目，因为统计信息可以依据账目信息动态生成，不需要可持久地
+存储在手机上。
+</p><h2 id="section" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">4</span>.&#8194;</span>系统设计与实现</h2><h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">4.1</span>.&#8194;</span>系统总体设计</h3>
+<p class="p noindent">我们将记账软件在功能上分为四个模块：记账模块、列表统计模块、图表统计模块、和云端同步模块。
+</p>
+<p class="p indent">在软件结构上分为容器和视图两个部分，利用redux框架，视图部分负责显示和交互，容器部分存储软件
+数据，通过接收视图传来的信号，对数据进行同步更新。
+</p><h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">4.2</span>.&#8194;</span>系统物理分布</h3>
+<p class="p noindent">系统总体目录结构：
+</p>
+<pre class="para-block pre-fenced pre-fenced3" style="display:block"><code>OurAccounts
+├── android
+│   ├── app
+│   ├── build
+│   ├── gradle
+│   ├── keystores
+│   ├── build.gradle
+│   ├── gradle.properties
+│   ├── gradlew
+│   ├── gradlew.bat
+│   ├── local.properties
+│   ├── OurAccounts.iml
+│   └── settings.gradle
+├── node_modules
+├── src
+│   ├── models
+│   ├── views
+│   ├── App.js
+│   └── reducer.js
+├── __tests__
+│   └── App-test.js
+├── app.json
+├── babel.config.js
+├── index.js
+├── metro.config.js
+├── package.json
+├── yarn-error.log
+└── yarn.lock</code></pre>
+<p class="p noindent para-continued"><code class="code code1">index.js</code>是主体程序的入口，其余的源代码都存放在<code class="code code1">src</code>文件夹中。<code class="code code1">android</code>文件夹保存Android
+项目信息，主要是React-Native框架自动生成的代码和配置文件。
+</p>
+<p class="p indent"><code class="code code1">src/views</code>目录保存各组件的视图界面代码；<code class="code code1">src/models</code>目录保存各组件数据的容器代码；
+<code class="code code1">src/reducer.js</code>保存Redux框架中程序的总数据容器；<code class="code code1">src/App.js</code>将数据容器与视图部分结合。
+</p><h3 id="section" class="h2" data-heading-depth="2" style="display:block"><span class="heading-before"><span class="heading-label">4.3</span>.&#8194;</span>模块设计</h3><h4 id="section" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">4.3.1</span>.&#8194;</span>主界面</h4><h5 id="section" class="h4" data-heading-depth="4" style="display:block">入口</h5>
+<p class="p noindent">整个应用的入口是<code class="code code1">index.js</code>文件，<code class="code code1">index.js</code>中注册<code class="code code1">src/App.js</code>中定义的<code class="code code1">App</code>组件。
+<code class="code code1">App</code>组件是真正的应用程序。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code><span style="color:blue">import</span> {AppRegistry} <span style="color:blue">from</span> <span style="color:maroon">&#39;</span><span style="color:maroon">react-native</span><span style="color:maroon">&#39;</span>;
+<span style="color:blue">import</span> App <span style="color:blue">from</span> <span style="color:maroon">&#39;</span><span style="color:maroon">./src/App</span><span style="color:maroon">&#39;</span>;
+<span style="color:blue">import</span> {name <span style="color:blue">as</span> appName} <span style="color:blue">from</span> <span style="color:maroon">&#39;</span><span style="color:maroon">./app.json</span><span style="color:maroon">&#39;</span>;
+
+AppRegistry.registerComponent(appName, () =&gt; App);</code></pre>
+<p class="p noindent para-continued"><code class="code code1">src/App.js</code>文件在数据容器与用户界面结合在一起。通过React-Redux框架的<code class="code code1">Provider</code>组件
+向用户界面提供数据。利用<code class="code code1">redux-persist</code>提供的<code class="code code1">PersistDate</code>实现账目数据在手机本地的
+可持久化存储。<code class="code code1">AppContainer</code>是主界面组件。<code class="code code1">store</code>是全局数据存储容器。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code><span style="color:blue">import</span> AppContainer <span style="color:blue">from</span> <span style="color:maroon">&#39;</span><span style="color:maroon">./views/HomeScreen</span><span style="color:maroon">&#39;</span>;
+<span style="color:blue">import</span> { store, persistor } <span style="color:blue">from</span> <span style="color:maroon">&#39;</span><span style="color:maroon">./reducer</span><span style="color:maroon">&#39;</span>;
+
+<span style="color:blue">const</span> App = () =&gt; {
+  <span style="color:blue">return</span> (
+    &lt;Provider store={store}&gt;
+      &lt;PersistGate loading={&lt;ActivityIndicator size=<span style="color:maroon">&quot;</span><span style="color:maroon">large</span><span style="color:maroon">&quot;</span>/&gt;} persistor={persistor}&gt;
+        &lt;AppContainer /&gt;
+      &lt;/PersistGate&gt;
+    &lt;/Provider&gt;
+  );
+}
+
+<span style="color:blue">export</span> <span style="color:blue">default</span> App;</code></pre><h5 id="section" class="h4" data-heading-depth="4" style="display:block">数据容器</h5>
+<p class="p noindent"><code class="code code1">/src/reducer.js</code>核心代码，创建全局数据容器并做可持久化处理。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code><span style="color:blue">const</span> reducer = combineReducers({
+  accountInfo: persistReducer(accountsPersistConfig, accountsReducer),
+  monthInfo: monthsReducer,
+  statisticsInfo: statisticsReducer,
+});
+
+<span style="color:blue">const</span> persistedReducer = persistReducer(persistConfig, reducer);
+
+<span style="color:blue">const</span> store = createStore(persistedReducer);
+<span style="color:blue">const</span> persistor = persistStore(store);</code></pre><h5 id="section" class="h4" data-heading-depth="4" style="display:block">主界面</h5>
+<p class="p noindent"><code class="code code1">src/views/HomeScreen</code>保存主界面。主界面由标题栏，正文和底部栏构成。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code><span style="color:blue">import</span> AccountsView <span style="color:blue">from</span> <span style="color:maroon">&#39;</span><span style="color:maroon">./Accounts</span><span style="color:maroon">&#39;</span>;
+<span style="color:blue">import</span> MonthsView <span style="color:blue">from</span> <span style="color:maroon">&#39;</span><span style="color:maroon">./Months</span><span style="color:maroon">&#39;</span>;
+<span style="color:blue">import</span> StatisticsView <span style="color:blue">from</span> <span style="color:maroon">&#39;</span><span style="color:maroon">./Statistics</span><span style="color:maroon">&#39;</span>;
+<span style="color:blue">import</span> SyncView <span style="color:blue">from</span> <span style="color:maroon">&#39;</span><span style="color:maroon">./Sync</span><span style="color:maroon">&#39;</span>;
+
+<span style="color:darkgreen">/*</span><span style="color:darkgreen"> 创建一个页面导航界面 </span><span style="color:darkgreen">*/</span>
+<span style="color:blue">const</span> HomeNavigator = createBottomTabNavigator({
+    <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 主界面的正文 </span><span style="color:darkgreen">*/</span>
+  accounts: { screen:  AccountsView },     <span style="color:darkgreen">// 记账页面</span>
+  months: { screen: MonthsView },          <span style="color:darkgreen">// 列表统计页面</span>
+  statistics: { screen: StatisticsView },  <span style="color:darkgreen">// 图表统计页面</span>
+  sync: { screen: SyncView },              <span style="color:darkgreen">// 同步页面</span>
+}, {
+    initialRouteName: <span style="color:maroon">&#39;</span><span style="color:maroon">accounts</span><span style="color:maroon">&#39;</span>,
+        <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 主界面底部栏 </span><span style="color:darkgreen">*/</span>
+    tabBarComponent: props =&gt; {
+      <span style="color:blue">return</span> (
+        &lt;Footer&gt;
+          &lt;FooterTab&gt;
+            &lt;Button&gt;{<span style="color:darkgreen">/*</span><span style="color:darkgreen"> 记账页面按钮 </span><span style="color:darkgreen">*/</span>}&lt;/Button&gt;
+            &lt;Button&gt;{<span style="color:darkgreen">/*</span><span style="color:darkgreen"> 列表统计页面按钮 </span><span style="color:darkgreen">*/</span>}&lt;/Button&gt;
+            &lt;Button&gt;{<span style="color:darkgreen">/*</span><span style="color:darkgreen"> 图表统计页面按钮 </span><span style="color:darkgreen">*/</span>}&lt;/Button&gt;
+            &lt;Button&gt;{<span style="color:darkgreen">/*</span><span style="color:darkgreen"> 同步页面按钮 </span><span style="color:darkgreen">*/</span>}&lt;/Button&gt;
+          &lt;/FooterTab&gt;
+        &lt;/Footer&gt;
+      )
+    }
+  }
+);</code></pre><h4 id="section" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">4.3.2</span>.&#8194;</span>记账模块</h4>
+<p class="p noindent">记账模块提供账单列表界面和账单编辑界面。账单列表界面显示所有的账目，可以在添加或删除一条账目。
+账单编辑界面显示一条具体的账目信息，包括交易发生的日期、时间，交易类型、项目、金额、种类，
+以及相关图片和交易发生的地址。
+</p><h5 id="section" class="h4" data-heading-depth="4" style="display:block">账单列表</h5>
+<p class="p noindent">账单列表部分对应<code class="code code1">src/views/Accounts.js</code>文件。
+</p>
+<p class="p indent">核心代码如下。<code class="code code1">Container</code>，<code class="code code1">Content</code>，<code class="code code1">Button</code>均是<code class="code code1">native-base</code>提供的组件。
+<code class="code code1">AccountList</code>是自定义的列表界面。<code class="code code1">Accounts</code>会从记账模块的数据容器中获取账目列表数据<code class="code code1">accounts</code>
+和一些可调用的函数如<code class="code code1">onClickDel</code>，并将这些属性传递给子组件使用。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>            &lt;Container&gt;
+                &lt;Content&gt;
+                    <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 添加新条目按钮 </span><span style="color:darkgreen">*/</span>
+                    &lt;Button onPress={...}&gt;  <span style="color:darkgreen">// 调用回调函数</span>
+                        &lt;Icon .../&gt;
+                        &lt;Text&gt;添加&lt;/Text&gt;
+                    &lt;/Button&gt;
+                    <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 账目列表 </span><span style="color:darkgreen">*/</span>
+                    &lt;AccountList
+                        accounts={accounts} <span style="color:darkgreen">// 传递账目数据</span>
+                        onClickDel={...}
+                        onClickEdit={...}
+                    /&gt;
+                &lt;/Content&gt;
+            &lt;/Container&gt;
+}</code></pre>
+<p class="p noindent para-continued">定义<code class="code code1">AccountList</code>组件的代码如下，使用了<code class="code code1">react-native</code>提供的基本组件<code class="code code1">FlatList</code>作为列表界面。
+<code class="code code1">AccountItem</code>是自定义的账单条目的视图。<code class="code code1">AccountList</code>从父组件处接收<code class="code code1">accounts</code>和回调函数，
+将其传给<code class="code code1">AccountItem</code>。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>        <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 对FlatList做封装，得到AccountList组件 </span><span style="color:darkgreen">*/</span>
+        &lt;FlatList
+            data={accounts}
+            renderItem={({item, index}) =&gt; (
+                <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 每一个账单条目 </span><span style="color:darkgreen">*/</span>
+                &lt;AccountItem
+                    account={item}        <span style="color:darkgreen">// 传递账单条目</span>
+                    index={index}
+                    onClickDel={onClickDel}
+                    onClickEdit={onClickEdit}
+                /&gt;
+            )}
+        /&gt;</code></pre>
+<p class="p noindent para-continued">定义<code class="code code1">AccountItem</code>的代码如下，<code class="code code1">AccountItem</code>中定义了列表中应显示的简略账目信息，
+以及左滑时出现的删除按钮。<code class="code code1">AccountItem</code>接收<code class="code code1">accounts</code>等属性，用于显示和交互。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>        <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 将可滑动行做封装，得到AccountItem </span><span style="color:darkgreen">*/</span>
+        &lt;SwipeRow
+      ...
+            <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 条目简略信息 </span><span style="color:darkgreen">*/</span>
+            body={
+                &lt;Button
+          ...
+                    onPress={() =&gt; onClickEdit(index)}&gt;
+                    &lt;H2&gt;
+                        条目{index}:
+                    &lt;/H2&gt;
+                    &lt;Text&gt;
+                        {<span style="color:darkgreen">/*</span><span style="color:darkgreen"> 显示简略的账目信息 </span><span style="color:darkgreen">*/</span>}
+                    &lt;/Text&gt;
+                &lt;/Button&gt;
+            }
+            <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 左滑时出现的删除按钮 </span><span style="color:darkgreen">*/</span>
+            right={
+                &lt;Button
+          ...
+                    onPress={() =&gt; onClickDel(index)}&gt;
+                    &lt;Icon active name=<span style="color:maroon">&#39;</span><span style="color:maroon">trash</span><span style="color:maroon">&#39;</span> /&gt;
+                &lt;/Button&gt;
+            }
+        /&gt;</code></pre><h5 id="section" class="h4" data-heading-depth="4" style="display:block">账单编辑</h5>
+<p class="p noindent">账单编辑部分对应<code class="code code1">src/views/AccountEdit.js</code>文件。
+</p>
+<p class="p indent">核心代码如下，在一个表单里定义了各编辑组件。
+<code class="code code1">Form</code>、<code class="code code1">Item</code>、<code class="code code1">Input</code>、<code class="code code1">Label</code>、<code class="code code1">Picker</code>、<code class="code code1">Image</code>等均为<code class="code code1">react-native</code>或<code class="code code1">native-base</code>
+提供的基本组件。
+<code class="code code1">MyDatePicker</code>、<code class="code code1">MyTimePicker</code>是自定义的选择日期和时间的组件。
+<code class="code code1">AccountEdit</code>从数据容器中接收属性<code class="code code1">accountData</code>和一些回调函数。
+<code class="code code1">accountData</code>表示当前修改的账单条目。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>      &lt;Container&gt;
+        &lt;Content&gt;
+          &lt;Form&gt;
+                        <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 选择日期的组件 </span><span style="color:darkgreen">*/</span>
+            &lt;Item ...&gt;
+              &lt;Label&gt;日期&lt;/Label&gt;
+              &lt;MyDatePicker ...
+                date={accountData.date} onChangeDate={onChangeDate} /&gt;
+            &lt;/Item&gt;
+                        ...
+                        <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 选择账目类型的组件 </span><span style="color:darkgreen">*/</span>
+            &lt;Item ...&gt;
+              &lt;Label&gt;账目类型&lt;/Label&gt;
+              &lt;Picker
+                ...
+                selectedValue={
+                  accountData.isIncome === <span style="color:maroon">&#39;</span><span style="color:maroon">undefined</span><span style="color:maroon">&#39;</span> ? <span style="color:blue">true</span> : accountData.isIncome
+                }
+                onValueChange={(itemValue) =&gt; onChangeType(itemValue)}&gt;
+                &lt;Picker.Item label=<span style="color:maroon">&#39;</span><span style="color:maroon">收入</span><span style="color:maroon">&#39;</span> value={<span style="color:blue">true</span>} /&gt;
+                &lt;Picker.Item label=<span style="color:maroon">&#39;</span><span style="color:maroon">支出</span><span style="color:maroon">&#39;</span> value={<span style="color:blue">false</span>} /&gt;
+              &lt;/Picker&gt;
+            &lt;/Item&gt;
+                        <span style="color:darkgreen">/*</span><span style="color:darkgreen"> 选择消费种类（项目）的组件 </span><span style="color:darkgreen">*/</span>
+            &lt;Item ...&gt;
+              &lt;Label&gt;消费种类&lt;/Label&gt;
+              &lt;Picker
+                ...
+                selectedValue={accountData.item}
+                onValueChange={(itemValue) =&gt; onChangeItem(itemValue)}&gt;
+                &lt;Picker.Item label=<span style="color:maroon">&#39;</span><span style="color:maroon">购物</span><span style="color:maroon">&#39;</span> value={<span style="color:maroon">&#39;</span><span style="color:maroon">购物</span><span style="color:maroon">&#39;</span>} /&gt;
+                &lt;Picker.Item label=<span style="color:maroon">&#39;</span><span style="color:maroon">餐饮</span><span style="color:maroon">&#39;</span> value={<span style="color:maroon">&#39;</span><span style="color:maroon">餐饮</span><span style="color:maroon">&#39;</span>} /&gt;
+                &lt;Picker.Item label=<span style="color:maroon">&#39;</span><span style="color:maroon">服装</span><span style="color:maroon">&#39;</span> value={<span style="color:maroon">&#39;</span><span style="color:maroon">服装</span><span style="color:maroon">&#39;</span>} /&gt;
+                &lt;Picker.Item label=<span style="color:maroon">&#39;</span><span style="color:maroon">生活</span><span style="color:maroon">&#39;</span> value={<span style="color:maroon">&#39;</span><span style="color:maroon">生活</span><span style="color:maroon">&#39;</span>} /&gt;
+                                ...
+                                ...
+              &lt;/Picker&gt;
+            &lt;/Item&gt;
+                        ...
+                        ...
+          &lt;/Form&gt;
+        &lt;/Content&gt;
+      &lt;/Container&gt;</code></pre><h5 id="section" class="h4" data-heading-depth="4" style="display:block">账单数据的存储容器</h5>
+<p class="p noindent">账单数据的保存应用了Redux框架，即程序中只有唯一的一份数据容器，且只能通过
+回调函数间接操作数据内容，不允许在用户界面中对数据直接修改。
+</p>
+<p class="p indent">账目信息对应的数据容器实现在<code class="code code1">src/models/AccountReducer.js</code>中。
+</p>
+<p class="p indent">定义账单数据类型。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code><span style="color:blue">class</span> AccountData {
+  <span style="color:blue">constructor</span>({key}) {
+    <span style="color:blue">this</span>.key = key; <span style="color:darkgreen">// string</span>
+    <span style="color:blue">this</span>.date = moment(<span style="color:blue">new</span> Date()).format(<span style="color:maroon">&#39;</span><span style="color:maroon">YYYY-MM-DD</span><span style="color:maroon">&#39;</span>); <span style="color:darkgreen">// Date</span>
+    <span style="color:blue">this</span>.time = moment(<span style="color:blue">new</span> Date()).format(<span style="color:maroon">&quot;</span><span style="color:maroon">LT</span><span style="color:maroon">&quot;</span>); <span style="color:darkgreen">// Date</span>
+    <span style="color:blue">this</span>.isIncome = <span style="color:blue">false</span>; <span style="color:darkgreen">// boolean: is income or expense</span>
+    <span style="color:blue">this</span>.amount = <span style="color:maroon">&quot;</span><span style="color:maroon">0</span><span style="color:maroon">&quot;</span> <span style="color:darkgreen">// string: the amount of money</span>
+    <span style="color:blue">this</span>.item = <span style="color:maroon">&#39;</span><span style="color:maroon">购物</span><span style="color:maroon">&#39;</span> <span style="color:darkgreen">// string: on what item the transaction is</span>
+    <span style="color:blue">this</span>.desc = undefined <span style="color:darkgreen">// string: description of the transaction</span>
+    <span style="color:blue">this</span>.imgPaths = []; <span style="color:darkgreen">// array(string) paths of images</span>
+    <span style="color:blue">this</span>.position = undefined; <span style="color:darkgreen">// Position: the geolocation where the transaction happened</span>
+  }
+}</code></pre>
+<p class="p noindent para-continued">定义默认的容器数据。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code><span style="color:blue">const</span> INITIAL_STATE = {
+  next_key: <span class="constant" style="color:purple">0</span>,
+  accounts: [],
+  index: <span class="constant" style="color:purple">0</span>,
+  accountData: <span style="color:blue">new</span> AccountData({}),
+};</code></pre>
+<p class="p noindent para-continued">定义所有可能发生的数据操作行为。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code><span style="color:blue">const</span> accountsReducer = (state = INITIAL_STATE, action) =&gt; {
+  <span style="color:blue">switch</span> (action.type) {
+    <span style="color:blue">case</span> <span style="color:maroon">&quot;</span><span style="color:maroon">account_add</span><span style="color:maroon">&quot;</span>: <span style="color:blue">return</span> handleAdd(state);
+    <span style="color:blue">case</span> <span style="color:maroon">&quot;</span><span style="color:maroon">account_del</span><span style="color:maroon">&quot;</span>: <span style="color:blue">return</span> handleDel(state, action);
+    <span style="color:blue">case</span> <span style="color:maroon">&quot;</span><span style="color:maroon">account_edit</span><span style="color:maroon">&quot;</span>: <span style="color:blue">return</span> handleEdit(state, action);
+    <span style="color:blue">case</span> <span style="color:maroon">&quot;</span><span style="color:maroon">account_save</span><span style="color:maroon">&quot;</span>: <span style="color:blue">return</span> handleSave(state);
+    <span style="color:blue">case</span> <span style="color:maroon">&quot;</span><span style="color:maroon">account_edit_date</span><span style="color:maroon">&quot;</span>: <span style="color:blue">return</span> handleEditDate(state, action);
+    <span style="color:blue">case</span> <span style="color:maroon">&quot;</span><span style="color:maroon">account_edit_time</span><span style="color:maroon">&quot;</span>: <span style="color:blue">return</span> handleEditTime(state, action);
+    <span style="color:blue">case</span> <span style="color:maroon">&quot;</span><span style="color:maroon">account_edit_type</span><span style="color:maroon">&quot;</span>: <span style="color:blue">return</span> handleEditType(state, action);
+    <span style="color:blue">case</span> <span style="color:maroon">&quot;</span><span style="color:maroon">account_edit_amount</span><span style="color:maroon">&quot;</span>: <span style="color:blue">return</span> handleEditAmount(state, action);
+    ...
+        ...
+  }
+  <span style="color:blue">return</span> state;
+}</code></pre><h4 id="section" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">4.3.3</span>.&#8194;</span>列表统计模块</h4>
+<p class="p noindent">列表统计模块将每月的总收入和总支出显示给用户。为了方便地查看某一日的具体开支，还要能提供快捷的日期跳转功能。
+</p>
+<p class="p indent">在<code class="code code1">react-native-calendars</code>中，提供了<code class="code code1">Calendar</code>组件以显示日历。日历具有点击左右箭头按钮切换月份、单击日期触发事件等功能。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>                &lt;Calendar
+                    onDayPress={(day) =&gt;
+                        <span style="color:darkgreen">// 点击日期切换至消费详细</span>
+                        onClick(day, () =&gt; {
+                            <span style="color:darkgreen">// console.warn(day);</span>
+                            navigation.navigate(<span style="color:maroon">&#39;</span><span style="color:maroon">monthsDetail</span><span style="color:maroon">&#39;</span>);
+                        })
+                    }
+                    monthFormat = { <span style="color:maroon">&#39;</span><span style="color:maroon">yyyy年M月</span><span style="color:maroon">&#39;</span> }
+                    onMonthChange = {(month) =&gt; {
+                        onChange(month);
+                        onIncome(accounts);
+                        onExpense(accounts);
+                    }}
+                /&gt;</code></pre>
+<p class="p noindent para-continued">同时，为了实现UI上的复用，避免多个模块风格不一致，
+在<code class="code code1">Months</code>类型被封装为用户可见的<code class="code code1">MonthsView</code>前，我们使用<code class="code code1">react-navigation</code>中的功能指定其“标题栏”的外观。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>  <span style="color:blue">static</span> navigationOptions({navigation}) {
+        <span style="color:blue">return</span> {
+            title: <span style="color:maroon">&#39;</span><span style="color:maroon">Months</span><span style="color:maroon">&#39;</span>,
+            header: (
+                &lt;Header&gt;
+                    &lt;Left /&gt;
+                    &lt;Body&gt;
+                        &lt;Title&gt;月份&lt;/Title&gt;
+                    &lt;/Body&gt;
+                    &lt;Right /&gt;
+                &lt;/Header&gt;
+            )
+        };
+  }</code></pre>
+<p class="p noindent para-continued">在列表统计模块内部的触发事件可分为以下几类。
+</p>
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">点击日历上的具体日期
+
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">此时更新状态中的年、月、日，对应到该日期，通过年月日筛选出该日期下的账目
+</li>
+<li class="li ul-li list-star-li compact-li">触发从当前视图<code class="code code1">MonthsView_</code>转移到<code class="code code1">MonthsDetailView</code>的事件
+</li></ul></li>
+<li class="li ul-li list-star-li compact-li">点击日历的左右切换月份按钮
+
+<ul class="ul list-star compact">
+<li class="li ul-li list-star-li compact-li">更新状态中的月
+</li>
+<li class="li ul-li list-star-li compact-li">更新当前月的总收入和总支出
+</li></ul></li></ul>
+
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>  <span style="color:blue">const</span> mapDispatchToProps = (dispatch) =&gt; ({
+      onClick: (day, callBack) =&gt; {
+          dispatch({ type: <span style="color:maroon">&#39;</span><span style="color:maroon">year_select</span><span style="color:maroon">&#39;</span>, year: day.year });
+          dispatch({ type: <span style="color:maroon">&#39;</span><span style="color:maroon">month_select</span><span style="color:maroon">&#39;</span>, month: day.month });
+          dispatch({ type: <span style="color:maroon">&#39;</span><span style="color:maroon">day_select</span><span style="color:maroon">&#39;</span>, day: day.day });
+          dispatch({ type: <span style="color:maroon">&#39;</span><span style="color:maroon">month_watch</span><span style="color:maroon">&#39;</span>, callBack: callBack })
+          console.log(<span style="color:maroon">&#39;</span><span style="color:maroon">WATCH</span><span style="color:maroon">&#39;</span>);
+      },
+      onChange: (month) =&gt; {
+          dispatch({ type: <span style="color:maroon">&#39;</span><span style="color:maroon">month_change</span><span style="color:maroon">&#39;</span>, month: month.month });
+      },
+      onIncome: (accounts) =&gt; {
+          dispatch({ type: <span style="color:maroon">&#39;</span><span style="color:maroon">month_income</span><span style="color:maroon">&#39;</span>, accounts: accounts });
+      },
+      onExpense: (accounts) =&gt; {
+          dispatch({ type: <span style="color:maroon">&#39;</span><span style="color:maroon">month_expense</span><span style="color:maroon">&#39;</span>, accounts: accounts });
+      },
+  });</code></pre>
+<p class="p noindent para-continued">点击某一具体日期后，查看具体账目所涉及的逻辑在<code class="code code1">MonthsDetail.js</code>中。
+在<code class="code code1">AccountData</code>这一对象类型数据中，<code class="code code1">date</code>域为形如<code class="code code1">&quot;YYYY-MM-DD&quot;</code>的字符串。
+需要注意的是，诸如<code class="code code1">6</code>、<code class="code code1">7</code>月在字符串中也会变为<code class="code code1">06</code>、<code class="code code1">07</code>。据此可以写出筛选当日账目并按具体时间排序显示的逻辑。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>        <span style="color:blue">var</span> res = [];
+        <span style="color:blue">for</span> (<span style="color:blue">var</span> i = <span class="constant" style="color:purple">0</span>; i &lt; accounts.length; ++ i) {
+            <span style="color:blue">if</span> ((month &lt; <span class="constant" style="color:purple">10</span> &amp;&amp; year + <span style="color:maroon">&quot;</span><span style="color:maroon">-0</span><span style="color:maroon">&quot;</span> + month + <span style="color:maroon">&quot;</span><span style="color:maroon">-</span><span style="color:maroon">&quot;</span> + day == accounts[i].date) ||
+            (month &gt;= <span class="constant" style="color:purple">10</span> &amp;&amp; year + <span style="color:maroon">&quot;</span><span style="color:maroon">-</span><span style="color:maroon">&quot;</span> + month + <span style="color:maroon">&quot;</span><span style="color:maroon">-</span><span style="color:maroon">&quot;</span> + day == accounts[i].date )) {
+                res.push(accounts[i]);
+            }
+        }
+        res.sort(<span style="color:blue">function</span>(a, b){<span style="color:blue">return</span> a.time - b.time});</code></pre><h4 id="section" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">4.3.4</span>.&#8194;</span>图表统计模块</h4>
+<p class="p noindent">我们以饼状图展现每月中，各收入/支出类别在当月总收入/支出的占比。
+</p>
+<p class="p indent">在<code class="code code1">react-native-chart-kit</code>中，<code class="code code1">PieChart</code>组件能够满足我们的需求。
+在<code class="code code1">StatisticsReducer.js</code>中，保存的状态用于图表统计模块的制图。
+与列表统计模块不同的是，图表统计模块中使用<code class="code code1">CalendarList</code>，无需点按左右箭头按钮切换月份，而是直接左右滑动屏幕即可。
+</p>
+<p class="p indent">状态中，<code class="code code1">categories</code>中参与统计的收支类型需要与之前记账模块中内置的类型保持一致，<code class="code code1">income</code>和<code class="code code1">expense</code>两个数据分别用于收入图和支出图。
+但因为所有数据全部为<code class="code code1">0</code>时，在渲染时会报错，因此我们暂时将“其他”项这里修改为非<code class="code code1">0</code>。
+这只是权宜之计，实际统计后往往会被覆盖掉。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>  <span style="color:blue">const</span> INITIAL_STATE = {
+    month: moment().format(<span style="color:maroon">&#39;</span><span style="color:maroon">YYYY-MM</span><span style="color:maroon">&#39;</span>),
+    categories: [
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">购物</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">0</span>, expense: <span class="constant" style="color:purple">0</span>, },
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">餐饮</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">0</span>, expense: <span class="constant" style="color:purple">0</span>, },
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">服装</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">0</span>, expense: <span class="constant" style="color:purple">0</span>, },
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">生活</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">0</span>, expense: <span class="constant" style="color:purple">0</span>, },
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">教育</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">0</span>, expense: <span class="constant" style="color:purple">0</span>, },
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">娱乐</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">0</span>, expense: <span class="constant" style="color:purple">0</span>, },
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">出行</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">0</span>, expense: <span class="constant" style="color:purple">0</span>, },
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">医疗</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">0</span>, expense: <span class="constant" style="color:purple">0</span>, },
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">投资</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">0</span>, expense: <span class="constant" style="color:purple">0</span>, },
+      { name: <span style="color:maroon">&#39;</span><span style="color:maroon">其他</span><span style="color:maroon">&#39;</span>, income: <span class="constant" style="color:purple">1</span>, expense: <span class="constant" style="color:purple">1</span>, },
+    ],
+    yearData: [],
+  };</code></pre>
+<p class="p noindent para-continued">我们分别对总收入占比和总支出占比进行饼状图制图。
+</p>
+<pre class="para-block pre-fenced pre-fenced3 language-javascript lang-javascript javascript colorized" style="display:block"><code>    &lt;H3 style={{paddingLeft: <span class="constant" style="color:purple">50</span>,}}&gt;月收入统计&lt;/H3&gt;
+    &lt;PieChart
+            ...
+      data={ctg_income}
+      accessor=<span style="color:maroon">&#39;</span><span style="color:maroon">population</span><span style="color:maroon">&#39;</span>
+      backgroundColor=<span style="color:maroon">&#39;</span><span style="color:maroon">transparent</span><span style="color:maroon">&#39;</span>
+    /&gt;
+
+    &lt;H3 ...&gt;月支出统计&lt;/H3&gt;
+    &lt;PieChart
+            ...
+      data={ctg_expense}
+      accessor=<span style="color:maroon">&#39;</span><span style="color:maroon">population</span><span style="color:maroon">&#39;</span>
+      backgroundColor=<span style="color:maroon">&#39;</span><span style="color:maroon">transparent</span><span style="color:maroon">&#39;</span>
+    /&gt;</code></pre>
+<p class="p noindent para-continued">最后，在切换月份使得<code class="code code1">month</code>状态刷新时，我们也要能即时刷新图表显示。这一步的逻辑与列表统计模块类似。
+首先更新<code class="code code1">month</code>属性，然后用更新过的时间属性筛选出对应时间范围内的账目，用它们更新<code class="code code1">categories</code>中的各条目的收入支出。
+</p><h4 id="section" class="h3" data-heading-depth="3" style="display:block"><span class="heading-before"><span class="heading-label">4.3.5</span>.&#8194;</span>云端同步模块</h4>
+<p class="p noindent">云端同步功能我们尚未实现，将会在期末大作业中加入。
+</p><h2 id="section" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">5</span>.&#8194;</span>系统可能的拓展</h2>
+<ol class="ol loose">
+<li class="li ol-li loose-li">
+<p>云端同步功能：支持从本地向云端同步数据或是从云端像本地同步数据。
+</p></li>
+<li class="li ol-li loose-li">
+<p>导出功能：支持将选定日期范围内的账目导出至<code class="code code1">.csv</code>或<code class="code code1">.xls</code>格式的文件中，并能方便转移到其他平台。
+</p></li>
+<li class="li ol-li loose-li">
+<p>更详细的统计：支持更多维度的统计数据，如年消费项目占比，消费额变化曲线等。
+</p></li>
+<li class="li ol-li loose-li">
+<p>设置功能：制定多套显示模式、UI界面等，让用户自定义自己的记账软件。
+</p></li></ol>
+<h2 id="section" class="h1" data-heading-depth="1" style="display:block"><span class="heading-before"><span class="heading-label">6</span>.&#8194;</span>总结体会</h2>
+<p class="p noindent">这次Android作业难度，仅从代码量而言，相较于IOS作业有大提升，对于期末阶段的学生来说确实
+是不小的压力，但是相应的收获也非常丰富。
+</p>
+<p class="p indent">首先锻炼的是压力下高效产出代码的能力。我们小组两人在一周的时间内完成了这个程序的开发，对于
+相对还缺乏开发经验的学生来说是个比较令人满意的结果。在这一学期的工程训练之后，不少同学对
+项目的开发已经有了一定程度的熟悉和了解，这一点对于未来融入工作环境非常有益。
+</p>
+<p class="p indent">其次是学到了一些新技术。我们在开发过程中对React和Redux框架越来越熟悉。
+在实现各种功能时，我们接触了不少React，React-Native框架的组件，深刻地认识到了开源社区的力量。
+开源社区相互友好协助的氛围更有利于新技术的传播和改进。
+</p><span data-line=""></span></div>
+</body>
+
+</html>

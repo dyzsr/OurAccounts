@@ -1,17 +1,41 @@
 Title: 移动互联网技术与应用
 Subtitle: Android记账软件开发报告
 Author: 董岩
-Email: 2016211225
+Author Note: 2016211225
 Author: 倪理涵
-Email: 2016211156
+Author Note: 2016211156
+Package: [UTF8]ctex
 
 [TITLE]
 
+--------------
+
+[TOC]
+
+--------------
+
 # 系统开发的创意与背景
 
+当下是移动互联网的时代，手机已是生活的必需品。合理地使用手机可以让生活更加轻松、便捷。
+这学期的《移动互联网技术与应用》课程紧跟时代潮流，由来自企业，具有实际工程经验的老师
+为我们讲授移动平台软件的开发，以及与服务端的数据交互技术。
 
+这一学期，我们通过IOS平台富文本编辑器软件的开发实践，熟悉了IOS平台的软件开发流程；
+现在进行Android平台的记账软件的开发，是一个比富文本编辑器规模稍大的软件，更是我们熟悉了
+移动平台客户端软件的整体结构。
 
 # 相关技术
+
+## 开发环境
+
+* 操作系统：Windows 10，Ubuntu 18.04 LTS
+* 工具：Android Studio，VS Code，命令行终端
+* 语言：Javascript，React（JSX）
+
+## 所使用的技术
+
+我们的应用主要使用React-Native框架开发，开发过程需要借助`React-Native-CLI`，`Android Studio`
+等工具，在其中涉及到的技术有：
 
 * Javascript（ES2016版本）
 * NodeJS，基于V8引擎的JS运行环境，通常用于后端和界面的开发
@@ -22,7 +46,14 @@ Email: 2016211156
 
 # 系统功能需求
 
-这个软件主要的功能需求有记账、统计和账目的稳定保存。
+这个软件希望做到：
+
+* 能详尽地记录账目信息
+* 能统计账目信息
+* 能以图表的方式查看统计结果
+* 账目信息能够稳定保存
+
+我们将主要的功能需求划分为三个部分：记账功能、统计功能和同步功能。
 
 ## 记账功能
 
@@ -68,9 +99,9 @@ Email: 2016211156
     * 图表显示当月支出中各类别的占比
     * 图表显示当月收入中各类别的占比
 
-## 账目保存功能
+## 同步功能
 
-账目保存功能要求做到账目数据的可持久化保存，数据要在软件停止运行后稳定的存储在手机中。
+同步功能要求做到账目数据的可持久化保存，数据要在软件停止运行后稳定的存储在手机中。
 
 唯一需要保存的数据是所有的账目，因为统计信息可以依据账目信息动态生成，不需要可持久地
 存储在手机上。
@@ -79,7 +110,7 @@ Email: 2016211156
 
 ## 系统总体设计
 
-我们将记账软件在功能上分为四个模块：记账模块、列表统计模块、图表统计模块、和云端数据同步模块。
+我们将记账软件在功能上分为四个模块：记账模块、列表统计模块、图表统计模块、和云端同步模块。
 
 在软件结构上分为容器和视图两个部分，利用redux框架，视图部分负责显示和交互，容器部分存储软件
 数据，通过接收视图传来的信号，对数据进行同步更新。
@@ -127,7 +158,292 @@ OurAccounts
 
 ## 模块设计
 
+### 主界面
+
+#### 入口
+
+整个应用的入口是`index.js`文件，`index.js`中注册`src/App.js`中定义的`App`组件。
+`App`组件是真正的应用程序。
+
+```javascript
+import {AppRegistry} from 'react-native';
+import App from './src/App';
+import {name as appName} from './app.json';
+
+AppRegistry.registerComponent(appName, () => App);
+```
+
+`src/App.js`文件在数据容器与用户界面结合在一起。通过React-Redux框架的`Provider`组件
+向用户界面提供数据。利用`redux-persist`提供的`PersistDate`实现账目数据在手机本地的
+可持久化存储。`AppContainer`是主界面组件。`store`是全局数据存储容器。
+
+```javascript
+import AppContainer from './views/HomeScreen';
+import { store, persistor } from './reducer';
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<ActivityIndicator size="large"/>} persistor={persistor}>
+        <AppContainer />
+      </PersistGate>
+    </Provider>
+  );
+}
+
+export default App;
+```
+
+#### 数据容器
+
+`/src/reducer.js`核心代码，创建全局数据容器并做可持久化处理。
+
+```javascript
+const reducer = combineReducers({
+  accountInfo: persistReducer(accountsPersistConfig, accountsReducer),
+  monthInfo: monthsReducer,
+  statisticsInfo: statisticsReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
+```
+
+#### 主界面
+
+`src/views/HomeScreen`保存主界面。主界面由标题栏，正文和底部栏构成。
+
+```javascript
+import AccountsView from './Accounts';
+import MonthsView from './Months';
+import StatisticsView from './Statistics';
+import SyncView from './Sync';
+
+/* 创建一个页面导航界面 */
+const HomeNavigator = createBottomTabNavigator({
+	/* 主界面的正文 */
+  accounts: { screen:  AccountsView },     // 记账页面
+  months: { screen: MonthsView },          // 列表统计页面
+  statistics: { screen: StatisticsView },  // 图表统计页面
+  sync: { screen: SyncView },              // 同步页面
+}, {
+    initialRouteName: 'accounts',
+		/* 主界面底部栏 */
+    tabBarComponent: props => {
+      return (
+        <Footer>
+          <FooterTab>
+            <Button>{/* 记账页面按钮 */}</Button>
+            <Button>{/* 列表统计页面按钮 */}</Button>
+            <Button>{/* 图表统计页面按钮 */}</Button>
+            <Button>{/* 同步页面按钮 */}</Button>
+          </FooterTab>
+        </Footer>
+      )
+    }
+  }
+);
+```
+
+
 ### 记账模块
+
+记账模块提供账单列表界面和账单编辑界面。账单列表界面显示所有的账目，可以在添加或删除一条账目。
+账单编辑界面显示一条具体的账目信息，包括交易发生的日期、时间，交易类型、项目、金额、种类，
+以及相关图片和交易发生的地址。
+
+#### 账单列表
+
+账单列表部分对应`src/views/Accounts.js`文件。
+
+核心代码如下。`Container`，`Content`，`Button`均是`native-base`提供的组件。
+`AccountList`是自定义的列表界面。`Accounts`会从记账模块的数据容器中获取账目列表数据`accounts`
+和一些可调用的函数如`onClickDel`，并将这些属性传递给子组件使用。
+
+```javascript
+			<Container>
+				<Content>
+					/* 添加新条目按钮 */
+					<Button onPress={...}>  // 调用回调函数
+						<Icon .../>
+						<Text>添加</Text>
+					</Button>
+					/* 账目列表 */
+					<AccountList
+						accounts={accounts} // 传递账目数据
+						onClickDel={...}
+						onClickEdit={...}
+					/>
+				</Content>
+			</Container>
+}
+```
+
+定义`AccountList`组件的代码如下，使用了`react-native`提供的基本组件`FlatList`作为列表界面。
+`AccountItem`是自定义的账单条目的视图。`AccountList`从父组件处接收`accounts`和回调函数，
+将其传给`AccountItem`。
+
+``` javascript
+		/* 对FlatList做封装，得到AccountList组件 */
+		<FlatList
+			data={accounts}
+			renderItem={({item, index}) => (
+				/* 每一个账单条目 */
+				<AccountItem
+					account={item}		// 传递账单条目
+					index={index}
+					onClickDel={onClickDel}
+					onClickEdit={onClickEdit}
+				/>
+			)}
+		/>
+```
+
+定义`AccountItem`的代码如下，`AccountItem`中定义了列表中应显示的简略账目信息，
+以及左滑时出现的删除按钮。`AccountItem`接收`accounts`等属性，用于显示和交互。
+
+``` javascript
+		/* 将可滑动行做封装，得到AccountItem */
+		<SwipeRow
+      ...
+			/* 条目简略信息 */
+			body={
+				<Button
+          ...
+					onPress={() => onClickEdit(index)}>
+					<H2>
+						条目{index}:
+					</H2>
+					<Text>
+						{/* 显示简略的账目信息 */}
+					</Text>
+				</Button>
+			}
+			/* 左滑时出现的删除按钮 */
+			right={
+				<Button
+          ...
+					onPress={() => onClickDel(index)}>
+					<Icon active name='trash' />
+				</Button>
+			}
+		/>
+```
+
+#### 账单编辑
+
+账单编辑部分对应`src/views/AccountEdit.js`文件。
+
+核心代码如下，在一个表单里定义了各编辑组件。
+`Form`、`Item`、`Input`、`Label`、`Picker`、`Image`等均为`react-native`或`native-base`
+提供的基本组件。
+`MyDatePicker`、`MyTimePicker`是自定义的选择日期和时间的组件。
+`AccountEdit`从数据容器中接收属性`accountData`和一些回调函数。
+`accountData`表示当前修改的账单条目。
+
+```javascript
+      <Container>
+        <Content>
+          <Form>
+						/* 选择日期的组件 */
+            <Item ...>
+              <Label>日期</Label>
+              <MyDatePicker ...
+                date={accountData.date} onChangeDate={onChangeDate} />
+            </Item>
+						...
+						/* 选择账目类型的组件 */
+            <Item ...>
+              <Label>账目类型</Label>
+              <Picker
+                ...
+                selectedValue={
+                  accountData.isIncome === 'undefined' ? true : accountData.isIncome
+                }
+                onValueChange={(itemValue) => onChangeType(itemValue)}>
+                <Picker.Item label='收入' value={true} />
+                <Picker.Item label='支出' value={false} />
+              </Picker>
+            </Item>
+						/* 选择消费种类（项目）的组件 */
+            <Item ...>
+              <Label>消费种类</Label>
+              <Picker
+                ...
+                selectedValue={accountData.item}
+                onValueChange={(itemValue) => onChangeItem(itemValue)}>
+                <Picker.Item label='购物' value={'购物'} />
+                <Picker.Item label='餐饮' value={'餐饮'} />
+                <Picker.Item label='服装' value={'服装'} />
+                <Picker.Item label='生活' value={'生活'} />
+								...
+								...
+              </Picker>
+            </Item>
+						...
+						...
+          </Form>
+        </Content>
+      </Container>
+```
+
+#### 账单数据的存储容器
+
+账单数据的保存应用了Redux框架，即程序中只有唯一的一份数据容器，且只能通过
+回调函数间接操作数据内容，不允许在用户界面中对数据直接修改。
+
+账目信息对应的数据容器实现在`src/models/AccountReducer.js`中。
+
+定义账单数据类型。
+
+```javascript
+class AccountData {
+  constructor({key}) {
+    this.key = key; // string
+    this.date = moment(new Date()).format('YYYY-MM-DD'); // Date
+    this.time = moment(new Date()).format("LT"); // Date
+    this.isIncome = false; // boolean: is income or expense
+    this.amount = "0" // string: the amount of money
+    this.item = '购物' // string: on what item the transaction is
+    this.desc = undefined // string: description of the transaction
+    this.imgPaths = []; // array(string) paths of images
+    this.position = undefined; // Position: the geolocation where the transaction happened
+  }
+}
+```
+
+定义默认的容器数据。
+
+```javascript
+const INITIAL_STATE = {
+  next_key: 0,
+  accounts: [],
+  index: 0,
+  accountData: new AccountData({}),
+};
+```
+
+定义所有可能发生的数据操作行为。
+
+``` javascript
+const accountsReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case "account_add": return handleAdd(state);
+    case "account_del": return handleDel(state, action);
+    case "account_edit": return handleEdit(state, action);
+    case "account_save": return handleSave(state);
+    case "account_edit_date": return handleEditDate(state, action);
+    case "account_edit_time": return handleEditTime(state, action);
+    case "account_edit_type": return handleEditType(state, action);
+    case "account_edit_amount": return handleEditAmount(state, action);
+    ...
+		...
+  }
+  return state;
+}
+```
 
 ### 列表统计模块
 
@@ -220,10 +536,84 @@ OurAccounts
 
 ### 图表统计模块
 
-### 云端书记同步模块
+我们以饼状图展现每月中，各收入/支出类别在当月总收入/支出的占比。
+
+在`react-native-chart-kit`中，`PieChart`组件能够满足我们的需求。
+在`StatisticsReducer.js`中，保存的状态用于图表统计模块的制图。
+与列表统计模块不同的是，图表统计模块中使用`CalendarList`，无需点按左右箭头按钮切换月份，而是直接左右滑动屏幕即可。
+
+状态中，`categories`中参与统计的收支类型需要与之前记账模块中内置的类型保持一致，`income`和`expense`两个数据分别用于收入图和支出图。
+但因为所有数据全部为`0`时，在渲染时会报错，因此我们暂时将“其他”项这里修改为非`0`。
+这只是权宜之计，实际统计后往往会被覆盖掉。
+
+```javascript
+  const INITIAL_STATE = {
+    month: moment().format('YYYY-MM'),
+    categories: [
+      { name: '购物', income: 0, expense: 0, },
+      { name: '餐饮', income: 0, expense: 0, },
+      { name: '服装', income: 0, expense: 0, },
+      { name: '生活', income: 0, expense: 0, },
+      { name: '教育', income: 0, expense: 0, },
+      { name: '娱乐', income: 0, expense: 0, },
+      { name: '出行', income: 0, expense: 0, },
+      { name: '医疗', income: 0, expense: 0, },
+      { name: '投资', income: 0, expense: 0, },
+      { name: '其他', income: 1, expense: 1, },
+    ],
+    yearData: [],
+  };
+```
+
+我们分别对总收入占比和总支出占比进行饼状图制图。
+
+```javascript
+    <H3 style={{paddingLeft: 50,}}>月收入统计</H3>
+    <PieChart
+			...
+      data={ctg_income}
+      accessor='population'
+      backgroundColor='transparent'
+    />
+
+    <H3 ...>月支出统计</H3>
+    <PieChart
+			...
+      data={ctg_expense}
+      accessor='population'
+      backgroundColor='transparent'
+    />
+```
+
+最后，在切换月份使得`month`状态刷新时，我们也要能即时刷新图表显示。这一步的逻辑与列表统计模块类似。
+首先更新`month`属性，然后用更新过的时间属性筛选出对应时间范围内的账目，用它们更新`categories`中的各条目的收入支出。
+
+### 云端同步模块
+
+云端同步功能我们尚未实现，将会在期末大作业中加入。
 
 
 # 系统可能的拓展
 
+1. 云端同步功能：支持从本地向云端同步数据或是从云端像本地同步数据。
+
+2. 导出功能：支持将选定日期范围内的账目导出至`.csv`或`.xls`格式的文件中，并能方便转移到其他平台。
+
+3. 更详细的统计：支持更多维度的统计数据，如年消费项目占比，消费额变化曲线等。
+
+4. 设置功能：制定多套显示模式、UI界面等，让用户自定义自己的记账软件。
 
 # 总结体会
+
+这次Android作业难度，仅从代码量而言，相较于IOS作业有大提升，对于期末阶段的学生来说确实
+是不小的压力，但是相应的收获也非常丰富。
+
+首先锻炼的是压力下高效产出代码的能力。我们小组两人在一周的时间内完成了这个程序的开发，对于
+相对还缺乏开发经验的学生来说是个比较令人满意的结果。在这一学期的工程训练之后，不少同学对
+项目的开发已经有了一定程度的熟悉和了解，这一点对于未来融入工作环境非常有益。
+
+其次是学到了一些新技术。我们在开发过程中对React和Redux框架越来越熟悉。
+在实现各种功能时，我们接触了不少React，React-Native框架的组件，深刻地认识到了开源社区的力量。
+开源社区相互友好协助的氛围更有利于新技术的传播和改进。
+
+
