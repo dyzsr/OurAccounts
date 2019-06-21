@@ -10,7 +10,7 @@ import {
 import MonthsDetailView from './MonthsDetail';
 
 class Months extends Component {
-    static navigationOptions({navigation}) {
+	static navigationOptions({navigation}) {
 		return {
 			title: 'Months',
 			header: (
@@ -23,102 +23,102 @@ class Months extends Component {
 				</Header>
 			)
 		};
-    }
+	}
 
 	componentDidMount() {
 		const { navigation } = this.props;
 		navigation.setParams({
 			onClick: () => onClick(),
 		});
-    }
+	}
     
-    onWillFocus() {
-        const { accounts, onIncome, onExpense } = this.props;
-        onIncome(accounts);
-        onExpense(accounts);
-        console.log('init months');
-    }
+	onWillFocus() {
+			const { accounts, onIncome, onExpense } = this.props;
+			onIncome(accounts);
+			onExpense(accounts);
+			console.log('init months');
+	}
 
-    render() {
-        const { accounts, navigation, year, month, day, income, expense,
-            onClick, onChange, onIncome, onExpense } = this.props;
+	render() {
+			const { accounts, navigation, year, month, day, income, expense,
+					onClick, onChange, onIncome, onExpense } = this.props;
 
-        // onIncome(accounts);
-        // onExpense(accounts);
+			// onIncome(accounts);
+			// onExpense(accounts);
 
-        // console.warn(year + ' ' + month + ' ' + day);
+			// console.warn(year + ' ' + month + ' ' + day);
 
-        return (
-            <View style = {{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-            }}>
-                <NavigationEvents
-                    onWillFocus={() => this.onWillFocus()}
-                />
+			return (
+					<View style = {{
+							flex: 1,
+							flexDirection: 'column',
+							justifyContent: 'space-between',
+					}}>
+							<NavigationEvents
+									onWillFocus={() => this.onWillFocus()}
+							/>
 
-                <Calendar
-                    onDayPress={(day) =>
-                        // 点击日期切换至消费详细
-                        onClick(day, () => {
-                            // console.warn(day);
-                            navigation.navigate('monthsDetail');
-                        })
-                    }
-                    monthFormat = { 'yyyy年M月' }
-                    onMonthChange = {(month) => {
-                        onChange(month);
-                        onIncome(accounts);
-                        onExpense(accounts);
-                    }}
-                />
-                <View style = {{
-                    height: 100,
-                }} />
-                <View style = {{
-                    height: 100,
-                    flexDirection: 'row',
-                    justifyContent: 'center'
-                }}>
-                    <View style = {{
-                        flex: 1,
-                    }}>
-                        <Text style = {{
-                            fontSize: 30,
-                            color: "green",
-                            bottom: "25%",
-                            position: "absolute",
-                            left: "25%",
-                        }}>
-                            月收入{'\n'}
-                            { income }
-                        </Text>
-                    </View>
-                    <View style = {{
-                        flex: 0.005,
-                        backgroundColor: "grey",
-                        height: "90%",
-                        alignItems: 'center',
-                    }} />
-                    <View style = {{
-                        flex: 1,
-                    }}>
-                        <Text style = {{
-                            fontSize: 30,
-                            color: "red",
-                            bottom: "25%",
-                            position: "absolute",
-                            left: "25%",
-                        }}>
-                            月支出{'\n'}
-                            { expense }
-                        </Text>
-                    </View>
-                </View>
-            </View>
-        );
-    }
+							<Calendar
+									onDayPress={(day) =>
+											// 点击日期切换至消费详细
+											onClick(day, () => {
+													// console.warn(day);
+													navigation.navigate('monthsDetail');
+											})
+									}
+									monthFormat = { 'yyyy年M月' }
+									onMonthChange = {(month) => {
+											onChange(month);
+											onIncome(accounts);
+											onExpense(accounts);
+									}}
+							/>
+							<View style = {{
+									height: 100,
+							}} />
+							<View style = {{
+									height: 100,
+									flexDirection: 'row',
+									justifyContent: 'center'
+							}}>
+									<View style = {{
+											flex: 1,
+									}}>
+											<Text style = {{
+													fontSize: 30,
+													color: "green",
+													bottom: "25%",
+													position: "absolute",
+													left: "25%",
+											}}>
+													月收入{'\n'}
+													{ income }
+											</Text>
+									</View>
+									<View style = {{
+											flex: 0.005,
+											backgroundColor: "grey",
+											height: "90%",
+											alignItems: 'center',
+									}} />
+									<View style = {{
+											flex: 1,
+									}}>
+											<Text style = {{
+													fontSize: 30,
+													color: "red",
+													bottom: "25%",
+													position: "absolute",
+													left: "25%",
+											}}>
+													月支出{'\n'}
+													{ expense }
+											</Text>
+									</View>
+							</View>
+					</View>
+			);
+	}
 }
 
 const mapStateToProps = ({ accountInfo, monthInfo }) => ({

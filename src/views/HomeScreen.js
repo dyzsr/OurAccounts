@@ -37,7 +37,7 @@ const HomeNavigator = createBottomTabNavigator({
               onPress={() => props.navigation.navigate("months")}
             >
               <Icon type='FontAwesome5' name='book' />
-              <Text>月份</Text>
+              <Text>详情</Text>
             </Button>
             <Button
               vertical
@@ -45,7 +45,7 @@ const HomeNavigator = createBottomTabNavigator({
               onPress={() => props.navigation.navigate("statistics")}
             >
               <Icon type='FontAwesome5' name='chart-pie' />
-              <Text>图表</Text>
+              <Text>统计</Text>
             </Button>
             <Button
               vertical
@@ -53,7 +53,7 @@ const HomeNavigator = createBottomTabNavigator({
               onPress={() => props.navigation.navigate("sync")}
             >
               <Icon type='FontAwesome5' name='user-circle' />
-              <Text>账户</Text>
+              <Text>我的</Text>
             </Button>
           </FooterTab>
         </Footer>

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   StyleSheet,
   Text,
@@ -9,86 +9,83 @@ import {
   View,
 	TextInput,
 	Alert,
-} from 'react-native';
+} from 'react-native'
 import {
 	Container, Header, Content, Button, Title,
 	ListItem, SwipeRow, Item, Left, Body, Right,
-} from 'native-base';
-import { createStackNavigator, HeaderBackButton } from 'react-navigation';
+} from 'native-base'
+import { createStackNavigator, HeaderBackButton } from 'react-navigation'
+import SignUpView from './Signup'
 
-class Sync extends React.Component {
+class SignIn extends React.Component {
+	static navigationOptions({navigation}) {
+		return {
+			title: 'SignIn',
+			header: (
+				<Header>
+					<Left />
+					<Body>
+						<Title>请登录</Title>
+					</Body>
+					<Right />
+				</Header>
+			)
+		};
+  }
 
 	constructor(props) {
-		console.log('SYNC');
-		super(props);
+		console.log('SIGNIN')
+		super(props)
 	}
 
-	/*componentWillMount() {
-		storage.load({
-			key: 'account'
-		}).then((ret) => {
-			if (ret !== null) {
-				this.setState({
-					username: ret.username ? ret.username : '',
-					password: ret.password ? ret.password : ''
-				});
-			}
-		}).catch((err) => {
-			console.log(err);
-		});
-	}*/
-
-	signIn() {
-		const { user, pswd, navigation } = this.props;
+	signIn() { // 登录
+		const { name, pswd, navigation } = this.props
 
 		// console.warn("username: " + user)
 		// console.warn("password: " + pswd)
 
-		if (user === '' || pswd === '') {
-      Alert.alert('账号或密码不能为空');
-      return;
+		if (name === '' || pswd === '') {
+      Alert.alert('账号和密码不能为空!')
+      return
 		}
 
-		fetch('49.234.16.186:60000/signin', {
+		fetch('http://49.234.16.186:60000/signin', {
 			method: 'POST',
-			mode: 'cors',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				user: user,
+				name: name,
 				pswd: pswd,
 			})
 		}).then((response) => {
-			console.log(response);
-			if (response.status === 200) {
-				return response.json();
+			console.log("response: ")
+			console.log(response)
+			console.log("http status code: " + response.status)
+
+			if (response.status == 200) {	//　账号密码正确，跳转至账户数据同步页面
 			}
-			else if (response.status === 400) {
-				return Alert.alert('登录失败！');
+			else if (response.status == 400) {	// 账号密码错误
+				Alert.alert('账号或密码错误!')
+				return
 			}
-			else {
-				Alert.alert('unknown error!');
+			else {	// 非程序内置逻辑
+				Alert.alert('看到这个说明出 bug 啦!')
 			}
 		}).catch((error) => {
-			console.error(error);
-		})
+			console.error(error)
+		});
+
+		return;
 	}
 
 	render() {
-		const { user, pswd, navigation,
-			onChangeUser, onChangePswd } = this.props;
+		const { name, pswd, navigation,
+			onChangeName, onChangePswd } = this.props;
 
 		return (
 			<Container>
-				<Header>
-					<Left />
-					<Body>
-						<Title>同步</Title>
-					</Body>
-					<Right />
-				</Header>
 
 				<ScrollView
 					contentContainerStyle={{flex: 1}}
@@ -101,30 +98,30 @@ class Sync extends React.Component {
 					>
 
 						<View style={styles.inputView}>
-							{/* 用户名输入框 */}
+							{/* 账号输入框 */}
 							<View style={[styles.view, styles.lineTopBottom]}>
 								<Text style={styles.text}>
-									用户名:
+									账号
 								</Text>
 
 								<TextInput
 									style={styles.textInputStyle}
 									placeholder="请输入用户名"	// 没有任何文字输入时显示
-									clearButtonMode="while-editing"	// 文本框右侧显示清除按钮
 									secureTextEntry={false}	// 是否敏感
-									onChangeText={onChangeUser}	// 文本框内容变化时调用
-									value={user}
+									onChangeText={onChangeName}	// 文本框内容变化时调用
+									value={name}
 								/>
 							</View>
 
 							{/* 密码输入框 */}
 							<View style={[styles.view, styles.lineTopBottom]}>
-								<Text style={styles.text}>密	码:</Text>
+								<Text style={styles.text}>
+									密码
+								</Text>
 
 								<TextInput
 									style={styles.textInputStyle}
 									placeholder="请输入密码"
-									clearButtonMode="while-editing"
 									secureTextEntry={true}
 									onChangeText={onChangePswd}
 									value={pswd}
@@ -139,6 +136,16 @@ class Sync extends React.Component {
 								onPress={() => this.signIn()}// 登录功能
 							>
 								<Text style={styles.buttonText}>登录</Text>
+							</TouchableOpacity>
+						</View>
+
+						{/* 注册按钮 */}
+						<View style={styles.buttonView}>
+							<TouchableOpacity
+								style={[styles.button, {backgroundColor: "yellow"}]}
+								onPress={() => {navigation.navigate('signUp')}}	// 跳转至注册
+							>
+								<Text style={styles.buttonText}>注册</Text>
 							</TouchableOpacity>
 						</View>
 
@@ -221,17 +228,33 @@ const styles = StyleSheet.create({
 	}
 });
 
-const mapStateToProps = ({ accountInfo, syncInfo }) => ({
-	user: syncInfo.user,
+const mapStateToProps = ({ syncInfo }) => ({
+	name: syncInfo.name,
 	pswd: syncInfo.pswd,
-	data: syncInfo.data,
-});
+})
 
 const mapDispatchToProps = (dispatch) => ({
-	onChangeUser: (user) => dispatch({ type: 'change_user', user: user}),
-	onChangePswd: (pswd) => dispatch({ type: 'change_pswd', pswd: pswd}),
-});
+	onChangeName: (name) => dispatch({ type: 'change_name', name: name }),
+	onChangePswd: (pswd) => dispatch({ type: 'change_pswd', pswd: pswd }),
+})
 
-const SyncView = connect(mapStateToProps, mapDispatchToProps)(Sync);
+const SignInView = connect(mapStateToProps, mapDispatchToProps)(SignIn)
 
-export default SyncView;
+const SyncView = createStackNavigator({
+	signIn: {
+		screen: SignInView,
+	},
+	signUp: {
+		screen: SignUpView,
+	},
+	/*
+	user: {
+		screen: UserView,
+	}
+	*/
+}, {
+		initialRouteKey: 'signIn',
+	}
+)
+
+export default SyncView
