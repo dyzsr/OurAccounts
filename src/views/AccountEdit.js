@@ -189,6 +189,7 @@ class AccountEdit extends React.Component {
   render() {
     const { accountData, onChangeDate, onChangeTime, onChangeType,
       onChangeAmount, onChangeItem, onChangeDesc, onDelImage, onSave } = this.props;
+    const coords = this.getCoords();
 
     return (
       <Container padder>
@@ -294,13 +295,14 @@ class AccountEdit extends React.Component {
                 style={{
                   flex: 3,
                   marginRight: 10, marginBottom: 10, marginTop: 10,
-                  width: 250, height: 250
+                  width: 300, height: 300
                 }}
-                coordinate={{
-                  latitude: 39.91095,
-                  longitude: 116.37296,
-                }}
-              />
+                coordinate={coords}
+              >
+                <MapView.Marker
+                  coordinate={coords}
+                />
+              </MapView>
             </Item>
 
           </Form>
