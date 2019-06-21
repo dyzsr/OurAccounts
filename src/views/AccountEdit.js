@@ -19,6 +19,7 @@ import {
 } from 'react-native-popup-menu';
 
 import { init, Geolocation } from 'react-native-amap-geolocation';
+import { MapView } from 'react-native-amap3d';
 
 import styles from './style';
 
@@ -62,10 +63,10 @@ const MyTimePicker = ({time, onChangeTime, style}) => (
 );
 
 const Images = ({imgPaths, onDeleteImage}) => {
-  console.log(imgPaths);
+  console.log('img paths:', imgPaths);
   let W = width / 3 - 10;
   let H = W;
-  console.log(W, H);
+  console.log('size:', W, H);
   const images = imgPaths.map((imgPath, index) => (
     imgPath ?
       (
@@ -174,6 +175,17 @@ class AccountEdit extends React.Component {
     return '';
   }
 
+  getCoords() {
+    const {accountData} = this.props;
+    const {position} = accountData;
+    if (position) {
+      const { latitude, longitude } = position.location;
+      console.log('Coords:', latitude, longitude);
+      return { latitude, longitude };
+    }
+    return { latitude: 0, longitude: 0 };
+  }
+
   render() {
     const { accountData, onChangeDate, onChangeTime, onChangeType,
       onChangeAmount, onChangeItem, onChangeDesc, onDelImage, onSave } = this.props;
@@ -272,6 +284,24 @@ class AccountEdit extends React.Component {
             <H2 style={{marginLeft: 10}}>
               {this.getAddress()}
             </H2>
+            
+            <Item fixedLabel style = {{}} >
+              <Label
+                style={{flex: 1}}
+              >地图</Label>
+              <MapView 
+                //locationEnabled
+                style={{
+                  flex: 3,
+                  marginRight: 10, marginBottom: 10, marginTop: 10,
+                  width: 250, height: 250
+                }}
+                coordinate={{
+                  latitude: 39.91095,
+                  longitude: 116.37296,
+                }}
+              />
+            </Item>
 
           </Form>
         </Content>
