@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Calendar } from 'react-native-calendars';
 import { View } from 'react-native';
 import { createStackNavigator, NavigationEvents } from 'react-navigation';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import { withTheme } from 'react-native-paper';
 import {
 	Container, Header, Content, Button, Text, Title,
 	ListItem, SwipeRow, Item, Left, Body, Right,
@@ -12,7 +10,6 @@ import {
 import MonthsDetailView from './MonthsDetail';
 
 class Months extends Component {
-    // 标题头
     static navigationOptions({navigation}) {
 		return {
 			title: 'Months',
@@ -135,20 +132,20 @@ const mapStateToProps = ({ accountInfo, monthInfo }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     onClick: (day, callBack) => {
-		dispatch({ type: 'year_select', year: day.year });
-		dispatch({ type: 'month_select', month: day.month });
-		dispatch({ type: 'day_select', day: day.day });
-		dispatch({ type: 'month_watch', callBack: callBack })
-		console.log('WATCH');
+			dispatch({ type: 'year_select', year: day.year });
+			dispatch({ type: 'month_select', month: day.month });
+			dispatch({ type: 'day_select', day: day.day });
+			dispatch({ type: 'month_watch', callBack: callBack })
+			console.log('WATCH');
     },
     onChange: (month) => {
-        dispatch({ type: 'month_change', month: month.month });
+      dispatch({ type: 'month_change', month: month.month });
     },
     onIncome: (accounts) => {
-        dispatch({ type: 'month_income', accounts: accounts });
+      dispatch({ type: 'month_income', accounts: accounts });
     },
     onExpense: (accounts) => {
-        dispatch({ type: 'month_expense', accounts: accounts });
+      dispatch({ type: 'month_expense', accounts: accounts });
     },
 });
 

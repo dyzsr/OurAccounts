@@ -8,6 +8,8 @@ import AppContainer from './views/HomeScreen';
 
 // create store
 import { store, persistor } from './reducer';
+
+// 每次 state 更新时，打印日志
 store.subscribe(() => console.log(store.getState()));
 
 const App = () => {

@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage'
 import { accountsReducer } from './models/AccountsReducer';
 import { monthsReducer } from './models/MonthsReducer';
 import { statisticsReducer } from './models/StatisticsReducer';
+import { syncReducer } from './models/SyncReducer';
 
 const persistConfig = {
   key: 'root',
@@ -30,6 +31,7 @@ const reducer = combineReducers({
   accountInfo: persistReducer(accountsPersistConfig, accountsReducer),
   monthInfo: monthsReducer,
   statisticsInfo: statisticsReducer,
+  syncInfo: syncReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
