@@ -16,6 +16,7 @@ import {
 } from 'native-base'
 import { createStackNavigator, HeaderBackButton } from 'react-navigation'
 import SignUpView from './Signup'
+import UserSyncView from './User'
 
 class SignIn extends React.Component {
 	static navigationOptions({navigation}) {
@@ -38,51 +39,9 @@ class SignIn extends React.Component {
 		super(props)
 	}
 
-	signIn() { // 登录
-		const { name, pswd, navigation } = this.props
-
-		// console.warn("username: " + user)
-		// console.warn("password: " + pswd)
-
-		if (name === '' || pswd === '') {
-      Alert.alert('账号和密码不能为空!')
-      return
-		}
-
-		fetch('http://49.234.16.186:60000/signin', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				name: name,
-				pswd: pswd,
-			})
-		}).then((response) => {
-			console.log("response: ")
-			console.log(response)
-			console.log("http status code: " + response.status)
-
-			if (response.status == 200) {	//　账号密码正确，跳转至账户数据同步页面
-			}
-			else if (response.status == 400) {	// 账号密码错误
-				Alert.alert('账号或密码错误!')
-				return
-			}
-			else {	// 非程序内置逻辑
-				Alert.alert('看到这个说明出 bug 啦!')
-			}
-		}).catch((error) => {
-			console.error(error)
-		});
-
-		return;
-	}
-
 	render() {
 		const { name, pswd, navigation,
-			onChangeName, onChangePswd } = this.props;
+			signIn, onChangeName, onChangePswd } = this.props;
 
 		return (
 			<Container>
@@ -133,7 +92,7 @@ class SignIn extends React.Component {
 						<View style={styles.buttonView}>
 							<TouchableOpacity
 								style={styles.button}
-								onPress={() => this.signIn()}// 登录功能
+								onPress={() => signIn(() => navigation.navigate('userSync'))}	// 登录功能
 							>
 								<Text style={styles.buttonText}>登录</Text>
 							</TouchableOpacity>
@@ -234,8 +193,9 @@ const mapStateToProps = ({ syncInfo }) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onChangeName: (name) => dispatch({ type: 'change_name', name: name }),
-	onChangePswd: (pswd) => dispatch({ type: 'change_pswd', pswd: pswd }),
+	onChangeName: (name) => dispatch({type: 'change_name', name: name}),
+	onChangePswd: (pswd) => dispatch({type: 'change_pswd', pswd: pswd}),
+	signIn: (callBack) => dispatch({type: 'sign_in', callBack}),
 })
 
 const SignInView = connect(mapStateToProps, mapDispatchToProps)(SignIn)
@@ -247,11 +207,9 @@ const SyncView = createStackNavigator({
 	signUp: {
 		screen: SignUpView,
 	},
-	/*
-	user: {
-		screen: UserView,
+	userSync: {
+		screen: UserSyncView,
 	}
-	*/
 }, {
 		initialRouteKey: 'signIn',
 	}
