@@ -3,6 +3,7 @@ package com.ouraccounts;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import cn.qiuxiang.react.amap3d.AMap3DPackage;
 import com.horcrux.svg.SvgPackage;
 import cn.qiuxiang.react.geolocation.AMapGeolocationPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new AMap3DPackage(),
             new SvgPackage(),
             new AMapGeolocationPackage(),
             new RNFusedLocationPackage(),
