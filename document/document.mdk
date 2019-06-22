@@ -1,17 +1,24 @@
 Title: 移动互联网技术与应用
-Subtitle: Android记账软件开发报告
+Subtitle: 大作业报告<br><br><br><br><br><br><br><br>
 Author: 姓名：董岩
 Author Note: 学号：2016211225
 Affiliation: 班级：2016211310
 Author: 姓名：倪理涵
 Author Note: 学号：2016211156
 Affiliation: 班级：2016211310
-Toc text:
 Package: [UTF8]ctex
+
+--------------
+
+<br><br>
 
 [TITLE]
 
+<br><br>
+
 --------------
+
+<br><br><br>
 
 [TOC]
 
@@ -24,7 +31,7 @@ Package: [UTF8]ctex
 为我们讲授移动平台软件的开发，以及与服务端的数据交互技术。
 
 这一学期，我们通过IOS平台富文本编辑器软件的开发实践，熟悉了IOS平台的软件开发流程；
-现在进行Android平台的记账软件的开发，是一个比富文本编辑器规模稍大的软件，更是我们熟悉了
+现在进行Android平台的记账软件的开发，是一个比富文本编辑器规模稍大的软件，更使我们熟悉了
 移动平台客户端软件的整体结构。
 
 # 相关技术
@@ -33,7 +40,7 @@ Package: [UTF8]ctex
 
 * 操作系统：Windows 10，Ubuntu 18.04 LTS
 * 工具：Android Studio，VS Code，命令行终端
-* 语言：Javascript，React（JSX）
+* 语言：Javascript，React（JSX），Golang
 
 ## 所使用的技术
 
@@ -46,6 +53,7 @@ Package: [UTF8]ctex
 * React-Native，一套使用React开发移动端本地应用的框架
 * Redux，一个提供可预测程序状态的JS容器
 * React-Redux，一套React和Redux相结合的框架
+* Gin，一个高性能go语言后端框架
 
 # 系统功能需求
 
@@ -54,7 +62,7 @@ Package: [UTF8]ctex
 * 能详尽地记录账目信息
 * 能统计账目信息
 * 能以图表的方式查看统计结果
-* 账目信息能够稳定保存
+* 账目信息能够稳定保存，能在远端保存备份
 
 我们将主要的功能需求划分为三个部分：记账功能、统计功能和同步功能。
 
@@ -109,6 +117,8 @@ Package: [UTF8]ctex
 唯一需要保存的数据是所有的账目，因为统计信息可以依据账目信息动态生成，不需要可持久地
 存储在手机上。
 
+为了支持数据的迁移和备份，软件应有将数据上传至远端服务器和从服务器下载的功能。
+
 # 系统设计与实现
 
 ## 系统总体设计
@@ -138,10 +148,24 @@ OurAccounts
 │   └── settings.gradle
 ├── node_modules
 ├── src
-│   ├── models
-│   ├── views
-│   ├── App.js
-│   └── reducer.js
+│   ├── models
+│   │   ├── AccountsReducer.js
+│   │   ├── MonthsReducer.js
+│   │   ├── StatisticsReducer.js
+│   │   └── SyncReducer.js
+│   ├── views
+│   │   ├── AccountEdit.js
+│   │   ├── Accounts.js
+│   │   ├── HomeScreen.js
+│   │   ├── Months.js
+│   │   ├── MonthsDetail.js
+│   │   ├── Signup.js
+│   │   ├── Statistics.js
+│   │   ├── Sync.js
+│   │   ├── User.js
+│   │   └── style.js
+│   ├── App.js
+│   └── reducer.js
 ├── __tests__
 │   └── App-test.js
 ├── app.json
@@ -593,18 +617,81 @@ const accountsReducer = (state = INITIAL_STATE, action) => {
 
 ### 云端同步模块
 
-云端同步功能我们尚未实现，将会在期末大作业中加入。
+我们的云端同步模块支持上传数据和下载数据功能。
+
+同步功能需要用账户来同步数据。用户通过注册界面注册账户，或是通过登陆界面登陆账户。进入账户以后，
+可以选择注销，上传数据或者下载数据。
+
+### 服务器端
+
+我们的服务器端为客户端保存数据备份。客户端通过向服务端发送http请求来完成注册、登陆认证和数据同步。
+
+我们在服务端使用GO语言作为开发语言，使用Gin来搭建服务端框架。数据库我们采用了MongoDB，
+使用mongo-go-driver将go与MongoDB连接。
+
+服务端核心代码如下。我们首先建立与MongoDB的连接，然后初始化一个Gin引擎，设置路由。
+`/signin`用作登陆，`/signup`用作注册，`/syncup`用作上传数据，`/syncdown`用作下载数据。
+
+具体代码参照`OurAccountsServer/main.go`文件。
+
+``` go
+func main() {
+        // Set up DB
+        clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+
+        client, err := mongo.Connect(context.TODO(), clientOptions)
+
+        if err != nil {
+                log.Fatal(err)
+        }
+
+        // Check the connection
+        err = client.Ping(context.TODO(), nil)
+
+        if err != nil {
+                log.Fatal(err)
+        }
+
+        fmt.Println("Connected to MongoDB!")
+
+        // Set up router
+        router := gin.Default()
+
+        config := cors.DefaultConfig()
+        config.AllowAllOrigins = true
+
+        router.Use(cors.New(config))
+
+        router.POST("/signin", func(c *gin.Context) {
+                handleSignIn(c, client)
+        })
+        router.POST("/signup", func(c *gin.Context) {
+                handleSignUp(c, client)
+        })
+        router.POST("/syncup", func(c *gin.Context) {
+                handleSyncUp(c, client)
+        })
+        router.POST("/syncdown", func(c *gin.Context) {
+                handleSyncDown(c, client)
+        })
+
+        go router.RunTLS(":60001", "./certs/server.crt", "./certs/server.key")
+        router.Run(":60000")
+}
+```
 
 
 # 系统可能的拓展
 
-1. 云端同步功能：支持从本地向云端同步数据或是从云端像本地同步数据。
+1. 自动同步功能：支持登陆账户以后自动切换账目内容；支持用户修改账目之后自动上传至云服务器。
 
 2. 导出功能：支持将选定日期范围内的账目导出至`.csv`或`.xls`格式的文件中，并能方便转移到其他平台。
 
 3. 更详细的统计：支持更多维度的统计数据，如年消费项目占比，消费额变化曲线等。
 
 4. 设置功能：制定多套显示模式、UI界面等，让用户自定义自己的记账软件。
+
+
 
 # 总结体会
 
