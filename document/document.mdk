@@ -622,6 +622,237 @@ const accountsReducer = (state = INITIAL_STATE, action) => {
 同步功能需要用账户来同步数据。用户通过注册界面注册账户，或是通过登陆界面登陆账户。进入账户以后，
 可以选择注销，上传数据或者下载数据。
 
+在底部的导航栏“我的”项中，首先进入的是登录页面，这一页面提供了两个文本输入框，用来输入用户名和密码，以及两个功能按钮
+——在点按登录按钮后，如果用户名和密码正确，则会进入用户的数据同步页面，否则弹出提示框通知用户这一错误。
+
+```javascript
+<View
+  style = {styles.container}
+>
+  {/* 账号输入框 */}
+  <View style={[styles.view, styles.lineTopBottom]}>
+    <Text style={styles.text}>
+      账号
+    </Text>
+
+    <TextInput
+      style={styles.textInputStyle}
+      placeholder="请输入用户名"	// 没有任何文字输入时显示
+      secureTextEntry={false}	// 是否敏感
+      onChangeText={onChangeName}	// 文本框内容变化时调用
+      value={name}
+    />
+  </View>
+
+  {/* 密码输入框 */}
+  <View style={[styles.view, styles.lineTopBottom]}>
+    <Text style={styles.text}>
+      密码
+    </Text>
+
+    <TextInput
+      style={styles.textInputStyle}
+      placeholder="请输入密码"
+      secureTextEntry={true}
+      onChangeText={onChangePswd}
+      value={pswd}
+    />
+  </View>
+</View>
+
+{/* 登录按钮 */}
+<View style={styles.buttonView}>
+  <TouchableOpacity
+    style={styles.button}
+    onPress={() => signIn(() => navigation.navigate('userSync'))}	// 登录功能
+  >
+    <Text style={styles.buttonText}>登录</Text>
+  </TouchableOpacity>
+</View>
+
+{/* 注册按钮 */}
+<View style={styles.buttonView}>
+  <TouchableOpacity
+    style={[styles.button, {backgroundColor: "yellow"}]}
+    onPress={() => {navigation.navigate('signUp')}}	// 跳转至注册
+  >
+    <Text style={styles.buttonText}>注册</Text>
+  </TouchableOpacity>
+</View>
+```
+
+还有注册按钮，点击注册按钮后，会进入用户注册页面，包含三个输入框，用来输入用户名，密码以及重复密码。
+注册模块会对用户名的合法性以及是否重复，还有两次密码的输入是否一致进行检查。
+
+```javascript
+<View
+  style = {styles.container}
+>
+
+  <View style={styles.inputView}>
+    {/* 账号输入框 */}
+    <View style={[styles.view, styles.lineTopBottom]}>
+      <Text style={styles.text}>
+        账号
+      </Text>
+
+      <TextInput
+        style={styles.textInputStyle}
+        placeholder="6~16位，仅包含数字和字母，区分大小写"	// 没有任何文字输入时显示
+        secureTextEntry={false}	// 是否敏感
+        onChangeText={onSignName}	// 文本框内容变化时调用
+        value={sname}
+      />
+    </View>
+
+    {/* 密码输入框 */}
+    <View style={[styles.view, styles.lineTopBottom]}>
+      <Text style={styles.text}>
+        密码
+      </Text>
+
+      <TextInput
+        style={styles.textInputStyle}
+        placeholder="6~16位，仅包含数字和字母，区分大小写"
+        secureTextEntry={true}
+        onChangeText={onSignPswd}
+        value={spswd}
+      />
+    </View>
+
+    {/* 重复密码输入框 */}
+    <View style={[styles.view, styles.lineTopBottom]}>
+      <Text style={styles.text}>
+        重复密码
+      </Text>
+
+      <TextInput
+        style={styles.textInputStyle}
+        placeholder="请确认两次密码输入一致"
+        clearButtonMode="while-editing"
+        secureTextEntry={true}
+        onChangeText={onSignReppswd}
+        value={reppswd}
+      />
+    </View>
+  </View>
+
+  {/* 注册按钮 */}
+  <View style={styles.buttonView}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => signUp(navigation.goBack)} // 注册功能
+    >
+      <Text style={styles.buttonText}>注册</Text>
+    </TouchableOpacity>
+  </View>
+
+</View>
+```
+
+同步模块分为3个页面，因此共有三个文件分别实现UI及功能：`Sync.js`，`User.js`，`Signup.js`。
+以上已经给出了`Sync.js`和`Signup.js`的主要逻辑。
+而在`User.js`中，主要实现账目数据的上传与下载，以及注销功能——点按“退出”按钮后，界面会跳转到原先的登录界面。
+
+需要说明的是，登录、注册、上传以及下载这4大功能，在服务器端制定了相应的API：`signin`、`signup`、`syncup`、`syncdown`。
+在`react-native`中，我们以`fetch`来向服务器发送请求，以实现这4大API。
+
+所有的请求都是`POST`类型。请求内部的`body`是相应参数的`JSON`格式。
+
+```javascript
+const handleSignIn = (state, {callBack}) => {
+	if (state.name === '' || state.pswd === '') {
+		Alert.alert('账号和密码不能为空!')
+		return state
+	}
+
+	fetch('http://49.234.16.186:60000/signin', {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			name: state.name,
+			pswd: state.pswd,
+		})
+	}).then((response) => {
+		console.log("response: ")
+		console.log(response)
+		console.log("http status code: " + response.status)
+
+		if (response.status == 200) {	//　账号密码正确，跳转至账户数据同步页面
+			callBack()
+		}
+		else if (response.status == 400) {	// 账号密码错误
+			Alert.alert('账号或密码错误!')
+			return
+		}
+		else {	// 非程序内置逻辑
+			Alert.alert('看到这个说明出 bug 啦!')
+		}
+	}).catch((error) => {
+		console.error(error)
+	})
+
+	return state
+}
+
+const handleSignUp = (state, {callBack}) => {
+	if (state.spswd != state.reppswd) {
+		Alert.alert('两次密码输入不一致!')
+		return state
+	}
+
+	if (state.sname === '' || state.spswd === '') {
+		Alert.alert('账号和密码不能为空!')
+		return state
+	}
+
+	fetch('http://49.234.16.186:60000/signup', {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			name: state.sname,
+			pswd: state.spswd,
+		})
+	}).then((response) => {
+		console.log("response: ")
+		console.log(response)
+		console.log("http status code: " + response.status)
+
+		if (response.status == 200) {	//　账号密码正确，跳转回登录界面
+			Alert.alert('注册成功!')
+			callBack()
+			return {...state, sname: '', spswd: '', reppswd: ''}
+		}
+		else if (response.status == 400) {	// 账号密码错误
+			Alert.alert('账号已存在!')
+		}
+		else {	// 非程序内置逻辑
+			Alert.alert('看到这个说明出 bug 啦!')
+		}
+	}).catch((error) => {
+		console.error(error)
+	})
+
+	return state
+}
+```
+
+以数据的上传为例，`body`中不仅要含有`name`和`pswd`以验证身份，还要将当前的账目数据`accounts`转化为`JSON`格式作为同步的数据`data`。
+
+```javascript
+body: JSON.stringify({
+  name: state.name,
+  pswd: state.pswd,
+  data: JSON.stringify(accounts),
+})
+```
+
 ### 服务器端
 
 我们的服务器端为客户端保存数据备份。客户端通过向服务端发送http请求来完成注册、登陆认证和数据同步。
