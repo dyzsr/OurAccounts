@@ -1,5 +1,5 @@
 Title: 移动互联网技术与应用
-Subtitle: 大作业报告<br><br><br><br><br><br><br><br>
+Subtitle: 大作业报告
 Author: 姓名：董岩
 Author Note: 学号：2016211225
 Affiliation: 班级：2016211310
@@ -8,21 +8,15 @@ Author Note: 学号：2016211156
 Affiliation: 班级：2016211310
 Package: [UTF8]ctex
 
---------------
-
-<br><br>
 
 [TITLE]
 
-<br><br>
-
 --------------
-
-<br><br><br>
 
 [TOC]
 
 --------------
+
 
 # 系统开发的创意与背景
 
@@ -31,14 +25,17 @@ Package: [UTF8]ctex
 为我们讲授移动平台软件的开发，以及与服务端的数据交互技术。
 
 这一学期，我们通过IOS平台富文本编辑器软件的开发实践，熟悉了IOS平台的软件开发流程；
-现在进行Android平台的记账软件的开发，是一个比富文本编辑器规模稍大的软件，更使我们熟悉了
+之前几周进行Android平台的记账软件的开发，是一个比富文本编辑器规模稍大的软件，更使我们熟悉了
 移动平台客户端软件的整体结构。
+
+这一次的期末大作业，在上一次Android作业的基础上，增加了服务器数据同步的功能，给了我们一个
+了解服务器后端框架的机会。
 
 # 相关技术
 
 ## 开发环境
 
-* 操作系统：Windows 10，Ubuntu 18.04 LTS
+* 操作系统：Windows & Ubuntu
 * 工具：Android Studio，VS Code，命令行终端
 * 语言：Javascript，React（JSX），Golang
 
@@ -147,6 +144,14 @@ OurAccounts
 │   ├── OurAccounts.iml
 │   └── settings.gradle
 ├── node_modules
+├── OurAccountsServer
+│   ├── certs
+│   │   ├── server.crt
+│   │   └── server.key
+│   ├── vendor
+│   ├── Gopkg.lock
+│   ├── Gopkg.toml
+│   └── main.go
 ├── src
 │   ├── models
 │   │   ├── AccountsReducer.js
@@ -865,7 +870,7 @@ body: JSON.stringify({
 
 具体代码参照`OurAccountsServer/main.go`文件。
 
-``` go
+```
 func main() {
         // Set up DB
         clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
@@ -926,11 +931,12 @@ func main() {
 
 # 总结体会
 
-这次Android作业难度，仅从代码量而言，相较于IOS作业有大提升，对于期末阶段的学生来说确实
-是不小的压力，但是相应的收获也非常丰富。
+这次综合作业集成了之前的Android作业，加入了Go语言服务器部分的代码，让我们在了解客户端开发的
+同时也熟悉了服务端的开发框架。在期末阶段，对于学生来说，完成这些大作业是有着不小的压力，
+但是收获也相应的非常巨大。
 
-首先锻炼的是压力下高效产出代码的能力。我们小组两人在一周的时间内完成了这个程序的开发，对于
-相对还缺乏开发经验的学生来说是个比较令人满意的结果。在这一学期的工程训练之后，不少同学对
+首先锻炼的是压力下高效产出代码的能力。我们小组两人在两周的时间内完成了记账软件的开发，对于
+相对还缺乏开发经验的我们来说是个比较令人满意的结果。在这一学期的工程训练之后，不少同学对
 项目的开发已经有了一定程度的熟悉和了解，这一点对于未来融入工作环境非常有益。
 
 其次是学到了一些新技术。我们在开发过程中对React和Redux框架越来越熟悉。
